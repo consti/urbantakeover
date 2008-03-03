@@ -1,18 +1,13 @@
 <h1>My claims</h1>
 
-<h2>my currently owned spots</h2>
-<ul>
-<% for spot in @owned_spots %>
-  <li>
-    <%=h spot.name  %> @ <%= spot.current_claim.created_at %>
-  </li>
-<% end %>
-</ul>
+<%= render(:partial => 'my_spots', :locals => {:user => current_user}) %>
 
 <h2>claim log</h2>
+
+#TODO: add when someone else reclaimed my spot
+  
 <ul>
 <% for claim in @claims %>
-  #TODO: add when someone else reclaimed my spot
   <li>
     <%=h claim.spot.name  %> @ <%= claim.created_at %>
   </li>

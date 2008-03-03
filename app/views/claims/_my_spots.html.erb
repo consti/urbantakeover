@@ -1,0 +1,8 @@
+<h2>my currently owned spots</h2>
+<ul>
+<% for spot in user.owned_spots %>
+  <li>
+    <%=h spot.name  %> @ <%= spot.current_claim.created_at %>
+  </li>
+<% end %>
+</ul>

@@ -1,6 +1,10 @@
 <%= GMap.header %>  
 
-<h1>Listing spots</h1>
+<% if logged_in? %>
+  <%= render(:partial => 'claims/my_spots', :locals => {:user => current_user}) %>
+<% end %>
+
+<h1>Spots</h1>
 
 <%= @map.div(:width => 600, :height => 400) %>
 <%= @map.to_html %>
