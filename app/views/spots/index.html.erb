@@ -17,13 +17,17 @@
     <td><%=h spot.name %></td>
     <td> <%=h spot.geolocation_x %> <%=h spot.geolocation_y %> </td>
     <td><%=h spot.code %></td>
-    <td><%= link_to 'Show', spot %></td>
-    <td><%= link_to 'Edit', edit_spot_path(spot) %></td>
-    <td><%= link_to 'Destroy', spot, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% if can_edit_spot? %>
+      <td><%= link_to 'Show', spot %></td>
+      <td><%= link_to 'Edit', edit_spot_path(spot) %></td>
+      <td><%= link_to 'Destroy', spot, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New spot', new_spot_path %>
+<% if can_edit_spot? %>
+  <%= link_to 'New spot', new_spot_path %>
+<% end %>

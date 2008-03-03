@@ -1,4 +1,10 @@
 class SpotsController < ApplicationController
+  before_filter :login_required, :only => [:new, :edit, :create, :update, :destroy]
+
+  def authorized?
+    current_user.is_admin?
+  end
+
   # GET /spots
   # GET /spots.xml
   def index
