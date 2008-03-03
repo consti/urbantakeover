@@ -1,6 +1,13 @@
 .quickstart
 
 * get rails: http://www.rubyonrails.org/down
-* cp config/database.example config/database.yml
+** am besten ruby-gems holen und dann per sudo gem install rails installieren
+
+* cp config/database.example config/database.yml # sqlite passt scho. muss halt das rails plugin installiert sein
+* ruby script/migrate # macht datenbank modell
 * ruby script/server
 * http://localhost:3000
+
+
+#
+http://maps.google.com/maps?f=q&hl=en&geocode=&q=rathausstra%C3%9Fe+6+wien&sll=36.738884,-95.888672&sspn=38.393119,68.378906&ie=UTF8&ll=48.208645,16.359994&spn=0.007865,0.016694&z=16

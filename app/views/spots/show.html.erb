@@ -1,0 +1,7 @@
+<h1><%= @spot.code %></h1>
+
+<p><%= @spot.name %> </p>
+<p>Geolocation: <%= @spot.geolocation_x %> <%= @spot.geolocation_y %></p>
+
+<%= link_to 'Edit', edit_spot_path(@spot) %> |
+<%= link_to 'Back', spots_path %>
