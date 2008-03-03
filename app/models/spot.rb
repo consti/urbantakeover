@@ -23,6 +23,5 @@ class Spot < ActiveRecord::Base
   
   def geolocation_text= (value)
     geolocation_x, geolocation_y = value.split(" ", 2)
-    print "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAH %f" % geolocation_x
   end
 end

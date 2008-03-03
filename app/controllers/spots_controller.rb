@@ -4,6 +4,19 @@ class SpotsController < ApplicationController
   def index
     @spots = Spot.find(:all)
 
+    @map = GMap.new("map")
+    @map.control_init(:large_map => true, :map_type => true)
+
+    unless @spots.empty?
+      @map.center_zoom_init(@spots[-1].geolocation, 8)  # zoom to last spot
+
+      @spots.each do |spot|
+        marker = GMarker.new(spot.geolocation,   
+          :title => spot.name, :info_window => "<strong>%s</strong><br/>SMS Code: %s" % [spot.name, spot.code])  
+          @map.overlay_init(marker)
+      end
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @spots }
