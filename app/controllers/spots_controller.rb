@@ -8,7 +8,7 @@ class SpotsController < ApplicationController
     @map.control_init(:large_map => true, :map_type => true)
 
     unless @spots.empty?
-      @map.center_zoom_init(@spots[-1].geolocation, 8)  # zoom to last spot
+      @map.center_zoom_init(@spots[-1].geolocation, 13)  # zoom to last spot
 
       @spots.each do |spot|
         marker = GMarker.new(spot.geolocation,   
