@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 
+  has_many :claims
+  
   validates_presence_of     :login, :email
   validates_presence_of     :password,                   :if => :password_required?
   validates_presence_of     :password_confirmation,      :if => :password_required?
@@ -12,6 +14,20 @@ class User < ActiveRecord::Base
   validates_length_of       :email,    :within => 3..100
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   before_save :encrypt_password
+
+  def can_claim_spot?
+    true
+  end
+  
+  def can_edit_spots?
+    is_admin?
+  end
+  
+  def owned_spots
+    self.claims.collect do |claim|
+      claim.spot if claim.spot.current_owner == self
+    end.compact.uniq
+  end
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)

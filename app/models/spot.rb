@@ -4,6 +4,8 @@ class Spot < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :code
   
+  has_many :claims
+
   def geolocation
     return [geolocation_x, geolocation_y]
   end
@@ -23,5 +25,14 @@ class Spot < ActiveRecord::Base
   
   def geolocation_text= (value)
     geolocation_x, geolocation_y = value.split(" ", 2)
+  end
+  
+  def current_claim
+    #todo: store in database to avoid this freaking query
+    self.claims.find :first, :order => "created_at DESC"
+  end
+  
+  def current_owner
+    current_claim.user if current_claim
   end
 end

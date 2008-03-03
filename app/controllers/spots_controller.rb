@@ -18,11 +18,13 @@ class SpotsController < ApplicationController
 
       @spots.each do |spot|
         marker = GMarker.new(spot.geolocation,   
-          :title => spot.name, :info_window => "<strong>%s</strong><br/>SMS Code: %s" % [spot.name, spot.code])  
+          :title => spot.name, :info_window => "<strong>%s</strong><br/>SMS Code: %s<br/>claimed by: %s" % [spot.name, spot.code, spot.current_owner ? spot.current_owner.login : "no one"])  
           @map.overlay_init(marker)
       end
     end
     
+    @recent_claims = Claim.find :all, :limit => 32, :order => "created_at desc"
+
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @spots }
