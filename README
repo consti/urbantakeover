@@ -1,9 +1,24 @@
-.quickstart
+== get rails
 
-* get rails: http://www.rubyonrails.org/down
-** am besten ruby-gems holen und dann per sudo gem install rails installieren
+http://www.rubyonrails.org/down
+am besten ruby-gems holen und dann per sudo gem install rails installieren
 
-* cp config/database.example config/database.yml # sqlite passt scho. muss halt das rails plugin installiert sein
-* ruby script/migrate # macht datenbank modell
-* ruby script/server
-* http://localhost:3000
+
+== run
+
+=== mit sqlite (default, easy)
+
+cp config/database.example config/database.yml
+ruby script/server
+
+http://localhost:3000
+
+
+=== mit andere datenbank
+
+cp config/database.example config/database.yml
+vi config/database.yml - datenbankdaten eintragen
+rake db:migrate
+ruby script/server
+
+http://localhost:3000
