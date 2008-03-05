@@ -1,8 +1,18 @@
 <h2>my currently owned spots</h2>
-<ul>
+
 <% for spot in user.owned_spots %>
-  <li>
-    <%=h spot.name  %> @ <%= spot.current_claim.created_at %>
-  </li>
+<h3><%=h spot.name  %></h3>
+
+<p>
+    <% crossed_claim = spot.current_claim.crossed_claim
+      if crossed_claim %>
+        crossed <%= crossed_claim.user.login %>
+    <% else %>
+      since
+    <% end %>
+    
+    <%= interval_to_now spot.current_claim.created_at %>
+</p> 
+
 <% end %>
-</ul>
+

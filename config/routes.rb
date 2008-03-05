@@ -2,7 +2,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :spots
   map.resources :users
 
-  map.root :controller => "spots", :action => "index"
+  map.root :controller => "storefront", :action => "index"
 
   # The priority is based upon order of creation: first created -> highest priority.
 

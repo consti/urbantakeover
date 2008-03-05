@@ -4,12 +4,14 @@ class ClaimsController < ApplicationController
   def spot
     spot = Spot.find params[:id]    
     
-    if spot.current_owner == current_user
+    #return unless request.post? # TODO: require sticker code
+    
+    if current_user.can_claim? spot
       flash[:notice] = "Already yours :)"
       return redirect_to(:action => 'my')
     end
 
-    Claim.create :user => current_user, :spot => spot
+    current_user.claim spot
 
     flash[:notice] = "BAM! Claimed!"
     redirect_to(:action => 'my')

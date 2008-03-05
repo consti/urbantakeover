@@ -3,13 +3,19 @@
 <%= render(:partial => 'my_spots', :locals => {:user => current_user}) %>
 
 <h2>claim log</h2>
-
-#TODO: add when someone else reclaimed my spot
   
 <ul>
 <% for claim in @claims %>
   <li>
-    <%=h claim.spot.name  %> @ <%= claim.created_at %>
+    <%=h claim.spot.name  %> since <%= interval_to_now claim.created_at %>
+    <% if claim.spot.current_owner != current_user %>
+      <ul>
+      <li>
+        <% reclaim = claim.spot.first_claim_after(claim) %>
+        spot lost to <%= reclaim.user.login %> after <%= format_interval(reclaim.created_at - claim.created_at) %>. <%= link_to 'spot history', :controller => :spots, :action => :history, :id => claim.spot %>
+      </li>
+      </ul>
+    <% end %>
   </li>
 <% end %>
 </ul>

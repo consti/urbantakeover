@@ -1,0 +1,25 @@
+<div style="float: left;">
+  <% if logged_in? %>
+    <%= render(:partial => 'claims/my_spots', :locals => {:user => current_user}) %>
+  <% end %>
+  
+  # TODO: show spots that have been reclaimed by others
+</div>
+
+<div style="float: left;">
+  <h2>Spots</h2>
+  <%= GMap.header %>  
+
+  <%= @map.div(:width => 600, :height => 400) %>
+  <%= @map.to_html %>
+</div>
+
+<div style="float: left">
+  <h2>What's going on?</h2>
+  # TODO: group by days, show a simple global log of "what's going on". highlight stuff that is of importance for me (ie: my claims, my takeovers)
+  <ul>
+  <% for claim in @recent_claims %>
+    <li><%=h claim.user.login %> took <%=h claim.spot.name %> <%= if claim.crossed_claim then "from #{claim.crossed_claim.user.login} " end %> <%= interval_to_now claim.created_at %></li>
+  <% end %>
+  </ul>
+</div>

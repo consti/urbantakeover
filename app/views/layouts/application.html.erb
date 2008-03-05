@@ -12,7 +12,7 @@
 <div style="float:right;">
   <% if logged_in? %>
     <% if current_user.is_admin? %>
-      y0
+      y0!
     <% else %>
      hello
     <% end %>
@@ -28,7 +28,16 @@
   <% end %>
 </div>
 
-<h1 class="title"><%= link_to 'ut', root_url %></h1>
+<div><h1 class="title"><%= link_to 'ut', root_url %></h1>  
+  <% if logged_in? %>
+    <% if current_user.can_edit_spots?%>
+      <%= link_to 'new spot', :controller => :spots, :action => :new %> | 
+    <% end %>
+    <%= link_to 'claim spot', :controller => :spots, :action => :index %>
+  <% else %>
+    <%= link_to 'spot list', :controller => :spots, :action => :index %>
+  <% end %>
+</div>
 
 <p style="color: green"><%= flash[:notice] %></p>
 

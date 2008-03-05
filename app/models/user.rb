@@ -15,12 +15,18 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   before_save :encrypt_password
 
-  def can_claim_spot?
-    true
+  def can_claim? spot
+    return spot.current_owner != self
   end
   
   def can_edit_spots?
     is_admin?
+  end
+  
+  def claim spot
+    if self.can_claim? spot
+      Claim.create :user => self, :spot => spot
+    end
   end
   
   def owned_spots

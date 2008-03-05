@@ -12,32 +12,20 @@ class SpotsController < ApplicationController
 
     @map = GMap.new("map")
     @map.control_init(:large_map => true, :map_type => true)
-
-    unless @spots.empty?
-      @map.center_zoom_init(@spots[-1].geolocation, 13)  # zoom to last spot
-
-      @spots.each do |spot|
-        marker = GMarker.new(spot.geolocation,   
-          :title => spot.name, :info_window => "<strong>%s</strong><br/>SMS Code: %s<br/>claimed by: %s" % [spot.name, spot.code, spot.current_owner ? spot.current_owner.login : "no one"])  
-          @map.overlay_init(marker)
-      end
-    end
     
-    @recent_claims = Claim.find :all, :limit => 32, :order => "created_at desc"
-
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @spots }
     end
   end
-
+  
   # GET /spots/1
   # GET /spots/1.xml
   def show
     @spot = Spot.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { redirect_to :action => 'index', :focus => @spot.code }
       format.xml  { render :xml => @spot }
     end
   end

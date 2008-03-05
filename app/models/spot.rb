@@ -35,4 +35,14 @@ class Spot < ActiveRecord::Base
   def current_owner
     current_claim.user if current_claim
   end
+  
+  # returns the claim that "crossed" the passed claim
+  # TODO: make more performant? (used in claims/my)
+  def first_claim_after claim
+    self.claims.find :first, :order => "created_at DESC", :conditions => ["created_at > ?", claim.created_at]
+  end
+  
+  def first_claim_before claim
+    self.claims.find :first, :order => "created_at ASC", :conditions => ["created_at < ?", claim.created_at]
+  end
 end

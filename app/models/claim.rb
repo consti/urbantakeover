@@ -4,4 +4,12 @@ class Claim < ActiveRecord::Base
   
   belongs_to :user
   belongs_to :spot
+  
+  def crossed_claim
+    self.spot.first_claim_before self
+  end
+  
+  def crossed_by_claim
+    self.spot.first_claim_after self
+  end
 end
