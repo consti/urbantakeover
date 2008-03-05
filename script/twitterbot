@@ -4,47 +4,52 @@
 # no parsing happens here, we just pass all messages to the urban takeover message handler
 # and return the result if there's any
 
-print "xmpp4r!"
-require 'xmpp4r'
-print "net/http!"
-require 'net/http'
-print "cgi!"
-require 'cgi'
-print "iconv!"
-require 'iconv'
+require "xmpp4r"
+require "net/http"
+require "cgi"
+require "iconv"
+require "twitter"
 
-Jabber::debug = true
- 
-print "boot jabber!"
-client = Jabber::Client.new(Jabber::JID.new('cbo.jabber@gmail.com/google'))
 
-print "connect!"
-client.connect
+twitter = Twitter::Client.new( :login => 'sdsantos' , :password => 'xxxxxxx' )
+messages = twitter.messages(:received)
 
-print "auth!"
-client.auth('claimme12')
+messages.each do |message|
+  print message
+end
 
-print "set status!"
-client.send(Jabber::Presence.new.set_show(:chat).set_status('This is so 1985!'))
-
-print "ready!"
-
-client.add_message_callback { |msg|
-  if msg.body
-    puts "Incoming msg from #{msg.from}: #{msg.body}"
-    answer = Jabber::Message.new(msg.from)
-    answer.type = :chat
-    msg.body.match(':\n(.*)').should   {
-      request = msg.body.match(':\n(.*)')[1]
-      user = msg.body.match('Direct from (.*):\n')[1]
-      answer.body = "d #{user} haha"
-      puts "Outgoing msg to #{msg.from}: #{answer.body}"
-      client.send(answer)
-    }
-  end
-}
-
-Thread.stop
+#Jabber::debug = true
+# 
+#print "boot jabber!"
+#client = Jabber::Client.new(Jabber::JID.new('cbo.jabber@gmail.com/google'))
+#
+#print "connect!"
+#client.connect
+#
+#print "auth!"
+#client.auth('claimme12')
+#
+#print "set status!"
+#client.send(Jabber::Presence.new.set_show(:chat).set_status('This is so 1985!'))
+#
+#print "ready!"
+#
+#client.add_message_callback { |msg|
+#  if msg.body
+#    puts "Incoming msg from #{msg.from}: #{msg.body}"
+#    answer = Jabber::Message.new(msg.from)
+#    answer.type = :chat
+#    msg.body.match(':\n(.*)').should   {
+#      request = msg.body.match(':\n(.*)')[1]
+#      user = msg.body.match('Direct from (.*):\n')[1]
+#      answer.body = "d #{user} haha"
+#      puts "Outgoing msg to #{msg.from}: #{answer.body}"
+#      client.send(answer)
+#    }
+#  end
+#}
+#
+#Thread.stop
 
 def do_claim user, msg
   req = Net::HTTP.get_response(URI.parse("http://localhost:3000/gateway/twitter?user=#{user}&message=#{msg}"))
@@ -56,10 +61,9 @@ end
 
 
 
-
-require 'xmpp4r/client'
-include Jabber
-
+#require 'xmpp4r/client'
+#include Jabber
+#
 # Login
 #jid = JID::new('test@yeush.com/Testing')
 #password = 'test'

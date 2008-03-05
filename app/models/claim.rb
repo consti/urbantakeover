@@ -4,6 +4,7 @@ class Claim < ActiveRecord::Base
   
   belongs_to :user
   belongs_to :spot
+  has_one :sticker
   
   def crossed_claim
     self.spot.first_claim_before self

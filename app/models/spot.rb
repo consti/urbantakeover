@@ -3,8 +3,22 @@ class Spot < ActiveRecord::Base
   validates_presence_of :geolocation_y
   validates_presence_of :name
   validates_presence_of :code
+  validates_uniqueness_of :code
   
   has_many :claims
+
+
+  #todo: turn me into a before_save filter
+  before_validation :geolocate_address
+  
+  
+  def geolocate_address
+    return if not self.address or self.address.empty?
+    geocode = Geocoding.get(self.address)
+    return unless geocode
+    self.geolocation_x = geocode[0][:latitude]
+    self.geolocation_y = geocode[0][:longitude]
+  end
 
   def geolocation
     return [geolocation_x, geolocation_y]
