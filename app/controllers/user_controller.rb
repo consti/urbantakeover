@@ -3,6 +3,25 @@ class UserController < ApplicationController
   def index
     redirect_to root_url
   end
+  
+  def edit
+    @user = User.find(params[:id])
+    
+    #authorize
+    if not logged_in? or (current_user != @user and not current_user.is_admin?)
+      flash[:notice] = "surely not!"
+      redirect_to root_url
+    end
+    
+    if request.post?
+      @user.update_attributes(params[:user])
+      @user.save
+    end
+
+  rescue ActiveRecord::RecordInvalid
+    flash[:notice] = 'Speichern haut net hin!'
+    render :action => 'edit'
+  end
 
   def login
     return unless request.post?
@@ -37,4 +56,6 @@ class UserController < ApplicationController
     flash[:notice] = "You have been logged out."
     redirect_back_or_default(:controller => '/user', :action => 'index')
   end
+  
+  
 end

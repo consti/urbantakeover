@@ -16,7 +16,10 @@
     <% else %>
      hello
     <% end %>
-    <%= h current_user.login %>
+    <%= h(current_user.login) %>
+    
+    |
+    <%= link_to 'profile', :controller => :user, :action => :edit, :id => current_user %>
     |
     <%= link_to 'my claims', :controller => :claims, :action => :my %>
     |

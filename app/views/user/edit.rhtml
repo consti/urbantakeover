@@ -1,0 +1,25 @@
+<h1>Howdey <%=h @user.login %></h1>
+
+<%= error_messages_for :user %>
+
+<% form_for :user do |f| -%>
+<p><label for="login">Login</label><br/>
+<%= f.text_field :login %></p>
+
+<p><label for="email">Email</label><br/>
+<%= f.text_field :email %></p>
+
+<p><label for="password">Password</label><br/>
+<%= f.password_field :password %></p>
+
+<p><label for="password_confirmation">Confirm Password</label><br/>
+<%= f.password_field :password_confirmation %></p>
+
+<p><label for="is_admin">Administrator Access</label><br/>
+<%= f.check_box :is_admin %></p>
+
+<p><label for="login">Colours</label><br/>
+<%= f.text_field :colour_1 %> <%= f.text_field :colour_2 %> <%= f.text_field :colour_3 %></p>
+
+<p><%= submit_tag 'Save' %></p>
+<% end -%>

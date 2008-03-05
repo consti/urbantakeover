@@ -22,8 +22,7 @@ module ApplicationHelper
       break if granularity == 0
     end
     
-    output.empty? ? '0 seconds' : output
-    output.chop
+    output.empty? ? '0 seconds' : output.chop
   end
   
   def interval_to_now timestamp
