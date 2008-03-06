@@ -9,10 +9,16 @@ require "net/http"
 require "cgi"
 require "iconv"
 
+def dispatch_to_rails user, msg
+  req = Net::HTTP.get_response(URI.parse("http://localhost:3000/gateway/twitter?user=#{user}&message=#{msg}"))
+  return req.body
+end
+
 client = Jabber::Client.new(Jabber::JID.new('cbo.jabber@gmail.com/google'))
 client.connect
 client.auth('claimme12')
 
+print "ready!l"
 client.send(Jabber::Presence.new.set_show(:chat).set_status('This is so 1985!'))
 
 client.add_message_callback { |msg|
@@ -25,7 +31,7 @@ client.add_message_callback { |msg|
       benutzer = msg.body.match('Direct from (.*):\n')[1]
       answer.body = "d #{benutzer} - du sagtest: #{request}"
       puts "Outgoing msg to #{msg.from}: #{answer.body}"
-      client.send(answer)
+      client.send(dispatch_to_rails(benutzer, request))
     end
   end
 }
@@ -73,13 +79,6 @@ Thread.stop
 #}
 #
 #Thread.stop
-
-#def do_claim user, msg
-#  req = Net::HTTP.get_response(URI.parse("http://localhost:3000/gateway/twitter?user=#{user}&message=#{msg}"))
-#  if req.body != ""
-#    print "ANSWER TO #{user}: #{req.body}\n"
-#  end
-#end
 
 
 
