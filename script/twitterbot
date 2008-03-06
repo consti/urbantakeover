@@ -11,7 +11,7 @@ require "iconv"
 
 def dispatch_to_rails user, msg
   req = Net::HTTP.get_response(URI.parse("http://localhost:3000/gateway/twitter?user=#{user}&message=#{msg}"))
-  return req.body
+  return req.body[0...150]
 end
 
 client = Jabber::Client.new(Jabber::JID.new('cbo.jabber@gmail.com/google'))
