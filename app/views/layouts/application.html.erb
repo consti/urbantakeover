@@ -36,11 +36,16 @@
     <% if current_user.can_edit_spots?%>
       <%= link_to 'new spot', :controller => :spots, :action => :new %> | 
     <% end %>
-    <%= link_to 'claim spot', :controller => :spots, :action => :index %>
+    <%= link_to 'claim spot', :controller => :claims, :action => :new %> |
+    <%= link_to 'high score', :controller => :score, :action => :index %>
   <% else %>
     <%= link_to 'spot list', :controller => :spots, :action => :index %>
   <% end %>
 </div>
+
+<% if logged_in? %>
+  <%= render :partial => 'score/new_scores_flash', :locals => {:user => current_user} %>
+<% end %>
 
 <p style="color: green"><%= flash[:notice] %></p>
 

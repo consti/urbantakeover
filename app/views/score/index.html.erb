@@ -1,0 +1,11 @@
+<h1><%= @user.login %>'s Score:</h1>
+
+<strong><%= @user.total_score %></strong>
+
+<ul>
+<% for score in @user.scores %>
+  <li>
+  <%= score.points %> for <%= score.description %>
+  </li>
+<% end %>
+</ul>

@@ -3,8 +3,9 @@ class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 
-  has_many :claims
+  has_many :claims, :order => "created_at desc"
   has_many :stickers
+  has_many :scores, :order => "created_at desc"
   
   validates_presence_of     :login, :email
   validates_presence_of     :password,                   :if => :password_required?
@@ -15,6 +16,24 @@ class User < ActiveRecord::Base
   validates_length_of       :email,    :within => 3..100
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   before_save :encrypt_password
+  before_create :initial_score_after
+  after_create :initial_score_after
+  
+  def initial_score_before
+    self.scores_seen_until = Time.now
+  end
+  
+  def initial_score_after
+    self.score 5, "signed up"
+  end
+
+  def score(points, description)
+    self.scores.create :points => points, :description => description
+  end
+  
+  def total_score
+    self.scores.inject(0) {|n, s| n += s.points} 
+  end
 
   def can_claim? spot
     return spot.current_owner != self
@@ -26,7 +45,14 @@ class User < ActiveRecord::Base
   
   def claim spot
     if self.can_claim? spot
-      Claim.create :user => self, :spot => spot
+      my_claim = Claim.create :user => self, :spot => spot
+      self.score 20, "claimed #{spot.name}"
+      
+      crossed_claim = spot.first_claim_before my_claim
+      
+      if crossed_claim
+        crossed_claim.user.score 1, "crossed by #{self.login} at #{spot.name}"
+      end
     end
   end
   

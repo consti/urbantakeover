@@ -18,7 +18,7 @@ class ClaimsController < ApplicationController
   end
   
   def my
-    @claims = current_user.claims.find :all, :order => "created_at desc"
+    @claims = current_user.claims
     @owned_spots = current_user.owned_spots
   end
 end

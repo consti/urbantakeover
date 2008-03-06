@@ -1,0 +1,12 @@
+<% scores = user.scores.find :all, :conditions => ["created_at > ?", user.scores_seen_until] %>
+
+<% unless scores.empty? %>
+  <h2>got new points!!!</h2>
+  <ul>
+  <% for score in scores %>
+    <li><%= score.points %>: <%= score.description %></li>
+  <% end %>
+  </ul>
+  
+  <%= link_to "thanks!", :controller => :score, :action => :dismiss %>
+<% end %>

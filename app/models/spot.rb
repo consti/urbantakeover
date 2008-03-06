@@ -5,7 +5,7 @@ class Spot < ActiveRecord::Base
   validates_presence_of :code
   validates_uniqueness_of :code
   
-  has_many :claims
+  has_many :claims, :order => "created_at DESC"
 
 
   #todo: turn me into a before_save filter
@@ -43,7 +43,7 @@ class Spot < ActiveRecord::Base
   
   def current_claim
     #todo: store in database to avoid this freaking query
-    self.claims.find :first, :order => "created_at DESC"
+    self.claims.find :first
   end
   
   def current_owner
