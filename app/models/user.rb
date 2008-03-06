@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   validates_length_of       :email,    :within => 3..100
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   before_save :encrypt_password
-  before_create :initial_score_after
+  before_create :initial_score_before
   after_create :initial_score_after
   
   def initial_score_before
