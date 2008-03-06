@@ -16,6 +16,7 @@ class UserController < ApplicationController
     if request.post?
       @user.update_attributes(params[:user])
       @user.save
+      current_user.reload
     end
 
   rescue ActiveRecord::RecordInvalid

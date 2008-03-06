@@ -8,7 +8,7 @@ class StorefrontController < ApplicationController
     @map = GMap.new("map")
     @map.control_init(:large_map => true, :map_type => true)
     
-    @recent_claims = Claim.find :all, :limit => 32, :order => "created_at desc"
+    @recent_claims = Claim.find :all, :limit => 16, :order => "created_at desc"
 
     respond_to do |format|
       format.html # index.html.erb

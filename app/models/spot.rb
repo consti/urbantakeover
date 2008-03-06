@@ -15,7 +15,7 @@ class Spot < ActiveRecord::Base
   def geolocate_address
     return if not self.address or self.address.empty?
     geocode = Geocoding.get(self.address)
-    return unless geocode
+    return unless geocode.size == 1
     self.geolocation_x = geocode[0][:latitude]
     self.geolocation_y = geocode[0][:longitude]
   end
