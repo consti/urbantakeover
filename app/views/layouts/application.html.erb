@@ -23,6 +23,8 @@
     |
     <%= link_to 'my claims', :controller => :claims, :action => :my %>
     |
+    <%= link_to 'my score', :controller => :score, :action => :my %>
+    |
     <%= link_to 'log out', :controller => :user, :action => :logout %>
   <% else %>
     <%= link_to 'log in', :controller => :user, :action => :login %>
@@ -37,10 +39,10 @@
       <%= link_to 'new spot', :controller => :spots, :action => :new %> | 
     <% end %>
     <%= link_to 'claim spot', :controller => :claims, :action => :new %> |
-    <%= link_to 'high score', :controller => :score, :action => :index %>
-  <% else %>
-    <%= link_to 'spot list', :controller => :spots, :action => :index %>
   <% end %>
+  
+  <%= link_to 'high score list', :controller => :score, :action => :index %>
+  | <%= link_to 'spot list', :controller => :spots, :action => :index %>
 </div>
 
 <% if logged_in? %>

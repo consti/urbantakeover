@@ -1,11 +1,9 @@
-<h1><%= @user.login %>'s Score:</h1>
+<h1>Top 10</h1>
 
-<strong><%= @user.total_score %></strong>
-
-<ul>
-<% for score in @user.scores %>
+<ol>
+<% for user in @users %>
   <li>
-  <%= score.points %> for <%= score.description %>
+  <%= h user.login %>: <%= user.total_score %> points
   </li>
 <% end %>
-</ul>
+</ol>
