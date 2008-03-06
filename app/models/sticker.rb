@@ -14,7 +14,7 @@ class Sticker < ActiveRecord::Base
     end
 
     self.code = n.join("-")
-    
+
     generate_code if Sticker.find_by_code self.code
   end
 end

@@ -5,7 +5,7 @@ class ScoreController < ApplicationController
     #TODO: faked for now. real' me.
     
     @users = User.find :all
-    @users.sort {|u, u1| u.total_score <=> u1.total_score }
+    @users = @users.sort_by(&:total_score).reverse
   end
   
   def my
@@ -15,6 +15,6 @@ class ScoreController < ApplicationController
   def dismiss
     current_user.scores_seen_until = Time.now
     current_user.save
-    redirect_to root_url
+    redirect_back_or_default root_url
   end
 end
