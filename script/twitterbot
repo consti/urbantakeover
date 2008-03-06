@@ -29,9 +29,10 @@ client.add_message_callback { |msg|
     if(msg.body.match('Direct from (.*):\n'))
       request = msg.body.match(':\n(.*)')[1]
       benutzer = msg.body.match('Direct from (.*):\n')[1]
-      answer.body = "d #{benutzer} - du sagtest: #{request}"
+      ut_status = dispatch_to_rails(benutzer, request)
+      answer.body = "d #{benutzer} #{ut_status}"
       puts "Outgoing msg to #{msg.from}: #{answer.body}"
-      client.send(dispatch_to_rails(benutzer, request))
+      client.send(answer)
     end
   end
 }
