@@ -34,8 +34,9 @@
 </div>
 
 <div><h1 class="title"><%= link_to 'ut', root_url %></h1>  
+  <strong><%= link_to 'claim spot', :controller => :claims, :action => :new %></strong>
+
   <% if logged_in? %>
-    <strong><%= link_to 'claim spot', :controller => :claims, :action => :new %></strong>
     <% if current_user.can_edit_spots?%>
       | <%= link_to 'new spot', :controller => :spots, :action => :new %>
       | <%= link_to 'spot list', :controller => :spots, :action => :index %>

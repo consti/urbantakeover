@@ -1,5 +1,5 @@
 class ScoreController < ApplicationController
-  before_filter :login_required
+  before_filter :login_required, :except => :index
 
   def index
     #TODO: faked for now. real' me.
