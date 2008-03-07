@@ -32,6 +32,10 @@ class User < ActiveRecord::Base
     return false
   end
   
+  def city
+    return "Wien"
+  end
+  
 #  def self.find_florian
 #    self.find_by_login 'oneup'
 #  end

@@ -37,7 +37,7 @@ class Command < ActiveRecord::Base
         user.claim spot
         return "BAM! claimed #{spot.name}"
       else
-        geocodes = Geocoding.get(spot_address)
+        geocodes = Geocoding.get(spot_address + user.city) # HARHAR - users can easily find their own stuffz
         if geocodes.empty?
           return "sorry, can't understand address #{spot_address}"
         elsif geocodes.size > 1

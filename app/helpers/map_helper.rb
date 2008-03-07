@@ -7,4 +7,8 @@ module MapHelper
     
     return spots, map
   end
+  
+  def show_map spots=nil
+    render :partial => 'map/view', :locals => {:spots => spots}
+  end
 end

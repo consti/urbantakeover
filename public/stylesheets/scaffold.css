@@ -97,3 +97,8 @@ a.spot-name:hover, a.spot-name:active {
   text-decoration: none;
   background-color: #959595 !important;
 }
+
+/* div */
+.small {
+  font-size: 80%;
+}

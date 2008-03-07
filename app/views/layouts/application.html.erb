@@ -11,11 +11,7 @@
 
 <div style="float:right;">
   <% if logged_in? %>
-    <% if current_user.is_admin? %>
-      y0! <span style="color: red"><%= h(current_user.login) %></span>
-    <% else %>
-     hello <%= h(current_user.login) %> 
-    <% end %>
+    y0! <%= format_user current_user %>
     (<%= current_user.total_score %> points)
     
     |
@@ -42,7 +38,7 @@
     <% end %>
   <% end %>
   
-  | <%= link_to 'high score list', :controller => :score, :action => :index %>
+  | <%= link_to 'highscore list', :controller => :score, :action => :index %>
 </div>
 
 <% if logged_in? %>

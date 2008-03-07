@@ -1,4 +1,7 @@
 <h1><%= format_user @user %></h1>
+<% if logged_in? and current_user.is_admin? %>
+ <%= link_to 'edit', :action => :edit, :id => @user %>
+<% end %>
 
 <h2>currently owns</h2>
 <%= render(:partial => 'claims/my_spots', :locals => {:user => @user}) %>

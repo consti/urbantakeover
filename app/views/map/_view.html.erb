@@ -9,17 +9,17 @@ unless spots.empty?
     marker = GMarker.new(spot.geolocation,
       :title => spot.name, :info_window =>
       
-      "<strong>%s</strong> @ %s <br/>claimed by: %s<br/>%s" %
-       [link_to(h(spot.name), :controller => 'spots', :action => 'show', :id => spot),
+      "<strong>%s</strong><br/><span class=\"small\">%s</span><br/>claimed by: %s<br/>%s" %
+       [format_spot(spot),
         spot.address,
-        spot.current_owner ? spot.current_owner.login : "no one",
+        spot.current_owner ? format_user(spot.current_owner) : "no one",
         link_to("#{spot.name} on flickr", "http://flickr.com/photos/tags/#{spot.name}")
       ])  
       map.overlay_init(marker)
     
     if spot.current_owner
       #radius around spots
-      map.overlay_init(GPolygon.new(circle_points(spot.geolocation_x, spot.geolocation_y, 0.005), spot.current_owner.colour_1, 0, 0.5, spot.current_owner.colour_1, 0.5))
+      map.overlay_init(GPolygon.new(circle_points(spot.geolocation_x, spot.geolocation_y, 0.003), spot.current_owner.colour_1, 0, 0.5, spot.current_owner.colour_1, 0.5))
     end
     
     if params[:focus] and params[:focus] == spot.name

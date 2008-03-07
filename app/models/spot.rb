@@ -13,8 +13,8 @@ class Spot < ActiveRecord::Base
   def geolocate_address
     return if not self.address or self.address.empty?
     
-    geocode = Geocoding.get(self.address + " wien") # super cooler hack, damit in wien geht
-    return unless geocode.size == 1
+    geocode = Geocoding.get(self.address)
+    return if geocode.empty? # wenn mehrere gefunden, die erstbeste nehmen!
     self.geolocation_x = geocode[0][:latitude]
     self.geolocation_y = geocode[0][:longitude]
   end
