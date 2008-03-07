@@ -1,0 +1,57 @@
+# this isn't enouhg
+# todo:
+# edit database file
+# set permissions for shared/log, shared/uploads, shared/sessions
+# and or set the tmp directory to writeable.
+# dunno.
+
+set :application, "brabble"
+set :repository, "svn://svn.72dpiarmy.com/#{application}"
+
+role :web, "brabble.72dpiarmy.com"
+role :app, "brabble.72dpiarmy.com"
+role :db,  "brabble.72dpiarmy.com"
+
+set :deploy_to, "/var/rails/#{application}" # defaults to "/u/apps/#{application}"
+set :user, "root"            # defaults to the currently logged in user
+
+
+# =============================================================================
+# TASKS
+# =============================================================================
+
+task :before_restart do
+  write_version
+  symlink_uploads
+end
+
+task :symlink_uploads do
+  cmd = <<-CMD
+         if [ ! -d #{deploy_to}/share/uploads ] ; then
+                 mkdir -p #{deploy_to}/shared/uploads ;
+         fi ;
+         if [ ! -L #{deploy_to}/current/uploads -a -d #{deploy_to}/current/uploads ] ; then
+                 echo "uploads/ is a directory!" ;
+                 exit 1 ;
+         fi ;
+         if [ ! -L #{release_path}/public/uploads ] ; then
+                 ln -nsf #{deploy_to}/shared/uploads \
+                 #{release_path}/public/uploads ;
+         fi ;
+  CMD
+  run cmd
+end
+
+desc "Writes version information to version.yml derived from tag we are deploying"
+task :write_version, :roles => :app do
+  version = YAML::load_file("config/version.yml")
+  # Get the revision of the tag we are checking out
+  version['build'] = source.current_revision(self)
+  # Write back
+  put YAML::dump(version), "#{release_path}/config/version.yml", :mode => 0664
+end
+
+desc "Restart the web server"
+task :restart, :roles => :app do
+  sudo "/etc/init.d/apache2 restart"
+end
