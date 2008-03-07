@@ -7,17 +7,19 @@ class User < ActiveRecord::Base
   has_many :stickers
   has_many :scores, :order => "created_at desc"
   
-  validates_presence_of     :login, :email
+  validates_presence_of     :login
   validates_presence_of     :password,                   :if => :password_required?
   validates_presence_of     :password_confirmation,      :if => :password_required?
   validates_length_of       :password, :within => 4..40, :if => :password_required?
   validates_confirmation_of :password,                   :if => :password_required?
   validates_length_of       :login,    :within => 3..40
-  validates_length_of       :email,    :within => 3..100
   validates_uniqueness_of   :login, :email, :case_sensitive => false
+  validates_uniqueness_of   :twittername
+  
   before_save :encrypt_password
   before_create :initial_score_before
   after_create :initial_score_after
+  
   
   def initial_score_before
     self.scores_seen_until = Time.now
