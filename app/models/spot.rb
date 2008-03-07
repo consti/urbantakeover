@@ -2,7 +2,6 @@ class Spot < ActiveRecord::Base
   validates_presence_of :geolocation_x
   validates_presence_of :geolocation_y
   validates_presence_of :name
-  validates_uniqueness_of :code
   
   has_many :claims, :order => "created_at DESC"
 
@@ -14,18 +13,10 @@ class Spot < ActiveRecord::Base
   def geolocate_address
     return if not self.address or self.address.empty?
     
-    geocode = Geocoding.get(self.address)
+    geocode = Geocoding.get(self.address + " wien") # super cooler hack, damit in wien geht
     return unless geocode.size == 1
     self.geolocation_x = geocode[0][:latitude]
     self.geolocation_y = geocode[0][:longitude]
-    
-    if not self.name or self.name.empty?
-      self.name = self.address
-    end
-    
-    if not self.code or self.code.empty?
-      self.code = self.address.downcase.gsub(" ", "")
-    end
   end
 
   def geolocation

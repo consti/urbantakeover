@@ -1,0 +1,32 @@
+<%= GMap.header %>  
+
+<% spots, map = get_map_data(@spots) %>
+<%
+unless spots.empty?
+  map.center_zoom_init(spots[-1].geolocation, 13)  # zoom to last spot
+
+  spots.each do |spot|
+    marker = GMarker.new(spot.geolocation,
+      :title => spot.name, :info_window =>
+      
+      "<strong>%s</strong> @ %s <br/>claimed by: %s<br/>%s" %
+       [link_to(h(spot.name), :controller => 'spots', :action => 'show', :id => spot),
+        spot.address,
+        spot.current_owner ? spot.current_owner.login : "no one",
+        link_to("#{spot.name} on flickr", "http://flickr.com/photos/tags/#{spot.name}")
+      ])  
+      map.overlay_init(marker)
+    
+    if spot.current_owner
+      #radius around spots
+      map.overlay_init(GPolygon.new(circle_points(spot.geolocation_x, spot.geolocation_y, 0.005), spot.current_owner.colour_1, 0, 0.5, spot.current_owner.colour_1, 0.5))
+    end
+    
+    if params[:focus] and params[:focus] == spot.name
+      map.center_zoom_init(spot.geolocation, 13)  # zoom to last spot
+    end
+  end
+end
+%>
+<%= map.div(:width => 600, :height => 400) %>
+<%= map.to_html %>

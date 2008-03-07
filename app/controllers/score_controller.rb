@@ -14,7 +14,7 @@ class ScoreController < ApplicationController
   
   def dismiss
     current_user.scores_seen_until = Time.now
-    current_user.save
+    current_user.save!
     redirect_back_or_default root_url
   end
 end

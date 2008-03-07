@@ -1,6 +1,7 @@
 module ClaimsHelper
   def sort_claims_to_days claims
     days = []
+    return days if claims.empty?
     day = claims[0].created_at.day
     claims_at_day = []
     claims.each do |claim|

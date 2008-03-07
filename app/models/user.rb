@@ -13,14 +13,15 @@ class User < ActiveRecord::Base
   validates_length_of       :password, :within => 4..40, :if => :password_required?
   validates_confirmation_of :password,                   :if => :password_required?
   validates_length_of       :login,    :within => 3..40
-  validates_uniqueness_of   :login, :email, :case_sensitive => false
-  validates_uniqueness_of   :twittername
+  validates_uniqueness_of   :login, :case_sensitive => false
+  validates_uniqueness_of   :email, :case_sensitive => false, :if => Proc.new { |user| user.email != nil }
+  validates_uniqueness_of   :twittername, :if => Proc.new { |user| user.twittername != nil }
   
   before_save :encrypt_password
   before_create :initial_score_before
   after_create :initial_score_after
   
-  
+
   def initial_score_before
     self.scores_seen_until = Time.now
   end
@@ -48,12 +49,12 @@ class User < ActiveRecord::Base
   def claim spot
     if self.can_claim? spot
       my_claim = Claim.create :user => self, :spot => spot
-      self.score 20, "claimed #{spot.name}"
+      self.score 10, "claimed #{spot.name}"
       
       crossed_claim = spot.first_claim_before my_claim
       
       if crossed_claim
-        crossed_claim.user.score 1, "crossed by #{self.login} at #{spot.name}"
+        crossed_claim.user.score 2, "crossed by #{self.login} at #{spot.name}"
       end
     end
   end

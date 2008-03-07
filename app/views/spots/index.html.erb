@@ -1,21 +1,3 @@
-<%
-unless @spots.empty?
-  @map.center_zoom_init(@spots[-1].geolocation, 13)  # zoom to last spot
-
-  @spots.each do |spot|
-    marker = GMarker.new(spot.geolocation,
-      :title => spot.name, :info_window => "<strong>%s</strong><br/>SMS Code: %s<br/>claimed by: %s<br/>%s" % [spot.name, spot.code, spot.current_owner ? spot.current_owner.login : "no one", link_to('claim!', :controller => 'claims', :action => 'spot', :id => spot)])  
-      @map.overlay_init(marker)
-    
-    if params[:focus] and params[:focus] == spot.code
-      @map.center_zoom_init(spot.geolocation, 13)  # zoom to last spot
-    end
-  end
-end
-%>
-
-<%= GMap.header %>
-
 <h2>Spots</h2>
 
 <% if logged_in? and current_user.can_edit_spots? %>
@@ -24,31 +6,25 @@ end
   <%= link_to 'New spot', new_spot_path %>
 <% end %>
 
-<%= @map.div(:width => 600, :height => 400) %>
-<%= @map.to_html %>
-
 <table>
   <tr>
     <th>name</th>
     <th>location</th>
-    <th>code</th>
   </tr>
 
 <% for spot in @spots %>
   <tr>
     <td><%=h spot.name %></td>
     <td><%=h spot.geolocation_x %> <%=h spot.geolocation_y %> </td>
-    <td><%=h spot.code %></td>
     <% if logged_in? %>
       <% if current_user.can_edit_spots? %>
         <td><%= link_to 'Show', spot %></td>
         <td><%= link_to 'Edit', edit_spot_path(spot) %></td>
         <td><%= link_to 'Destroy', spot, :confirm => 'Are you sure?', :method => :delete %></td>
       <% end %>
-      <% if current_user.can_claim? spot %>
-        <td><%= link_to('claim!', :controller => 'claims', :action => 'spot', :id => spot) %></td>
-      <% end %>
     <% end %>
   </tr>
 <% end %>
 </table>
+
+<%= render :partial => 'map/view', :locals => {:spots => @spots} %>

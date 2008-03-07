@@ -8,11 +8,7 @@ class SpotsController < ApplicationController
   # GET /spots
   # GET /spots.xml
   def index
-    @spots = Spot.find(:all)
-
-    @map = GMap.new("map")
-    @map.control_init(:large_map => true, :map_type => true)
-    
+    @spots = Spot.find(:all)    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @spots }
@@ -23,45 +19,46 @@ class SpotsController < ApplicationController
   # GET /spots/1.xml
   def show
     @spot = Spot.find(params[:id])
+    params[:focus] = @spot.name
 
     respond_to do |format|
-      format.html { redirect_to :action => 'index', :focus => @spot.code }
+      format.html # html
       format.xml  { render :xml => @spot }
     end
   end
 
-  # GET /spots/new
-  # GET /spots/new.xml
-  def new
-    @spot = Spot.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @spot }
-    end
-  end
+#  # GET /spots/new
+#  # GET /spots/new.xml
+#  def new
+#  #  @spot = Spot.new
+#
+#    respond_to do |format|
+#      format.html # new.html.erb
+#      format.xml  { render :xml => @spot }
+#    end
+#  end
 
   # GET /spots/1/edit
   def edit
     @spot = Spot.find(params[:id])
   end
 
-  # POST /spots
-  # POST /spots.xml
-  def create
-    @spot = Spot.new(params[:spot])
-
-    respond_to do |format|
-      if @spot.save
-        flash[:notice] = 'Spot was successfully created.'
-        format.html { redirect_to(@spot) }
-        format.xml  { render :xml => @spot, :status => :created, :location => @spot }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @spot.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
+#  # POST /spots
+#  # POST /spots.xml
+#  def create
+#    @spot = Spot.new(params[:spot])
+#
+#    respond_to do |format|
+#      if @spot.save
+#        flash[:notice] = 'Spot was successfully created.'
+#        format.html { redirect_to(@spot) }
+#        format.xml  { render :xml => @spot, :status => :created, :location => @spot }
+#      else
+#        format.html { render :action => "new" }
+#        format.xml  { render :xml => @spot.errors, :status => :unprocessable_entity }
+#      end
+#    end
+#  end
 
   # PUT /spots/1
   # PUT /spots/1.xml
