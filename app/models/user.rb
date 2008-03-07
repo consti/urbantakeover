@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   
   
   def random_color_if_not_set
-    self.colour_1 = "#%06x" % rand(0xffffff)
+    self.colour_1 = "#%06x" % rand(0xffffff) if not self.colour_1 or self.colour_1.empty?
   end
   
   def initial_score_before

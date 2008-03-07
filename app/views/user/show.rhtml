@@ -1,16 +1,21 @@
-<h1>My claims</h1>
+<h1><%= format_user @user %></h1>
 
-<h2>currently owned spots</h2>
+<h2>currently owns</h2>
+<%= render(:partial => 'claims/my_spots', :locals => {:user => @user}) %>
 
-<%= render(:partial => 'my_spots', :locals => {:user => current_user}) %>
-
+<h2>friends</h2>
+<ul>
+<% for friend in @user.friends %>
+  <li><%= format_user friend%></li>
+<% end %>
+</ul>
 <h2>claim log</h2>
   
 <ul>
 <% for claim in @claims %>
   <li>
     <%=h claim.spot.name  %> since <%= interval_to_now claim.created_at %>
-    <% if claim.spot.current_owner != current_user %>
+    <% if claim.spot.first_claim_after(claim) %>
       <ul>
       <li>
         <% reclaim = claim.spot.first_claim_after(claim) %>

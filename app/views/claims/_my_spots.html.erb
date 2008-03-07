@@ -1,7 +1,6 @@
-<h2>my currently owned spots</h2>
 
 <% for spot in user.owned_spots %>
-<h3><%=h spot.name  %></h3>
+<p><%= format_spot spot %></p>
 
 <p>
     <% crossed_claim = spot.current_claim.crossed_claim

@@ -3,7 +3,7 @@
 
 <p>Geolocation: <%= @spot.geolocation_x %> <%= @spot.geolocation_y %></p>
 
-<p>Current owner: <%= @spot.current_owner.login %></p>
+<p>Current owner: <%= format_user @spot.current_owner %></p>
 
 <h2>Log</h2>
 

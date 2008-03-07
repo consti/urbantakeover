@@ -6,6 +6,11 @@ class UserController < ApplicationController
     redirect_to root_url
   end
   
+  def show
+    @user = User.find params[:id]
+    @claims = @user.claims
+  end
+  
   def add_friend
     friend = User.find(params[:id])
     if friend != current_user

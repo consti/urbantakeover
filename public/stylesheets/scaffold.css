@@ -13,7 +13,6 @@ pre {
 }
 
 a { color: #000; }
-a:visited { color: #666; }
 a:hover { color: #fff; background-color:#000; }
 
 .fieldWithErrors {
@@ -72,3 +71,29 @@ div.progressBar div.background {
   width: 0%;
 }
 
+/* user names */
+a.user-name:link, a.user-name:visited {
+  color: #000;
+  text-decoration: none;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+a.user-name:hover, a.user-name:active {
+  text-decoration: none;
+  background-color: #959595 !important;
+}
+
+/* spot name */
+a.spot-name:link, a.spot-name:visited {
+  color: #000;
+  background-color: #ccc;
+  text-decoration: none;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+a.spot-name:hover, a.spot-name:active {
+  text-decoration: none;
+  background-color: #959595 !important;
+}
