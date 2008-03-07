@@ -1,14 +1,35 @@
 class UserController < ApplicationController
+  before_filter :login_required, :only => [:add_friend, :remove_friend, :edit]
+  
   # say something nice, you goof!  something sweet.
   def index
     redirect_to root_url
   end
   
+  def add_friend
+    friend = User.find(params[:id])
+    if friend != current_user
+      current_user.friends << friend
+      current_user.save!
+    end
+    redirect_back_or_default :controller => 'posts', :action => 'show', :name => friend.name
+  end
+  
+  def remove_friend
+    friend = User.find(params[:id])
+    if friend != current_user
+      current_user.friends.delete friend
+      current_user.save!
+    end
+    redirect_back_or_default :controller => 'posts', :action => 'show', :name => friend.name
+  end
+  
+  
   def edit
     @user = User.find(params[:id])
     
     #authorize
-    if not logged_in? or (current_user != @user and not current_user.is_admin?)
+    if current_user != @user and not current_user.is_admin?
       flash[:notice] = "surely not!"
       redirect_to root_url
     end

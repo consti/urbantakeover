@@ -73,6 +73,19 @@ class Command < ActiveRecord::Base
           end
         end
       end
+    elsif parts[0] == 'friend'
+      friend_name = parts[1, parts.size].join(" ")
+      friend = User.find_by_login(friend_name)
+      if (friend != self.user) and (not friend.friend_of? self.user)
+        self.user.friends << friend
+        self.user.save!
+        user.score 5, "added #{friend.login} as friend"
+        friend.score 5, "added as friend by #{user.login}"
+        return "BAM! 5 points for adding #{friend.login} as friend" #TODO: send sms to user when .score!
+      else
+        return "SRY, Already friends with #{friend.login}!"
+      end
+
     elsif parts[0] == 'cross'
       return "not implemented yet fully und so"
 

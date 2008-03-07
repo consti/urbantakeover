@@ -6,7 +6,8 @@
 <p>Current owner: <%= @spot.current_owner.login %></p>
 
 <h2>Log</h2>
-TODO: show log of who crossed who here
+
+<%= render :partial => 'claims/log', :locals => {:claims => @spot.claims} %>
 
 <h2>Images</h2>
 TODO: fetch from flickr tag

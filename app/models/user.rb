@@ -6,6 +6,9 @@ class User < ActiveRecord::Base
   has_many :claims, :order => "created_at desc"
   has_many :stickers
   has_many :scores, :order => "created_at desc"
+  has_and_belongs_to_many :friends, :class_name => 'User', :join_table => 'user_friend', :association_foreign_key => 'user_id', :foreign_key => 'friend_id'
+  has_and_belongs_to_many :friends_of, :class_name => 'User', :join_table => 'user_friend', :association_foreign_key => 'friend_id', :foreign_key => 'user_id'
+  
   
   validates_presence_of     :login
   validates_presence_of     :password,                   :if => :password_required?
@@ -18,10 +21,35 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :twittername, :if => Proc.new { |user| user.twittername != nil }
   
   before_save :encrypt_password
+  before_validation :random_color_if_not_set
   before_create :initial_score_before
   after_create :initial_score_after
   
-
+  def friend_of? user
+    self.friends_of.each do |friend|
+      return true if friend == user
+    end
+    return false
+  end
+  
+#  def self.find_florian
+#    self.find_by_login 'oneup'
+#  end
+#  
+#  def after_create
+#    flo = User.find_florian
+#    return unless flo
+#    self.friends = [flo]
+#    self.save
+#    flo.friends << self
+#    flo.save
+#  end
+  
+  
+  def random_color_if_not_set
+    self.colour_1 = "#%06x" % rand(0xffffff)
+  end
+  
   def initial_score_before
     self.scores_seen_until = Time.now
   end
@@ -51,10 +79,8 @@ class User < ActiveRecord::Base
       my_claim = Claim.create :user => self, :spot => spot
       self.score 10, "claimed #{spot.name}"
       
-      crossed_claim = spot.first_claim_before my_claim
-      
-      if crossed_claim
-        crossed_claim.user.score 2, "crossed by #{self.login} at #{spot.name}"
+      if my_claim.crossed_claim
+        my_claim.crossed_claim.user.score 2, "crossed by #{self.login} at #{spot.name}"
       end
     end
   end
