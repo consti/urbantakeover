@@ -3,10 +3,16 @@
  <%= link_to 'edit', :action => :edit, :id => @user %>
 <% end %>
 
+<% if @user.team %>
+ <p>Team: <%= format_team @user.team %> (<%= @user.team.score %> points)</p>
+<% end %>
+
+<p>Score: <%= @user.total_score %></p>
+
 <h2>currently owns</h2>
 <%= render(:partial => 'claims/my_spots', :locals => {:user => @user}) %>
 
-<h2>friends</h2>
+<h2>Friends</h2>
 <ul>
 <% for friend in @user.friends %>
   <li><%= format_user friend%></li>
@@ -17,12 +23,12 @@
 <ul>
 <% for claim in @claims %>
   <li>
-    <%=h claim.spot.name  %> since <%= interval_to_now claim.created_at %>
+    <%= format_spot claim.spot  %> since <%= interval_to_now claim.created_at %>
     <% if claim.spot.first_claim_after(claim) %>
       <ul>
       <li>
         <% reclaim = claim.spot.first_claim_after(claim) %>
-        spot lost to <%= reclaim.user.login %> after <%= format_interval(reclaim.created_at - claim.created_at) %>. <%= link_to 'spot history', :controller => :spots, :action => :history, :id => claim.spot %>
+        spot lost to <%= format_user reclaim.user %> after <%= format_interval(reclaim.created_at - claim.created_at) %>.
       </li>
       </ul>
     <% end %>

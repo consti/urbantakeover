@@ -1,9 +1,18 @@
-<h1>Top 10</h1>
+<h1>Teams</h1>
+<ol>
+<% for team in @teams %>
+  <li>
+    <%= format_team team %>: <%= team.score %> points
+  </li>
+<% end %>
+</ol>
+
+<h1>Users</h1>
 
 <ol>
 <% for user in @users %>
   <li>
-  <%= h user.login %>: <%= user.total_score %> points
+  <%= format_user user %>: <%= user.total_score %> points
   </li>
 <% end %>
 </ol>

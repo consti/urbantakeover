@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :scores, :order => "created_at desc"
   has_and_belongs_to_many :friends, :class_name => 'User', :join_table => 'user_friend', :association_foreign_key => 'user_id', :foreign_key => 'friend_id'
   has_and_belongs_to_many :friends_of, :class_name => 'User', :join_table => 'user_friend', :association_foreign_key => 'friend_id', :foreign_key => 'user_id'
+  belongs_to :team
   
   
   validates_presence_of     :login
@@ -59,7 +60,7 @@ class User < ActiveRecord::Base
   end
   
   def initial_score_after
-    self.score 5, "signed up"
+    self.score 50, "signed up"
   end
 
   def score(points, description)
@@ -81,10 +82,10 @@ class User < ActiveRecord::Base
   def claim spot
     if self.can_claim? spot
       my_claim = Claim.create :user => self, :spot => spot
-      self.score 10, "claimed #{spot.name}"
+      self.score 100, "claimed #{spot.name}"
       
       if my_claim.crossed_claim
-        my_claim.crossed_claim.user.score 2, "crossed by #{self.login} at #{spot.name}"
+        my_claim.crossed_claim.user.score 10, "crossed by #{self.login} at #{spot.name}"
       end
     end
   end

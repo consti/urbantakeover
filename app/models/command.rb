@@ -79,13 +79,27 @@ class Command < ActiveRecord::Base
       if (friend != self.user) and (not friend.friend_of? self.user)
         self.user.friends << friend
         self.user.save!
-        user.score 5, "added #{friend.login} as friend"
-        friend.score 5, "added as friend by #{user.login}"
+        user.score 50, "added #{friend.login} as friend"
+        friend.score 50, "added as friend by #{user.login}"
         return "BAM! 5 points for adding #{friend.login} as friend" #TODO: send sms to user when .score!
       else
         return "SRY, Already friends with #{friend.login}!"
       end
 
+    elsif parts[0] == 'team'
+      team_name = parts[1, parts.size].join(" ")
+      team = Team.find_or_create_by_name team_name
+      if not team.users.include? user
+        team.users << user
+        if team.save
+          return "BAM! joined team #{team.name}"
+        else
+          return "SRY, can't join team #{team.name}? #{team.errors_as_string}"
+        end
+      else
+        return "HUH? you're already in team #{team.name}!"
+      end
+  
     elsif parts[0] == 'cross'
       return "not implemented yet fully und so"
 

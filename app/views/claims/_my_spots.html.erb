@@ -1,8 +1,8 @@
 
+<ul>
 <% for spot in user.owned_spots %>
-<p><%= format_spot spot %></p>
+<li><%= format_spot spot %>
 
-<p>
     <% crossed_claim = spot.current_claim.crossed_claim
       if crossed_claim %>
         crossed <%= crossed_claim.user.login %>
@@ -11,7 +11,7 @@
     <% end %>
     
     <%= interval_to_now spot.current_claim.created_at %>
-</p> 
-
+</li> 
 <% end %>
+</ul>
 
