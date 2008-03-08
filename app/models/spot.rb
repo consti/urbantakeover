@@ -52,10 +52,10 @@ class Spot < ActiveRecord::Base
   # returns the claim that "crossed" the passed claim
   # TODO: make more performant? (used in claims/my)
   def first_claim_after claim
-    self.claims.find :first, :order => "created_at DESC", :conditions => ["created_at > ?", claim.created_at]
+    self.claims.find :first, :order => "created_at ASC", :conditions => ["created_at > ?", claim.created_at]
   end
   
   def first_claim_before claim
-    self.claims.find :first, :order => "created_at ASC", :conditions => ["created_at < ?", claim.created_at]
+    self.claims.find :first, :order => "created_at DESC", :conditions => ["created_at < ?", claim.created_at]
   end
 end

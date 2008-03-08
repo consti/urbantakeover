@@ -1,13 +1,12 @@
 <div style="float: left;">
-<h1><%= @spot.name %></h1>
+<h1><%= format_spot @spot %></h1>
 <% if current_user.can_edit_spots? %>
   <%= link_to 'Edit', edit_spot_path(@spot) %>
 <% end %>
 
-<p>Geolocation: <%= @spot.geolocation_x %> <%= @spot.geolocation_y %></p>
+<p>Address: <%= @spot.address %></p>
 
 <p>Current owner: <%= format_user @spot.current_owner %></p>
-<p>Address: <%= @spot.address %></p>
 
 <h2>Log</h2>
 
@@ -17,8 +16,6 @@
 TODO: fetch from flickr tag
 TODO: let users upload (with their stickers on the foto ^__^)
 
-<%= link_to 'Edit', edit_spot_path(@spot) %> |
-<%= link_to 'Back', spots_path %>
 </div>
 <div style="float: left">
 <%= show_map(@spots) %>
