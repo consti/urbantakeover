@@ -4,6 +4,7 @@ class Spot < ActiveRecord::Base
   validates_presence_of :name
   
   has_many :claims, :order => "created_at DESC"
+  has_many :stuffs
 
 
   #todo: turn me into a before_save filter

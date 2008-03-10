@@ -84,6 +84,7 @@ private
         #TODO: save old name, so we see how names change
         if spot.name != spot_name
           old_name = spot.name
+          stuff = Stuff.create :name => spot.name, :spot => spot # save old name for spot
           spot.name = spot_name
           spot.save
         end
