@@ -1,5 +1,6 @@
 <div style="float: left;">
 <h1><%= format_spot @spot %></h1>
+<% unless @spot.stuffs.empty?
 <% if current_user.can_edit_spots? %>
   <%= link_to 'Edit', edit_spot_path(@spot) %>
 <% end %>
