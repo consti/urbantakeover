@@ -40,6 +40,8 @@ Rails::Initializer.run do |config|
     :session_key => '_urbantakeover_session',
     :secret      => '3744a02be16fccf8f780dbd0a142ef15f94e4b4c40f1ecd4732de83d9b7ef1e856bfb469f2785012282a7232c62231de4b5b7c82b520e21464ad07590d5f387b'
   }
+  
+  PRIVATE_API_KEY = YAML.load(File.open("#{RAILS_ROOT}/config/private_api.yml"))['api_key']
 
   # Use the database for sessions instead of the cookie-based default,
   # which shouldn't be used to store highly confidential information
