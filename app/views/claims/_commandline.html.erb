@@ -1,0 +1,5 @@
+<div id="status"></div>
+
+<% remote_form_for(:command, :url => {:controller => :gateway, :action => :website}, :update => 'status') do |f| %>
+  sms: <%= f.text_field 'text' %>
+<% end %>
