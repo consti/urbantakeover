@@ -73,10 +73,10 @@ private
 
       geocodes = Geocoding.get(address) # HARHAR - users can easily find their own stuffz
       if geocodes.empty?
-        user.notify_twitter "sry, can't find address '#{address}'. plz try something like 'rathausstraße 6, 1010 wien'"
+        user.notify_twitter "sry, can't find '#{address}'. plz format like '#{spot_name} @ rathausstraße 6, 1010 wien'"
         return "sry, can't find address '#{address}'. plz try something like 'rathausstraße 6, 1010 wien'"
       elsif geocodes.size > 1
-        user.notify_twitter "sry, multiple spots found, specify address exactly. eg #{geocodes.first.address}"
+        user.notify_twitter "sry, multiple spots found. plz be more exact. eg '#{spot_name} @ #{geocodes.first.address}"
         return "sry, multiple spots found, specify address exactly. eg #{geocodes.first.address}"
       else
         geocode = geocodes.first
