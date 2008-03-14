@@ -38,10 +38,11 @@ twitter = Twitter::Base.new(API_CONFIG['twitter']['email'], API_CONFIG['twitter'
 sleep_interval = 60 #poll every minute
 
 while true
+  print "query messages"
   begin 
     messages = twitter.received_messages
     messages.each do |m|
-      println dispatch_to_rails(m.recipient_screen_name, m.text, m.id)
+      println dispatch_to_rails(m.sender_screen_name, m.text, m.id)
     end
   rescue Exception => e
     println "error reading / processing twitter received message: #{e.to_s}"

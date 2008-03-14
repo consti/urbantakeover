@@ -42,6 +42,8 @@ private
                          :login => username,
                          :password => password,
                          :password_confirmation => password)
+      user.notify_twitter "ohai #{username}! your password for http://urbantakeover.at is #{password}. enjoy!"
+
       return_message += "Ohay #{username} your password is #{password}! "
       user.save!
       user.reload

@@ -38,6 +38,7 @@ private
       friend.score 50, "added as friend by #{user.login}"
       return "BAM! 5 points for adding #{friend.login} as friend" #TODO: send sms to user when .score!
     else
+      user.notify_twitter "sry, already friends with #{friend.login}"
       return "SRY, Already friends with #{friend.login}!"
     end
   end
@@ -55,10 +56,12 @@ private
     if spot_address == nil # spot name only, try to tag that
       spot = Spot.find_by_name spot_name
       unless spot
+        user.notify_twitter "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ $address' to score."
         return "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ $address' to score."
       end
       
       unless user.can_claim? spot
+        user.notify_twitter "lol, you already own #{spot.name}!"
         return "you already own #{spot.name}"
       end
       
@@ -70,8 +73,10 @@ private
 
       geocodes = Geocoding.get(address) # HARHAR - users can easily find their own stuffz
       if geocodes.empty?
+        user.notify_twitter "sry, can't find address '#{address}'. plz try something like 'rathausstraße 6, 1010 wien'"
         return "sry, can't find address '#{address}'. plz try something like 'rathausstraße 6, 1010 wien'"
       elsif geocodes.size > 1
+        user.notify_twitter "sry, multiple spots found, specify address exactly. eg #{geocodes.first.address}"
         return "sry, multiple spots found, specify address exactly. eg #{geocodes.first.address}"
       else
         geocode = geocodes.first
@@ -95,12 +100,14 @@ private
         if self.user.can_claim? spot
           claim = self.user.claim spot
           if old_name
+            user.notify_twitter "lol! you rebranded #{old_name} to #{spot.name}!"
             return "bam! 10 points for claiming #{spot.name} (renamed from #{old_name})"
           else
             # TODO: previous user get points for giving this a good name
             return "bam! 10 points for claiming #{spot.name}"
           end
         else
+          user.notify_twitter "sry, can't claim #{spot.name} - already yours!"
           return "sry, can't claim #{spot.name} - already yours!" # TODO: update me if there are new conditions
         end
       end
@@ -114,9 +121,11 @@ private
       if team.save
         return "BAM! joined team #{team.name}"
       else
+        user.notify_twitter "sry, can't join team #{team.name}? #{team.errors_as_string}"
         return "sry, can't join team #{team.name}? #{team.errors_as_string}"
       end
     else
+      user.notify_twitter "huh? you're already in team #{team.name}!"
       return "huh? you're already in team #{team.name}!"
     end
   end
