@@ -9,6 +9,7 @@ RAILS_GEM_VERSION = '2.0.2' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
+require "twitter"
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
@@ -41,7 +42,10 @@ Rails::Initializer.run do |config|
     :secret      => '3744a02be16fccf8f780dbd0a142ef15f94e4b4c40f1ecd4732de83d9b7ef1e856bfb469f2785012282a7232c62231de4b5b7c82b520e21464ad07590d5f387b'
   }
   
-  PRIVATE_API_KEY = YAML.load(File.open("#{RAILS_ROOT}/config/private_api.yml"))['api_key']
+  PRIVATE_API_CONFIG = YAML.load(File.open("#{RAILS_ROOT}/config/private_api.yml"))
+  PRIVATE_API_KEY = PRIVATE_API_CONFIG['key']
+  
+  TWITTER = Twitter::Base.new(PRIVATE_API_CONFIG['twitter']['email'], PRIVATE_API_CONFIG['twitter']['password'])
 
   # Use the database for sessions instead of the cookie-based default,
   # which shouldn't be used to store highly confidential information

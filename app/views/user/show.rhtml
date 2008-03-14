@@ -7,6 +7,12 @@
  <p>Team: <%= format_team @user.team %> (<%= @user.team.score %> points)</p>
 <% end %>
 
+<p>City: <%= @user.city %></p>
+
+<% if @user.twittername %>
+  <p>Twitter: <%= h @user.twittername %></p>
+<% end %>
+
 <p>Score: <%= @user.total_score %></p>
 
 <h2>currently owns</h2>

@@ -25,7 +25,7 @@ private
   end
 
   def handle_message username, message
-    message.downcase!
+    message = message.strip.downcase
     #username = username.downcase!
 
     return "no username" if (username == nil or username.empty?)

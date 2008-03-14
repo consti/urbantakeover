@@ -55,7 +55,7 @@ private
     if spot_address == nil # spot name only, try to tag that
       spot = Spot.find_by_name spot_name
       unless spot
-        return "no one has claimed #{spot_name} yet. send 'claim #{spot_name} @ $address' to claim it."
+        return "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ $address' to score."
       end
       
       unless user.can_claim? spot
@@ -65,11 +65,12 @@ private
       user.claim spot
       return "BAM! claimed #{spot.name}"
     else
-      geocodes = Geocoding.get("#{spot_address}, #{user.city}") # HARHAR - users can easily find their own stuffz
+      address = "#{spot_address}"
+      geocodes = Geocoding.get(address) # HARHAR - users can easily find their own stuffz
       if geocodes.empty?
-        return "sorry, can't understand address #{spot_address}"
+        return "sry, can't understand address >'#{address}'< '#{spot_address}'. plz try something like 'rathausstraße 6, 1010 wien'"
       elsif geocodes.size > 1
-        return "multiple spots found, specify address exactly. eg #{geocodes.first.address}"
+        return "sry, multiple spots found, specify address exactly. eg #{geocodes.first.address}"
       else
         geocode = geocodes.first
         spot = Spot.find_by_address geocode.address
@@ -77,7 +78,7 @@ private
           spot = Spot.create :name => spot_name, :address => geocode.address, :geolocation_x => geocode.latitude, :geolocation_y => geocode.longitude
           spot.save
           self.user.claim spot
-          return "yay! you claimed a new spot! #{spot_name} @ #{spot.address}"
+          return "bam! you claimed a new spot! #{spot_name} @ #{spot.address}"
         end
         
         #reclaim an existing spot
@@ -90,15 +91,15 @@ private
         end
 
         if self.user.can_claim? spot
-          self.user.claim spot
+          claim = self.user.claim spot
           if old_name
-            return "yay! 10 points for claiming #{spot.name} (renamed from #{old_name})"
+            return "bam! 10 points for claiming #{spot.name} (renamed from #{old_name})"
           else
             # TODO: previous user get points for giving this a good name
-            return "yay! 10 points for claiming #{spot.name}"
+            return "bam! 10 points for claiming #{spot.name}"
           end
         else
-          return "can't claim #{spot.name} - already yours!" # TODO: update me if there are new conditions
+          return "sry, can't claim #{spot.name} - already yours!" # TODO: update me if there are new conditions
         end
       end
     end
@@ -111,10 +112,10 @@ private
       if team.save
         return "BAM! joined team #{team.name}"
       else
-        return "SRY, can't join team #{team.name}? #{team.errors_as_string}"
+        return "sry, can't join team #{team.name}? #{team.errors_as_string}"
       end
     else
-      return "HUH? you're already in team #{team.name}!"
+      return "huh? you're already in team #{team.name}!"
     end
   end
 

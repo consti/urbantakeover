@@ -2,6 +2,8 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
+  attr_protected :is_admin
+  
 
   has_many :claims, :order => "created_at desc"
   has_many :stickers
@@ -65,6 +67,10 @@ class User < ActiveRecord::Base
 
   def score(points, description)
     self.scores.create :points => points, :description => description
+
+    message = description
+    message += " get #{points} points" if points != 0
+    self.notify_twitter message
   end
   
   def total_score
@@ -79,15 +85,27 @@ class User < ActiveRecord::Base
     is_admin?
   end
   
-  def claim spot
-    if self.can_claim? spot
-      my_claim = Claim.create :user => self, :spot => spot
-      self.score 100, "claimed #{spot.name}"
-      
-      if my_claim.crossed_claim
-        my_claim.crossed_claim.user.score 10, "crossed by #{self.login} at #{spot.name}"
+  def notify_twitter message # todo: notify() as function name does weird things. this is better
+    if self.twittername
+      begin
+        TWITTER.d(self.twittername, message)
+      rescue e
+        RAILS_DEFAULT_LOGGER.error("Twitter error while sending to #{self.twittername}. Message: #{message}. Exception: #{e.to_s}.")
       end
     end
+  end
+  
+  def claim spot
+    return nil unless self.can_claim? spot
+
+    my_claim = Claim.create :user => self, :spot => spot
+    self.score 100, "claimed #{spot.name}"
+    
+    if my_claim.crossed_claim
+      my_claim.crossed_claim.user.score 10, "you have been crossed by #{self.login} at #{spot.name}"
+    end
+    
+    my_claim
   end
   
   def owned_spots
