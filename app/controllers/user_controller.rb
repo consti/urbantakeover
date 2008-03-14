@@ -1,5 +1,9 @@
 class UserController < ApplicationController
-  before_filter :login_required, :only => [:add_friend, :remove_friend, :edit]
+  before_filter :login_required, :only => [:add_friend, :remove_friend, :edit, :profile]
+  
+  def profile
+    redirect_to :action => 'edit', :id => current_user.id
+  end
   
   # say something nice, you goof!  something sweet.
   def index
