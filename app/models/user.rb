@@ -68,8 +68,14 @@ class User < ActiveRecord::Base
   def score(points, description)
     self.scores.create :points => points, :description => description
 
-    message = description
-    message += ", get #{points} points" if points != 0
+    if points > 0
+      message = "bam! #{description}, get #{points} points!"
+    elsif points < 0
+      message = "fck! #{description}, loose #{points.abs} points!"
+    else
+      message = description
+    end
+
     self.notify_twitter message
   end
   
