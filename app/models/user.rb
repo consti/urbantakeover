@@ -69,7 +69,7 @@ class User < ActiveRecord::Base
     self.scores.create :points => points, :description => description
 
     message = description
-    message += " get #{points} points" if points != 0
+    message += ", get #{points} points" if points != 0
     self.notify_twitter message
   end
   

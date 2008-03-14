@@ -43,7 +43,7 @@ Rails::Initializer.run do |config|
   }
   
   PRIVATE_API_CONFIG = YAML.load(File.open("#{RAILS_ROOT}/config/private_api.yml"))
-  PRIVATE_API_KEY = PRIVATE_API_CONFIG['key']
+  PRIVATE_API_KEY = PRIVATE_API_CONFIG['api_key']
   
   TWITTER = Twitter::Base.new(PRIVATE_API_CONFIG['twitter']['email'], PRIVATE_API_CONFIG['twitter']['password'])
 
