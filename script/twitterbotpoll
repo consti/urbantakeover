@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+
+# a simple twitter <-> urbantakeover gateway.
+# no parsing happens here, we just pass all messages to the urban takeover message handler
+# and return the result if there's any
+
+require "logger"
+require "net/http"
+require "yaml"
+require "rubygems"
+require "twitter"
+
+LOGEEERR = Logger.new('log/twitterbotpoll.log')
+
+API_CONFIG = YAML.load(File.open("config/private_api.yml"))
+
+def dispatch_to_rails user, msg, twitter_message_id
+  req = Net::HTTP.post_form(URI.parse(API_CONFIG['server']),
+                                {'user' => user, 'message' => msg, 'twitter_message_id' => twitter_message_id, 'key' => API_CONFIG['api_key']})
+
+  if req.body.include? "Exception caught" # very quick, very dirty
+    return "sorry, something went terribly wrong on the server. will try to fix it."
+  else
+    return req.body[0...150]
+  end
+end
+
+def println m
+  LOGEEERR.info m
+  print "#{m}\n"
+end
+
+println "connect to twitter"
+
+twitter = Twitter::Base.new(API_CONFIG['twitter']['email'], API_CONFIG['twitter']['password'])
+
+
+sleep_interval = 60 #poll every minute
+
+while true
+  begin 
+    messages = twitter.received_messages
+    messages.each do |m|
+      println dispatch_to_rails(m.recipient_screen_name, m.text, m.id)
+    end
+  rescue Exception => e
+    println "error reading / processing twitter received message: #{e.to_s}"
+  end
+  
+  sleep sleep_interval
+end
