@@ -88,8 +88,9 @@ class User < ActiveRecord::Base
   def notify_twitter message # todo: notify() as function name does weird things. this is better
     if self.twittername
       begin
+        #TODO: probably very stupid, should be done differently. code copied from http://snippets.dzone.com/posts/show/3714 (for rest see environment.rb)
         TWITTER.d(self.twittername, message)
-      rescue e
+      rescue Exception => e
         RAILS_DEFAULT_LOGGER.error("Twitter error while sending to #{self.twittername}. Message: #{message}. Exception: #{e.to_s}.")
       end
     end

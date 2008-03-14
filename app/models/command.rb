@@ -10,10 +10,10 @@ class Command < ActiveRecord::Base
       return claim_spot(parts[1, parts.size].join(" ")) #spot beschreibung wieder zusammensetzen
 
     elsif parts[0] == 'friend'
-      return add_friend(parts[1, parts.size].join(" ") )
+      return add_friend(parts[1, parts.size].join(" "))
 
     elsif parts[0] == 'team'
-      return join_team( parts[1, parts.size].join(" ") )
+      return join_team( parts[1, parts.size].join(" "))
         
     elsif parts[0] == 'cross'
       return "not implemented yet fully und so"
@@ -65,10 +65,12 @@ private
       user.claim spot
       return "BAM! claimed #{spot.name}"
     else
-      address = "#{spot_address}"
+      address = spot_address
+      address += ", #{user.city}" if user.city
+
       geocodes = Geocoding.get(address) # HARHAR - users can easily find their own stuffz
       if geocodes.empty?
-        return "sry, can't understand address >'#{address}'< '#{spot_address}'. plz try something like 'rathausstraße 6, 1010 wien'"
+        return "sry, can't find address '#{address}'. plz try something like 'rathausstraße 6, 1010 wien'"
       elsif geocodes.size > 1
         return "sry, multiple spots found, specify address exactly. eg #{geocodes.first.address}"
       else
@@ -134,12 +136,12 @@ private
     end
 
     spot = Spot.find_by_name(spot_name_or_address)
-    unless spot      
+    unless spot
       geocodes = Geocoding.get(spot_name_or_address)
       if geocodes.empty?
          return "sorry, can't understand address #{spot_address}"
       elsif geocodes.size > 1
-         return "multiple spots found, specify address exactly. eg #{geocodes.first.address}"
+         return "multiple addresses found, specify address exactly. eg #{geocodes.first.address}"
       else
          geocode = geocodes.first
          spot = Spot.find_by_address geocode.address
