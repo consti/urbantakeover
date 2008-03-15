@@ -1,12 +1,15 @@
+<div style="float: right; width: 500px;"
+<marquee>
 <% scores = user.scores.find :all, :conditions => ["created_at > ?", user.scores_seen_until] %>
 
 <% unless scores.empty? %>
-  <h2>got new points!!!</h2>
-  <ul>
+
   <% for score in scores %>
-    <li><%= score.points %>: <%= score.description %></li>
+    <span><%= score.points %>: <%= score.description %></span>
   <% end %>
-  </ul>
   
-  <%= link_to "thanks!", :controller => :score, :action => :dismiss %>
+  <%= link_to "x", :controller => :score, :action => :dismiss %>
 <% end %>
+
+</marquee>
+</div>

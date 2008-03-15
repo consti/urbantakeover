@@ -3,7 +3,7 @@
 <% spots, map = get_map_data(@spots) %>
 <%
 unless spots.empty?
-  map.center_zoom_init(spots[-1].geolocation, 13)  # zoom to last spot
+  map.center_zoom_init(spots[-1].geolocation, 14)  # zoom to last spot
 
   spots.each do |spot|
     marker = GMarker.new(spot.geolocation,
@@ -28,5 +28,5 @@ unless spots.empty?
   end
 end
 %>
-<%= map.div(:width => 600, :height => 400) %>
+<%= map.div(:width => 550, :height => 400) %>
 <%= map.to_html %>

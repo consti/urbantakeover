@@ -30,6 +30,10 @@
 </div>
 
 <div><h1 class="title"><%= link_to 'ut', root_url %></h1>  
+  <% unless logged_in? %>
+    <strong><%= link_to 'how to play', howto_path %> | </strong>
+  <% end %>
+  
   <strong><%= link_to 'claim spot', :controller => :claims, :action => :new %></strong>
 
   <% if logged_in? %>
@@ -49,5 +53,8 @@
 
 <%= yield  %>
 
+<div id="footer" style="clear: both">
+  <p>2008 (cc-tba) <a class="72dpiarmy" href="http://72dpiarmy.com"><span>72dpi</span>army</a></p>
+</div>
 </body>
 </html>

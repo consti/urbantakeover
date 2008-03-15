@@ -16,9 +16,9 @@ class User < ActiveRecord::Base
   validates_presence_of     :login
   validates_presence_of     :password,                   :if => :password_required?
   validates_presence_of     :password_confirmation,      :if => :password_required?
-  validates_length_of       :password, :within => 4..40, :if => :password_required?
+  validates_length_of       :password, :within => 3..40, :if => :password_required?
   validates_confirmation_of :password,                   :if => :password_required?
-  validates_length_of       :login,    :within => 3..40
+  validates_length_of       :login,    :within => 1..32
   validates_uniqueness_of   :login, :case_sensitive => false
   validates_uniqueness_of   :email, :case_sensitive => false, :if => Proc.new { |user| user.email != nil }
   validates_uniqueness_of   :twittername, :if => Proc.new { |user| user.twittername != nil }
@@ -28,6 +28,19 @@ class User < ActiveRecord::Base
   before_create :initial_score_before
   after_create :initial_score_after
   
+#  validate :leetness_of_password
+#  
+#  def leetnes_of_password
+#    # we also allow/generate only 3key passwords. but if we force a lot of non alphanumerical characters in, i hope i make htem hard to crack. but easy to type on cellphones.
+#    # this also creates a minigame for our uses to guess 1337 passwords (or the identifiers that give a higher leet score)
+#    leet_factor = 0
+#    %w(! " § $ € « @ % & / = ? ß ` ´ * + ' # , ; . : - _ < > ^ ° # ').each do |leet_character|
+#      leet_factor += 1 if self.password.include? leet_character
+#    end
+#    
+#    errors.add "password not 1337 enough, please use special characters, like @ in your password."  if leet_factor > 1
+#  end
+  
   def friend_of? user
     self.friends_of.each do |friend|
       return true if friend == user
@@ -36,7 +49,11 @@ class User < ActiveRecord::Base
   end
   
   def city
-    return "Wien"
+    return "Wien" # attr_read oder so || wien
+  end
+
+  def name
+    self.login || self.twittername
   end
   
 #  def self.find_florian
@@ -86,12 +103,13 @@ class User < ActiveRecord::Base
   def can_claim? spot
     return spot.current_owner != self
   end
-  
+
   def can_edit_spots?
     is_admin?
   end
   
   def notify_twitter message # todo: notify() as function name does weird things. this is better
+    return #if environment == 'development'
     if self.twittername
       begin
         #TODO: probably very stupid, should be done differently. code copied from http://snippets.dzone.com/posts/show/3714 (for rest see environment.rb)

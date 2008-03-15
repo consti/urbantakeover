@@ -1,37 +1,16 @@
 
-<%= render :partial => 'commandline' %>
+<h2>Did what?</h2>
 
-<h2>How To play (TODO: make me bautiful)</h2>
-<ol>
-<li><a href="https://twitter.com/signup">Register on twitter</a></li>
-<li><%= link_to 'Tell us', :controller => 'user', :action => 'profile' %> your twitter name</li>
-<li>Add <a href="http://twitter.com/cpu">cpu</a> as friend</li>
-<li>[wait till we add you back]</li>
-<li>START PLAYING. online <i><code>claim metalab @ rathausstraße 6</code> to cpu</i> when you put a sticker there</li>
-<li>via sms: <b><code>d cpu claim metalab @ rathausstraße 6</code> to twitter +44 7624801423</b></li>
-</ol>
+<% form_for(:command) do |f| %>
+  do it: <%= f.text_field 'text' %>
+  <%= submit_tag 'go!' %>
+<% end %>
 
+<p>Commands:</p>
+<ul>
+  <li><code>claim spot</code></li>
+  <li><code>claim spot @ street 123</code></li>
+  <li><code>team teamname</code></li>
+</ul>
 
-</pre>
-<!-- 
-<%= error_messages_for :user %>
-
-<h1>I hereby declare...</h1>
-
-<% form_for :user do |f| -%>
-  <p>That I, <b><%= current_user.login %></b>, using Sticker No. <%= f.text_field :sticker_code %></p>
-  
-  <ul style="list-style-type: lower-alpha;">
-  <li>claimed the Spot with code <%= f.text_field :spot_code %></li>
-  <li>crossed the Sticker with No. <%= f.text_field :crossed_sticker_code %>
-  <li>tagged the Address <%= f.text_field :address %></li>
-  </ul>
-  
-  <p>and now it's mine.</p> 
-  
-  <%= submit_tag "Sticker up, y0!" %>
-  
-  <p><i>PS: I know if I am cheating, people are going to <strong>kick my ass</strong>.</i></p>
-<% end -%>
-
--->
+<%= render :partial => 'howto' %>

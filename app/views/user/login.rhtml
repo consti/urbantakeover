@@ -1,4 +1,4 @@
-<h1>Need to be logged in? Gimme a second!</h1>
+<h1>Sry, login required. (Or <%= link_to "sign up", :controller => :user, :action => :signup %>!)</h1>
 
 <% form_tag do -%>
 <p><label for="login">Login</label><br/>
@@ -14,5 +14,3 @@
 
 <p><%= submit_tag 'Log in' %></p>
 <% end -%>
-
-<p><i>PS: If you're not signed up yet, you can <%= link_to "sign up here", :controller => :user, :action => :signup %></i></p>

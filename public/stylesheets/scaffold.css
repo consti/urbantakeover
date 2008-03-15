@@ -1,4 +1,4 @@
-body { background-color: #fff; color: #333; }
+body { background-color: #fff; color: #333; padding: 3px;}
 
 body, p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
@@ -112,7 +112,62 @@ a.spot-name:hover, a.spot-name:active {
   background-color: #959595 !important;
 }
 
-/* div */
+/* stuff */
 .small {
   font-size: 80%;
+}
+
+code {
+  background-color: #959595;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+/* areas */
+#footer p{
+  margin-top: 20px;
+  padding-top: 3px;
+  border-top: 1px solid #959595;
+  font-size: 80%;
+  font-family: "Georgia", serif;
+  text-align: right;
+}
+
+#footer p, #footer p {
+  color: #959595;
+}
+
+/* 72dpi logo link */
+#footer p a:link, #footer p a:visited {
+  color: #959595;
+  text-decoration: none;
+}
+#footer p a:link span, #footer p a:visited span { color: #99cc00; }
+
+#footer p a:hover, #footer p a:active{
+  background-color: #99cc00;
+  color: white;
+  text-decoration: none;
+}
+#footer p a:hover span, #footer p a:active span { color: white; }
+
+/* color shorthands */
+.green {
+  color: #99cc00 !important;
+}
+
+.lime {
+    color: #99cc00 !important;
+}
+
+.white {
+    color: white !important;
+}
+
+.black {
+    color: black !important;
+}
+
+.grey {
+    color: #555555 !important;
 }

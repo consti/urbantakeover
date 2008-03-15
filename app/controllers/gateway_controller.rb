@@ -15,13 +15,6 @@ class GatewayController < ApplicationController
     
     render :text => handle_message(params[:user], params[:message])
   end
-  
-  def website
-    command = Command.create(:user => current_user, :text => params[:command][:text])
-    result = command.run!
-    flash[:notice] = result || "sry, something went wrong. no result text??? o_O'"
-    return redirect_back_or_default(root_url)
-  end
 
 private
   def verify_private_api

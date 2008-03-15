@@ -73,11 +73,11 @@ private
 
       geocodes = Geocoding.get(address) # HARHAR - users can easily find their own stuffz
       if geocodes.empty?
-        user.notify_twitter "sry, can't find '#{address}'. plz format like '#{spot_name} @ rathausstraße 6, 1010 wien'"
-        return "sry, can't find address '#{address}'. plz try something like 'rathausstraße 6, 1010 wien'"
+        user.notify_twitter "plz: claim like '#{spot_name} @ Musterstraße 12'"
+        return "no address '#{address}'"
       elsif geocodes.size > 1
-        user.notify_twitter "sry, multiple spots found. plz be more exact. eg '#{spot_name} @ #{geocodes.first.address}"
-        return "sry, multiple spots found, specify address exactly. eg #{geocodes.first.address}"
+        user.notify_twitter "plz write exact address, multiple spots found. like #{geocodes.first.address}"
+        return "sry, multiple spots found. for #{address}"
       else
         geocode = geocodes.first
         spot = Spot.find_by_address geocode.address
@@ -85,7 +85,7 @@ private
           spot = Spot.create :name => spot_name, :address => geocode.address, :geolocation_x => geocode.latitude, :geolocation_y => geocode.longitude
           spot.save
           self.user.claim spot
-          return "bam! you claimed a new spot! #{spot_name} @ #{spot.address}"
+          return "#{self.user.name} conquered a new spot! #{spot_name} @ #{spot.address}"
         end
         
         #reclaim an existing spot
@@ -107,8 +107,8 @@ private
             return "bam! 10 points for claiming #{spot.name}"
           end
         else
-          user.notify_twitter "sry, can't claim #{spot.name} - already yours!"
-          return "sry, can't claim #{spot.name} - already yours!" # TODO: update me if there are new conditions
+          user.notify_twitter "lol! #{spot.name} is already yours!"
+          return "#{spot.name} already belongs to #{user.name}" # TODO: update me if there are new conditions
         end
       end
     end
