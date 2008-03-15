@@ -14,9 +14,9 @@ LOGEEERR = Logger.new('log/twitterbotpoll.log')
 
 API_CONFIG = YAML.load(File.open("config/private_api.yml"))
 
-def dispatch_to_rails user, msg, twitter_message_id
-  req = Net::HTTP.post_form(URI.parse(API_CONFIG['server']),
-                                {'user' => user, 'message' => msg, 'twitter_message_id' => twitter_message_id, 'key' => API_CONFIG['api_key']})
+def dispatch_to_rails what, params
+  req = Net::HTTP.post_form(URI.parse(API_CONFIG['server']+what),
+                                {'key' => API_CONFIG['api_key']}.merge(params))
 
   if req.body.include? "Exception caught" # very quick, very dirty
     return "sorry, something went terribly wrong on the server. will try to fix it."
@@ -35,23 +35,25 @@ println "connect to twitter"
 twitter = Twitter::Base.new(API_CONFIG['twitter']['email'], API_CONFIG['twitter']['password'])
 
 
-sleep_interval = 60 #poll every minute, actually no - cronjob me
+println "querying followers"
+begin 
+  twitter.followers.each do |u|
+    println dispatch_to_rails('auto_follow', {'user' => u.name})
+  end
+rescue Exception => e
+  println "error reading / processing twitter friend: #{e.to_s}"
+end
 
 
 println "querying messages"
 begin 
   messages = twitter.received_messages  
   messages.each do |m|
-    println dispatch_to_rails(m.sender_screen_name, m.text, m.id)
+    
+    println dispatch_to_rails('command', {'user' => m.sender_screen_name, 'message' => m.text, 'twitter_message_id' => m.id})
   end
 rescue Exception => e
   println "error reading / processing twitter received message: #{e.to_s}"
 end
 
-#println "querying followers"
-#twitter.followers.each do |u|
-#  dispatch_to_rails u.name, nil, nil
-#end
-
-
-println "done, see you next time"
+println "done, cu next time"

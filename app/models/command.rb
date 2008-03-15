@@ -5,6 +5,7 @@ class Command < ActiveRecord::Base
   
   def run!
     parts = self.text.strip.split(" ")
+    parts[0].downcase!
     # claim spot_name [@ addresse]
     if parts[0] == "claim"
       return claim_spot(parts[1, parts.size].join(" ")) #spot beschreibung wieder zusammensetzen
@@ -121,8 +122,9 @@ private
       if team.save
         return "BAM! joined team #{team.name}"
       else
-        user.notify_twitter "sry, can't join team #{team.name}? #{team.errors_as_string}"
-        return "sry, can't join team #{team.name}? #{team.errors_as_string}"
+        err = team.errors.full_messages.join(', ')
+        user.notify_twitter "sry, can't join team #{team.name}? contact team@72dpiarmy.com plz!"
+        return "sry, can't join team #{team.name}? #{err}"
       end
     else
       user.notify_twitter "huh? you're already in team #{team.name}!"

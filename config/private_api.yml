@@ -1,5 +1,5 @@
 api_key: aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d27e44d96827b0fe262f83e2d1eee3a8a288227bc
-server: http://localhost:3000/gateway/twitter
+server: http://localhost:3000/twitter/
 twitter:
   user: cpu
   email: glados@72dpiarmy.com

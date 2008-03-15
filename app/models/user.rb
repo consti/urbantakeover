@@ -24,9 +24,21 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :twittername, :if => Proc.new { |user| user.twittername != nil }
   
   before_save :encrypt_password
+  before_save :update_twitter_friend
   before_validation :random_color_if_not_set
   before_create :initial_score_before
   after_create :initial_score_after
+  
+  def update_twitter_friend
+    if self.twitter_friend_with != self.twittername:
+      begin
+        TWITTER.create_friendship self.twittername
+      rescue Exception => e
+        RAILS_DEFAULT_LOGGER.error("Twitter error while creating_friendship with #{self.twittername}. Exception: #{e.to_s}.")
+      end
+      self.twitter_friend_with = self.twittername
+    end
+  end
   
 #  validate :leetness_of_password
 #  
