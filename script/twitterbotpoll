@@ -48,10 +48,10 @@ rescue Exception => e
   println "error reading / processing twitter received message: #{e.to_s}"
 end
 
-println "querying followers"
-twitter.followers.each do |u|
-  dispatch_to_rails u.name, nil, nil
-end
+#println "querying followers"
+#twitter.followers.each do |u|
+#  dispatch_to_rails u.name, nil, nil
+#end
 
 
 println "done, see you next time"
