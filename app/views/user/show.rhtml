@@ -5,7 +5,9 @@
 
 <ul>
   <li>Score: <%= @user.total_score %> points</li>
-  <li>Team Score: <%= @user.team.score %> points</li>
+  <% if @user.team %>
+    <li>Team Score: <%= @user.team.score %> points</li>
+  <% end %>
   <li>City: <%= @user.city %></li>
 
   <% if @user.twittername %>
