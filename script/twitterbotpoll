@@ -38,7 +38,7 @@ twitter = Twitter::Base.new(API_CONFIG['twitter']['email'], API_CONFIG['twitter'
 sleep_interval = 60 #poll every minute, actually no - cronjob me
 
 
-println "querying twitter"
+println "querying messages"
 begin 
   messages = twitter.received_messages  
   messages.each do |m|
@@ -47,5 +47,11 @@ begin
 rescue Exception => e
   println "error reading / processing twitter received message: #{e.to_s}"
 end
+
+println "querying followers"
+twitter.followers.each do |u|
+  dispatch_to_rails u.name, nil, nil
+end
+
 
 println "done, see you next time"

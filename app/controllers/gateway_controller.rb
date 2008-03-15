@@ -8,7 +8,7 @@ class GatewayController < ApplicationController
   
   private_api :twitter
 
-  def twitter
+  def twitter  
     return render :text => 'already parsed' if Twittermessage.find_by_twitter_id(params[:twitter_message_id])
     
     Twittermessage.create :twitter_id => params[:twitter_message_id]

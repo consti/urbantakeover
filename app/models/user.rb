@@ -109,7 +109,7 @@ class User < ActiveRecord::Base
   end
   
   def notify_twitter message # todo: notify() as function name does weird things. this is better
-    return #if environment == 'development'
+    #return #if environment == 'development'
     if self.twittername
       begin
         #TODO: probably very stupid, should be done differently. code copied from http://snippets.dzone.com/posts/show/3714 (for rest see environment.rb)

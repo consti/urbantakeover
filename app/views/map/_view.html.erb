@@ -2,8 +2,11 @@
 
 <% spots, map = get_map_data(@spots) %>
 <%
+# zoom to parliament vienna 
+# http://maps.google.com/maps?f=q&hl=en&geocode=&q=Parliament,+Doktor-Karl-Renner-Ring+3,+1010+Wien,+Wien,+Austria&ie=UTF8&cd=1&z=13
+map.center_zoom_init(spots[-1].geolocation, 14)  # zoom to last spot
+
 unless spots.empty?
-  map.center_zoom_init(spots[-1].geolocation, 14)  # zoom to last spot
 
   spots.each do |spot|
     marker = GMarker.new(spot.geolocation,
