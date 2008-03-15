@@ -1,10 +1,10 @@
-<h1>My claims</h1>
+<h2>My claims</h2>
 
-<h2>currently owned spots</h2>
+<h3>Currently owned spots</h3>
 
 <%= render(:partial => 'my_spots', :locals => {:user => current_user}) %>
 
-<h2>claim log</h2>
+<h3>Claim log</h3>
   
 <ul>
 <% for claim in @claims %>

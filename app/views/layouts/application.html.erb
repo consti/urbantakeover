@@ -6,35 +6,43 @@
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <title>ut:// <%= controller.controller_name %>: <%= controller.action_name %></title>
   <%= stylesheet_link_tag 'scaffold' %>
+  <%= javascript_include_tag :defaults %>
 </head>
 <body>
 
-<div style="float:right;">
+<div style="float:right; text-align: right;">
   <% if logged_in? %>
+    <p>
     y0! <%= format_user current_user %>
-    (<%= current_user.total_score %> points)
-    
+    (<%= link_to "#{current_user.total_score} points", :controller => :score, :action => :my %>)
     |
-    <%= link_to 'profile', :controller => :user, :action => :edit, :id => current_user %>
+    <%= link_to 'my spots', :controller => :claims, :action => :my %>
     |
-    <%= link_to 'my claims', :controller => :claims, :action => :my %>
-    |
-    <%= link_to 'my score', :controller => :score, :action => :my %>
+    <%= link_to 'my settings', settings_url %>
     |
     <%= link_to 'log out', :controller => :user, :action => :logout %>
+    </p>
+    
+    <%= render :partial => 'score/new_scores_flash', :locals => {:user => current_user} %>
   <% else %>
+    <p>
     <%= link_to 'log in', :controller => :user, :action => :login %>
     |
     <%= link_to 'sign up', :controller => :user, :action => :signup %>
+    </p>
+
   <% end %>
 </div>
 
-<div><h1 class="title"><%= link_to 'ut', root_url %></h1>  
-  <% unless logged_in? %>
-    <strong><%= link_to 'how to play', howto_path %> | </strong>
-  <% end %>
+<div>
   
-  <strong><%= link_to 'claim spot', :controller => :claims, :action => :new %></strong>
+  <h1><a class="title" href="<%= root_url %>">urbantakeover</a></h1>  
+  <div class="menu">
+  <%= link_to 'claim spot', :controller => :claims, :action => :new %>
+  
+
+  | <%= link_to 'how to play', howto_path %>
+
 
   <% if logged_in? %>
     <% if current_user.can_edit_spots?%>
@@ -42,12 +50,9 @@
     <% end %>
   <% end %>
   
-  | <%= link_to 'highscore list', :controller => :score, :action => :index %>
+  | <%= link_to 'highscore', :controller => :score, :action => :index %>
+  </div>
 </div>
-
-<% if logged_in? %>
-  <%= render :partial => 'score/new_scores_flash', :locals => {:user => current_user} %>
-<% end %>
 
 <p style="color: green"><%= flash[:notice] %></p>
 

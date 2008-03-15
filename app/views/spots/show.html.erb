@@ -1,5 +1,5 @@
 <div style="float: left;">
-<h1><%= format_spot @spot %></h1>
+<h2><%= format_spot @spot %></h2>
 
 <% unless @spot.stuffs.empty? %>
   Also known as: <%= @spot.stuffs.collect(&:name).join(", ") %>

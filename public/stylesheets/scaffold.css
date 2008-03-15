@@ -123,6 +123,10 @@ code {
   padding-right: 2px;
 }
 
+marquee {
+  marquee-style: alternate; /* 404 -_-' */
+}
+
 /* areas */
 #footer p{
   margin-top: 20px;
@@ -170,4 +174,41 @@ code {
 
 .grey {
     color: #555555 !important;
+}
+
+
+h1 {
+  margin: 0;
+  padding: 0;
+}
+
+/* headlines */
+a.title {
+  display: block;
+  margin-top: 0;
+  padding-top: 0;
+  padding-left: 54px; /* 48 + 6 */
+  height: 40px; /* 48 - 8 */
+  padding-top: 8px;
+  font-size: 26px;
+  background: url('/images/logo.png') no-repeat top left;
+  
+  text-decoration: none;
+  color: #959595;
+}
+
+.menu {
+  margin-top: 3px;
+  font-weight: bold;
+  color: #666;
+}
+
+.menu a:link, .menu a:visited {
+  color: #666;
+  text-decoration:none;
+}
+
+.menu a:hover, .menu a:active {
+  color: white;
+  background-color: #666;
 }

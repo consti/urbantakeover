@@ -1,35 +1,29 @@
-<h1><%= format_user @user %></h1>
+<h2><%= format_user @user %> of team <%= format_team @user.team %></h2>
 <% if logged_in? and current_user.is_admin? %>
  <%= link_to 'edit', :action => :edit, :id => @user %>
 <% end %>
 
-<% if @user.team %>
- <p>Team: <%= format_team @user.team %> (<%= @user.team.score %> points)</p>
-<% end %>
+<ul>
+  <li>Score: <%= @user.total_score %> points</li>
+  <li>Team Score: <%= @user.team.score %> points</li>
+  <li>City: <%= @user.city %></li>
 
-<p>City: <%= @user.city %></p>
-
-<% if @user.twittername %>
-  <p>Twitter: <%= h @user.twittername %></p>
-<% end %>
-
-<p>Score: <%= @user.total_score %></p>
+  <% if @user.twittername %>
+    <li>Twitter: <%= h @user.twittername %></li>
+  <% end %>
+  
+  <li>Friends: <%= @user.friends.collect {|f| format_user f }.join(", ") %></li>
+</ul>
 
 <h2>currently owns</h2>
 <%= render(:partial => 'claims/my_spots', :locals => {:user => @user}) %>
 
-<h2>Friends</h2>
-<ul>
-<% for friend in @user.friends %>
-  <li><%= format_user friend%></li>
-<% end %>
-</ul>
 <h2>claim log</h2>
   
 <ul>
 <% for claim in @claims %>
   <li>
-    <%= format_spot claim.spot  %> since <%= interval_to_now claim.created_at %>
+    <%= format_spot claim.spot  %> at <%= interval_to_now claim.created_at %>
     <% if claim.spot.first_claim_after(claim) %>
       <ul>
       <li>

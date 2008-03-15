@@ -1,15 +1,15 @@
-<div style="float: right; width: 500px;"
-<marquee>
+<div id="new-scores-flash">
 <% scores = user.scores.find :all, :conditions => ["created_at > ?", user.scores_seen_until] %>
-
 <% unless scores.empty? %>
 
-  <% for score in scores %>
-    <span><%= score.points %>: <%= score.description %></span>
-  <% end %>
-  
-  <%= link_to "x", :controller => :score, :action => :dismiss %>
-<% end %>
+  <marquee style="width: 450px;">
+    +
+    <% for score in scores %>
+      <span><%= format_score score %> +</span>
+    <% end %>
+  </marquee>
 
-</marquee>
+  <%= link_to_remote "ok!", :url => {:controller => :score, :action => :dismiss}, :loading => "$('new-scores-flash').update('')" %>
+
+<% end %>
 </div>

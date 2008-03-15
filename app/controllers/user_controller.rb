@@ -1,6 +1,11 @@
 class UserController < ApplicationController
-  before_filter :login_required, :only => [:add_friend, :remove_friend, :edit, :profile]
+  before_filter :login_required, :only => [:add_friend, :remove_friend, :edit, :profile, :settings]
   
+  # TODO: refactor me! get rid of settings/profile distinction
+  def settings
+    profile
+  end
+
   def profile
     redirect_to :action => 'edit', :id => current_user.id
   end
@@ -62,7 +67,7 @@ class UserController < ApplicationController
         self.current_user.remember_me
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
       end
-      flash[:notice] = "Logged in successfully"
+      #flash[:notice] = "Logged in successfully"
       redirect_back_or_default(:controller => '/user', :action => 'index')
     else
       flash[:notice] = "Password? LAWL!!!"
