@@ -38,7 +38,7 @@ twitter = Twitter::Base.new(API_CONFIG['twitter']['email'], API_CONFIG['twitter'
 println "querying followers"
 begin 
   twitter.followers.each do |u|
-    println dispatch_to_rails('auto_follow', {'user' => u.name})
+    println dispatch_to_rails('auto_follow', {'user' => u.screen_name})
   end
 rescue Exception => e
   println "error reading / processing twitter friend: #{e.to_s}"
