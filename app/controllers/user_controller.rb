@@ -51,11 +51,12 @@ class UserController < ApplicationController
     if request.post?
       @user.update_attributes(params[:user])
       @user.save
+      flash[:notice] = 'Changes saved, kbai!'
       current_user.reload
     end
 
   rescue ActiveRecord::RecordInvalid
-    flash[:notice] = 'Speichern haut net hin!'
+    flash[:notice] = 'User save failed?!'
     render :action => 'edit'
   end
 

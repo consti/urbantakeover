@@ -21,7 +21,8 @@ class User < ActiveRecord::Base
   validates_length_of       :login,    :within => 1..32
   validates_uniqueness_of   :login, :case_sensitive => false
   validates_uniqueness_of   :email, :case_sensitive => false, :if => Proc.new { |user| user.email != nil }
-  validates_uniqueness_of   :twittername, :if => Proc.new { |user| user.twittername != nil }
+  validates_uniqueness_of   :twittername, :if => Proc.new { |user| user.twittername != nil and not user.twittername.empty? }
+  validate :colour_is_somewhat_visible
   
   before_save :encrypt_password
   before_save :update_twitter_friend
@@ -29,6 +30,12 @@ class User < ActiveRecord::Base
   before_create :initial_score_before
   after_create :initial_score_after
   
+  def colour_is_somewhat_visible
+    if self.colour_1 == self.colour_2
+      self.errors.add "Colour 1 and 2 can't be the same. Other players won't be able to read your name, kbai?!"
+    end
+  end
+
   def should_twitter?
     return ENV["RAILS_ENV"] == 'production'
   end

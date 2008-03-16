@@ -76,6 +76,7 @@ div.progressBar div.background {
 /* user names */
 a.user-name:link, a.user-name:visited {
   color: #000;
+  border-right: 3px solid #eee;
   text-decoration: none;
   padding-left: 2px;
   padding-right: 2px;
@@ -89,6 +90,7 @@ a.user-name:hover, a.user-name:active {
 /* team name */
 a.team-name:link, a.team-name:visited {
   color: #000;
+  border-left: 3px solid #000;
   background-color: #eee;
   text-decoration: none;
   padding-left: 2px;
@@ -97,7 +99,7 @@ a.team-name:link, a.team-name:visited {
 
 a.team-name:hover, a.team-name:active {
   text-decoration: none;
-  background-color: #959595 !important;
+  background-color: #999 !important;
 }
 
 /* spot name */

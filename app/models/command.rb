@@ -49,68 +49,80 @@ private
       s = spot_description.split("@")
       spot_name = s[0].strip.downcase
       spot_address = s[1].strip.downcase
+      return claim_by_name_and_address(spot_name, spot_address)
     else
-      spot_name = spot_description.downcase
-      spot_address = nil
+      target = spot_description.downcase
+      return claim_by_name_or_address(target)
     end
-
-    if spot_address == nil # spot name only, try to tag that
-      spot = Spot.find_by_name spot_name
-      unless spot
+  end
+  
+  def claim_by_name_or_address target
+    spot_name = target
+    spot = Spot.find_by_name spot_name
+    unless spot
+      #TODO: maybe it's an address:
+      geocodes = Geocoding.get(target)
+      if geocodes.empty?
         user.notify_twitter "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ $address' to score."
         return "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ $address' to score."
-      end
-      
-      unless user.can_claim? spot
-        user.notify_twitter "lol, you already own #{spot.name}!"
-        return "you already own #{spot.name}"
-      end
-      
-      user.claim spot
-      return "BAM! claimed #{spot.name}"
-    else
-      address = spot_address
-      address += ", #{user.city}" if user.city
-
-      geocodes = Geocoding.get(address) # HARHAR - users can easily find their own stuffz
-      if geocodes.empty?
-        user.notify_twitter "plz: claim like '#{spot_name} @ Musterstraße 12'"
-        return "no address '#{address}'"
-      elsif geocodes.size > 1
-        user.notify_twitter "plz write exact address, multiple spots found. like #{geocodes.first.address}"
-        return "sry, multiple spots found. for #{address}"
       else
-        geocode = geocodes.first
-        spot = Spot.find_by_address geocode.address
-        unless spot
-          spot = Spot.create :name => spot_name, :address => geocode.address, :geolocation_x => geocode.latitude, :geolocation_y => geocode.longitude
-          spot.save
-          self.user.claim spot
-          return "#{self.user.name} conquered a new spot! #{spot_name} @ #{spot.address}"
-        end
-        
-        #reclaim an existing spot
-        #TODO: save old name, so we see how names change
-        if spot.name != spot_name
-          old_name = spot.name
-          stuff = Stuff.create :name => spot.name, :spot => spot # save old name for spot
-          spot.name = spot_name
-          spot.save
-        end
+        spot = Spot.create :name => spot_name, :address => geocode.address, :geolocation_x => geocode.latitude, :geolocation_y => geocode.longitude
+        spot.save
+      end
+    end
+    
+    unless user.can_claim? spot
+      user.notify_twitter "lol, you already own #{spot.name}!"
+      return "you already own #{spot.name}"
+    end
+    
+    user.claim spot
+    return "BAM! claimed #{spot.name}"
+  end
 
-        if self.user.can_claim? spot
-          claim = self.user.claim spot
-          if old_name
-            user.notify_twitter "lol! you rebranded #{old_name} to #{spot.name}!"
-            return "bam! 10 points for claiming #{spot.name} (renamed from #{old_name})"
-          else
-            # TODO: previous user get points for giving this a good name
-            return "bam! 10 points for claiming #{spot.name}"
-          end
+  def claim_by_name_and_address spot_name, spot_address
+    #default: try to tag address
+    address = spot_address
+    address += ", #{user.city}" if user.city
+
+    geocodes = Geocoding.get(address) # HARHAR - users can easily find their own stuffz
+    if geocodes.empty?
+      user.notify_twitter "plz: claim like '#{spot_name} @ Musterstraße 12'"
+      return "no address found for '#{address}'"
+    elsif geocodes.size > 1
+      user.notify_twitter "plz write exact address, multiple spots found. like #{geocodes.first.address}"
+      return "sry, multiple spots found. for #{address}"
+    else
+      geocode = geocodes.first
+      spot = Spot.find_by_address geocode.address
+      unless spot
+        spot = Spot.create :name => spot_name, :address => geocode.address, :geolocation_x => geocode.latitude, :geolocation_y => geocode.longitude
+        spot.save
+        self.user.claim spot
+        return "#{self.user.name} conquered a new spot! #{spot_name} @ #{spot.address}"
+      end
+      
+      #reclaim an existing spot
+      #TODO: save old name, so we see how names change
+      if spot.name != spot_name
+        old_name = spot.name
+        stuff = Stuff.create :name => spot.name, :spot => spot # save old name for spot
+        spot.name = spot_name
+        spot.save
+      end
+
+      if self.user.can_claim? spot
+        claim = self.user.claim spot
+        if old_name
+          user.notify_twitter "lol! you rebranded #{old_name} to #{spot.name}!"
+          return "bam! 10 points for claiming #{spot.name} (renamed from #{old_name})"
         else
-          user.notify_twitter "lol! #{spot.name} is already yours!"
-          return "#{spot.name} already belongs to #{user.name}" # TODO: update me if there are new conditions
+          # TODO: previous user get points for giving this a good name
+          return "bam! 10 points for claiming #{spot.name}"
         end
+      else
+        user.notify_twitter "lol! #{spot.name} is already yours!"
+        return "#{spot.name} already belongs to #{user.name}" # TODO: update me if there are new conditions
       end
     end
   end
