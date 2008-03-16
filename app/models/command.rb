@@ -66,8 +66,12 @@ private
         user.notify_twitter "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ address'."
         return "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ $address'."
       else
-        spot = Spot.create :name => spot_name, :address => geocode.address, :geolocation_x => geocode.latitude, :geolocation_y => geocode.longitude
-        spot.save
+        geocode = geocodes.first
+        spot = Spot.find_by_address geocode.address
+        unless spot
+          spot = Spot.create :name => spot_name, :address => geocode.address, :geolocation_x => geocode.latitude, :geolocation_y => geocode.longitude
+          spot.save
+        end
       end
     end
     

@@ -5,7 +5,7 @@
 
     <% crossed_claim = spot.current_claim.crossed_claim
       if crossed_claim %>
-        crossed <%= crossed_claim.user.login %>
+        crossed <%= format_user crossed_claim.user %>
     <% else %>
       since
     <% end %>
