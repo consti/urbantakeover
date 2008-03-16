@@ -60,11 +60,17 @@ private
     spot_name = target
     spot = Spot.find_by_name spot_name
     unless spot
-      #TODO: maybe it's an address:
-      geocodes = Geocoding.get(target)
+      #maybe it's an address:
+      address = target
+      address += ", #{user.city}" if user.city # TODO: make city omitable if i'm somewhere else
+
+      geocodes = Geocoding.get(address)
       if geocodes.empty?
         user.notify_twitter "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ address'."
-        return "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ $address'."
+        return "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ $address'."      
+      elsif geocodes.size > 1
+        user.notify_twitter "plz write exact address, multiple spots found. like #{geocodes.first.address}"
+        return "sry, multiple spots found. for #{address}. eg: #{geocodes.first.address}."
       else
         geocode = geocodes.first
         spot = Spot.find_by_address geocode.address
@@ -87,7 +93,7 @@ private
   def claim_by_name_and_address spot_name, spot_address
     #default: try to tag address
     address = spot_address
-    address += ", #{user.city}" if user.city
+    address += ", #{user.city}" if user.city # TODO: make city omitable if i'm somewhere else
 
     geocodes = Geocoding.get(address) # HARHAR - users can easily find their own stuffz
     if geocodes.empty?
