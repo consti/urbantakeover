@@ -1,8 +1,8 @@
-<h2>Sry, login required. (Or <%= link_to "sign up", :controller => :user, :action => :signup %>!)</h2>
+<h2>y0! login required. (Or <%= link_to "sign up", :controller => :user, :action => :signup %>!)</h2>
 
 <% form_tag do -%>
 <p><label for="login">Login</label><br/>
-<%= text_field_tag 'login' %></p>
+<%= text_field_tag 'login', params[:login] %></p>
 
 <p><label for="password">Password</label><br/>
 <%= password_field_tag 'password' %></p>

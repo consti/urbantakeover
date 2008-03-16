@@ -36,7 +36,7 @@
 
 <div>
   
-  <h1><a class="title" href="<%= root_url %>">urbantakeover</a></h1>  
+  <h1><a class="title" href="<%= root_url %>">urbantakeover  <span class="small">(<%= Claim.count %> up)</span></a></h1>
   <div class="menu">
   <%= link_to 'claim spot', :controller => :claims, :action => :new %>
   

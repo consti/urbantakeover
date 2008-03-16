@@ -5,6 +5,9 @@ ActionController::Routing::Routes.draw do |map|
   map.settings '/settings', :controller => 'user', :action => 'settings'
   map.howto '/howto', :controller => 'claims', :action => 'howto'
   map.claim '/claim', :controller => 'claims', :action => 'new'
+  map.login '/login', :controller => 'user', :action => 'login'
+  map.highscore '/highscore', :controller => 'score', :action => 'index'
+
   map.root :controller => 'claims', :action => 'recent'
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -102,9 +102,9 @@ class User < ActiveRecord::Base
     self.scores.create :points => points, :description => description
 
     if points > 0
-      message = "bam! #{description}, get #{points} points!"
+      message = "bam! #{description}, got #{points} points!"
     elsif points < 0
-      message = "fck! #{description}, loose #{points.abs} points!"
+      message = "fck! #{description}, lost #{points.abs} points!"
     else
       message = description
     end
