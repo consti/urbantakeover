@@ -15,7 +15,7 @@ unless spots.empty?
        [format_spot(spot),
         spot.address,
         spot.current_owner ? format_user(spot.current_owner) : "no one",
-        spot.claims.collect({|c| c.user.name }).uniq || "no one",
+        spot.claims.collect{|c| c.user.name }.uniq,
         link_to("#{spot.name} on flickr", "http://flickr.com/photos/tags/#{spot.name}")
       ])  
       map.overlay_init(marker)

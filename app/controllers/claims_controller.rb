@@ -22,7 +22,6 @@ class ClaimsController < ApplicationController
   end
   
   def howto
-    render :template => 'claims/_howto'
   end
   
   # GET /recent
