@@ -15,8 +15,15 @@ class UserController < ApplicationController
     redirect_to root_url
   end
   
-  def show
-    @user = User.find params[:id]
+  def show_by_login
+    u = User.find_by_login params[:user]
+    return redirect_back_or_default root_url unless u
+    show u
+    render :template => 'user/show'
+  end
+
+  def show user=nil
+    @user = user || User.find(params[:id])
     @claims = @user.claims
   end
   
@@ -64,10 +71,8 @@ class UserController < ApplicationController
     return unless request.post?
     self.current_user = User.authenticate(params[:login], params[:password])
     if logged_in?
-      if params[:remember_me] == "1"
-        self.current_user.remember_me
-        cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
-      end
+      self.current_user.remember_me # always remember :)
+      cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
       #flash[:notice] = "Logged in successfully"
       redirect_back_or_default(:controller => '/user', :action => 'index')
     else

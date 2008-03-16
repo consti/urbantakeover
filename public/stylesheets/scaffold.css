@@ -76,7 +76,7 @@ div.progressBar div.background {
 /* user names */
 a.user-name:link, a.user-name:visited {
   color: #000;
-  border-right: 3px solid #eee;
+  border-right: 3px solid #999;
   text-decoration: none;
   padding-left: 2px;
   padding-right: 2px;

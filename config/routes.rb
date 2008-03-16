@@ -7,8 +7,11 @@ ActionController::Routing::Routes.draw do |map|
   map.claim '/claim', :controller => 'claims', :action => 'new'
   map.login '/login', :controller => 'user', :action => 'login'
   map.highscore '/highscore', :controller => 'score', :action => 'index'
-
   map.root :controller => 'claims', :action => 'recent'
+  
+  map.connect '/:user', :controller => 'user', :action => 'show_by_login'
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
 

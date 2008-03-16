@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
   attr_protected :is_admin
+  attr_protected :twitter_friend_with
   
 
   has_many :claims, :order => "created_at desc"

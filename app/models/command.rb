@@ -63,8 +63,8 @@ private
       #TODO: maybe it's an address:
       geocodes = Geocoding.get(target)
       if geocodes.empty?
-        user.notify_twitter "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ $address' to score."
-        return "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ $address' to score."
+        user.notify_twitter "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ address'."
+        return "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ $address'."
       else
         spot = Spot.create :name => spot_name, :address => geocode.address, :geolocation_x => geocode.latitude, :geolocation_y => geocode.longitude
         spot.save
