@@ -29,10 +29,14 @@ class User < ActiveRecord::Base
   before_create :initial_score_before
   after_create :initial_score_after
   
+  def should_twitter?
+    return ENV["RAILS_ENV"] == 'production'
+  end
+
   def update_twitter_friend
     if self.twitter_friend_with != self.twittername:
       begin
-        TWITTER.create_friendship self.twittername
+        TWITTER.create_friendship self.twittername if should_twitter?
       rescue Exception => e
         RAILS_DEFAULT_LOGGER.error("Twitter error while creating_friendship with #{self.twittername}. Exception: #{e.to_s}.")
       end
@@ -120,12 +124,11 @@ class User < ActiveRecord::Base
     is_admin?
   end
   
-  def notify_twitter message # todo: notify() as function name does weird things. this is better
-    #return #if environment == 'development'
+  def notify_twitter message
     if self.twittername
       begin
         #TODO: probably very stupid, should be done differently. code copied from http://snippets.dzone.com/posts/show/3714 (for rest see environment.rb)
-        TWITTER.d(self.twittername, message)
+        TWITTER.d(self.twittername, message) if should_twitter?
       rescue Exception => e
         RAILS_DEFAULT_LOGGER.error("Twitter error while sending to #{self.twittername}. Message: #{message}. Exception: #{e.to_s}.")
       end
