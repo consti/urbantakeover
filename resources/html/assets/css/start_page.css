@@ -1,0 +1,60 @@
+/*-----------------------------------------   
+
+2008 (cc-tba) by 72dpiarmy
+
+Version: 1.0
+
+Author: Leo Sierek
+
+Author URI: http://www.72dpiarmy.com  	
+
+-------------------------------------------*/
+
+/*--------------------------*/
+/* =about		            */
+#about {
+	font-size: 1.6em;
+	background: #eee;
+	border-bottom: 1px solid #ccc;
+	padding: 1em;
+	}
+	#about p { color: #000; margin: 0;} 
+
+/*--------------------------*/
+/* =activity	            */
+#game_activity { float: left; width: 36em; border-right: 1px solid #ccc; margin-right: -1px; padding-bottom: 2em;}
+	
+	.day_activity { float: left; width: 100%; border-bottom: 1px solid #ccc; margin-bottom: 2em;}
+	
+		.date { 
+			float: left;
+			text-align: center;
+			color: #444; 
+			width: 3em; 
+			background: #eee;
+			border:  1px solid #ccc;
+			margin-right: 2em;
+			padding: 0.25em 0.7em;  
+			}
+			.day { color: #777; font-size: 1.7em;}
+		
+		.activity_list { float: left; width: 28em;}
+			.claim { float: left; width: 100%; margin-bottom: 1em;}
+				.avatar { float: left; margin-right: 1em;}
+				.activity_info { color: #999;}
+					.time { font-weight: bold; color: #000;}
+					.message { color: #444;}
+	
+					.user_link { color: #fff; background: #e40101;} 
+					.spot_link { color:  #fff; background: #666;}
+		
+	#activity_list_link { float: right; margin-right: 2em;}
+
+/*--------------------------*/
+/* =recent spots            */
+#recent_spots {
+	float: left;
+	width: 54.9em;
+	border-left: 1px solid #ccc;
+	padding: 0 0 2em 5em;
+	}
