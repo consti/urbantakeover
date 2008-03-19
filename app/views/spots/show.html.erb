@@ -5,7 +5,7 @@
   Also known as: <%= @spot.stuffs.collect(&:name).join(", ") %>
 <% end %>
 
-<% if current_user.can_edit_spots? %>
+<% if logged_in? and current_user.can_edit_spots? %>
   <%= link_to 'Edit', edit_spot_path(@spot) %>
 <% end %>
 

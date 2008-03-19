@@ -77,7 +77,7 @@ class User < ActiveRecord::Base
   end
 
   def name
-    self.login || self.twittername
+    self.login || self.twittername # i think twittername is never called, but i don't know if it works the other way round if twittername is nil and not "", but is twittername nil or "". dunno. ask rails. try in script/console or ask ruby in irb. :P
   end
   
 #  def self.find_florian
@@ -147,10 +147,12 @@ class User < ActiveRecord::Base
     return nil unless self.can_claim? spot
 
     my_claim = Claim.create :user => self, :spot => spot
-    self.score 100, "claimed #{spot.name}"
     
     if my_claim.crossed_claim
-      my_claim.crossed_claim.user.score -10, "fck! crossed by #{self.login} at #{spot.name}"
+      my_claim.crossed_claim.user.score -10, "fck! crossed by #{self.name} at #{spot.name}"
+      self.score 100, "crossed #{my_claim.crossed_claim.user.name} @ #{spot.name}"
+    else
+      self.score 100, "claimed #{spot.name}"
     end
     
     my_claim
