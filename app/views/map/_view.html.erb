@@ -2,22 +2,26 @@
 
 <% spots, map = get_map_data(@spots) %>
 <%
-# zoom to parliament vienna 
-# http://maps.google.com/maps?f=q&hl=en&geocode=&q=Parliament,+Doktor-Karl-Renner-Ring+3,+1010+Wien,+Wien,+Austria&ie=UTF8&cd=1&z=13
-
 unless spots.empty?
   map.center_zoom_init(spots[-1].geolocation, 14)  # zoom to last spot
+  
   spots.each do |spot|
+  
+    info_lines = []
+    info_lines << "<strong>%s</strong><br/><span class=\"small\">%s</span><br/>current: %s<br/>here: %s<br/>%s" %
+     [format_spot(spot),
+      spot.address,
+      spot.current_owner ? format_user(spot.current_owner) : "no one",
+      spot.claims.collect{|c| c.user.name }.uniq.join(", "),
+      link_to("Tag on flickr", "http://flickr.com/photos/tags/#{spot.name}")
+    ]
+    
+    if not spot.tupalo_link.empty?
+      info_lines << link_to("Spot on Tupalo", spot.tupalo_link)
+    end
+  
     marker = GMarker.new(spot.geolocation,
-      :title => spot.name, :info_window =>
-      
-      "<strong>%s</strong><br/><span class=\"small\">%s</span><br/>current: %s<br/>here: %s<br/>%s" %
-       [format_spot(spot),
-        spot.address,
-        spot.current_owner ? format_user(spot.current_owner) : "no one",
-        spot.claims.collect{|c| c.user.name }.uniq.join(", "),
-        link_to("#{spot.name} on flickr", "http://flickr.com/photos/tags/#{spot.name}")
-      ])  
+      :title => spot.name, :info_window => info_lines.join("<br/>"))  
       map.overlay_init(marker)
     
     if spot.current_owner

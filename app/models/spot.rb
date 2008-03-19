@@ -1,3 +1,6 @@
+require "hpricot"
+require 'open-uri'
+
 class Spot < ActiveRecord::Base
   validates_presence_of :geolocation_x
   validates_presence_of :geolocation_y
@@ -10,7 +13,29 @@ class Spot < ActiveRecord::Base
   #todo: turn me into a before_save filter
   before_validation :geolocate_address
   
-  
+  def self.create_by_tupalo name
+    #tries to fetch the spot from tupalo
+    begin
+      doc = Hpricot(open("http://tupalo.com/vienna/search/#{CGI.escape(name)}.rss"))
+    rescue
+      #TODO: LOG ME!
+      return nil # tupalo offline
+    end
+
+    items = (doc/"item")
+    
+    return nil if items.size != 1
+    
+    item = items.first
+    location = (item/"georss:point").text
+    longitude, latitude = location.strip.split(" ")
+    longitude.strip!
+    latitude.strip!
+    tupalo_link = (item/"guid").text
+
+    return Spot.create :name => name, :geolocation_x => longitude, :geolocation_y => latitude, :tupalo_link => tupalo_link    
+  end
+
   def geolocate_address
     return if not self.address or self.address.empty?
     

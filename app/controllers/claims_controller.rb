@@ -11,10 +11,23 @@ class ClaimsController < ApplicationController
   end
   
   def new
-    @command = Command.new(params[:command])
+    @command = Command.new()
     
     return unless request.post?
-    command = Command.create(:user => current_user, :text => params[:command][:text])
+
+    # TODO: FIXME
+    if params[:target]
+      text = "claim #{params[:target]}"
+    elsif params[:spot]
+      text = "claim #{params[:spot]} @ #{params[:address]}"
+    elsif params[:team]
+      text = "team #{params[:team]}"
+    else
+      flash[:notice] = "no command set?"
+      return
+    end
+
+    command = Command.create(:user => current_user, :text => text)
     result = command.run!
     flash[:notice] = result || "sry, something went wrong. no result text??? o_O'"
     

@@ -150,7 +150,7 @@ class User < ActiveRecord::Base
     self.score 100, "claimed #{spot.name}"
     
     if my_claim.crossed_claim
-      my_claim.crossed_claim.user.score 10, "you have been crossed by #{self.login} at #{spot.name}"
+      my_claim.crossed_claim.user.score -10, "fck! crossed by #{self.login} at #{spot.name}"
     end
     
     my_claim

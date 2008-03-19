@@ -1,17 +1,24 @@
 
-<h2>Did what?</h2>
+<h2>Do what?</h2>
 
-<% form_for(:command) do |f| %>
-  do it: <%= f.text_field 'text' %>
-  <%= submit_tag 'go!' %>
+<h3>Claim a known spot</h3>
+<% form_tag do %>
+  claim <%= text_field_tag 'target', 'spot or address' %>
+  <%= submit_tag 'go' %>
 <% end %>
 
-<p>Commands:</p>
-<ul>
-  <li><code>claim spot</code></li>
-  <li><code>claim spot @ street 123</code></li>
-  <li><code>team teamname</code></li>
-</ul>
+<h3>Claim a new spot in the city</h3>
+<% form_tag do %>
+  claim <%= text_field_tag 'spot', 'spot' %> @ <%= text_field_tag 'address', 'address' %>
+  <%= submit_tag 'go' %>
+<% end %>
+
+<h3>Join or open a team</h3>
+<% form_tag do %>
+  join <%= text_field_tag 'team', 'name' %>
+  <%= submit_tag 'go' %>
+<% end %>
+
 
 <h2>Need help?</h2>
 <p>No worries; instructions are <em><%= link_to 'here', howto_path %></em>.</p>

@@ -4,8 +4,7 @@ class Command < ActiveRecord::Base
   belongs_to :user
   
   def run!
-    parts = self.text.strip.split(" ")
-    parts[0].downcase!
+    parts = self.text.downcase.strip.split(" ")
     # claim spot_name [@ addresse]
     if parts[0] == "claim"
       return claim_spot(parts[1, parts.size].join(" ")) #spot beschreibung wieder zusammensetzen
@@ -43,7 +42,7 @@ private
       return "SRY, Already friends with #{friend.login}!"
     end
   end
-  
+    
   def claim_spot spot_description
     if spot_description.include? "@"
       s = spot_description.split("@")
@@ -56,6 +55,8 @@ private
     end
   end
   
+  #TODO: refactor me
+  #TODO: space indicates possible address ;)
   def claim_by_name_or_address target
     spot_name = target
     spot = Spot.find_by_name spot_name
@@ -66,8 +67,13 @@ private
 
       geocodes = Geocoding.get(address)
       if geocodes.empty?
-        user.notify_twitter "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ address'."
-        return "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ $address'."      
+        spot = Spot.create_by_tupalo target
+
+        if not spot
+          # no tupalo spot, must have really been an address
+          user.notify_twitter "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ address'."
+          return "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ $address'."      
+        end
       elsif geocodes.size > 1
         user.notify_twitter "plz write exact address, multiple spots found. like #{geocodes.first.address}"
         return "sry, multiple spots found. for #{address}. eg: #{geocodes.first.address}."
