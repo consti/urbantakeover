@@ -9,7 +9,9 @@ ActionController::Routing::Routes.draw do |map|
   map.highscore '/highscore', :controller => 'score', :action => 'index'
   map.root :controller => 'claims', :action => 'recent'
   
-  map.connect '/:user', :controller => 'user', :action => 'show_by_login'
+  map.connect '/:name', :controller => 'user', :action => 'show_by_login' # TODO: :controller => 'disambiguator', :action => 'user_or_spot_or_what'
+  map.connect '/u/:user', :controller => 'user', :action => 'show_by_login'
+  map.connect '/s/:name', :controller => 'spots', :action => 'show_by_name'
 
 
 

@@ -16,14 +16,14 @@ class UserController < ApplicationController
   end
   
   def show_by_login
-    u = User.find_by_login params[:user]
-    return redirect_back_or_default root_url unless u
-    show u
+    @user = User.find_by_login params[:name]
+    return redirect_back_or_default root_url unless @user
+    show
     render :template => 'user/show'
   end
 
-  def show user=nil
-    @user = user || User.find(params[:id])
+  def show
+    @user ||= User.find(params[:id])
     @claims = @user.claims
   end
   

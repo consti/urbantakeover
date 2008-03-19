@@ -12,7 +12,7 @@ unless spots.empty?
      [format_spot(spot),
       spot.address,
       spot.current_owner ? format_user(spot.current_owner) : "no one",
-      spot.claims.collect{|c| c.user.name }.uniq.join(", "),
+      spot.claims.collect{|c| format_user(c.user) }.uniq.join(", "),
       link_to("Tag on flickr", "http://flickr.com/photos/tags/#{spot.name}")
     ]
     

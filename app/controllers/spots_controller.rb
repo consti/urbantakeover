@@ -15,10 +15,16 @@ class SpotsController < ApplicationController
     end
   end
   
+  def show_by_name
+    @spot = Spot.find_by_name(params[:name])
+    flash[:notice] = "Sry, no Spot #{params[:name]} found." and return redirect_back_or_default root_url unless @spot
+    render :template => 'spots/show'
+  end
+  
   # GET /spots/1
   # GET /spots/1.xml
   def show
-    @spot = Spot.find(params[:id])
+    @spot ||= Spot.find(params[:id])
     params[:focus] = @spot.name
 
     respond_to do |format|
