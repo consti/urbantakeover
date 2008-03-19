@@ -64,4 +64,4 @@ Rails::Initializer.run do |config|
   # config.active_record.default_timezone = :utc
 end
 
-require 'support'
+require 'lib/support'
