@@ -29,9 +29,14 @@ class User < ActiveRecord::Base
   before_save :encrypt_password
   before_save :update_twitter_friend
   before_validation :random_color_if_not_set
+  before_validation :set_city
   before_create :initial_score_before
   after_create :initial_score_after
   
+  def set_city
+    self.city = City.find_by_name "Wien" # HACKETY HACK
+  end
+
   def colour_is_somewhat_visible
     if self.colour_1 == self.colour_2
       self.errors.add "Colour 1 and 2 can't be the same. Other players won't be able to read your name, kbai?!"
