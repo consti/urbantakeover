@@ -121,7 +121,7 @@ class User < ActiveRecord::Base
     self.scores.inject(0) {|n, s| n += s.points} 
   end
 
-  def can_claim? spot
+  def can_edit_spots? spot
     return spot.current_owner != self
   end
 
@@ -145,11 +145,19 @@ class User < ActiveRecord::Base
 
     my_claim = Claim.create :user => self, :spot => spot
     
+    if my_claim.spot.address.empty? or my_claim.spot.address.include?(self.city.name)
+      #tagged in own city or unknown
+      points = 100
+    else
+      #tagged other city!!!
+      points = 1000
+    end
+    
     if my_claim.crossed_claim
       my_claim.crossed_claim.user.score -10, "fck! crossed by #{self.name} at #{spot.name}"
-      self.score 100, "crossed #{my_claim.crossed_claim.user.name} @ #{spot.name}"
+      self.score points, "crossed #{my_claim.crossed_claim.user.name} @ #{spot.name}"
     else
-      self.score 100, "claimed #{spot.name}"
+      self.score points, "claimed #{spot.name}"
     end
     
     my_claim
