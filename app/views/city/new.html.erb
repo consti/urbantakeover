@@ -1,0 +1,21 @@
+<h2>Create city</h2>
+
+<%= error_messages_for :city %>
+
+<% form_for(@city, :url => {:action => 'new'}) do |f| %>
+  <p>
+    Name: <%= f.text_field :name %>
+  </p>
+
+  <p>
+    Zoom Factor: <%= f.text_field :zoomfactor %>
+  </p>
+
+  <p>
+    Geolocation: <%= f.text_field :longitude %> <%= f.text_field :latitude %>
+  </p>
+
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>

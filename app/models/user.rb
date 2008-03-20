@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :friends, :class_name => 'User', :join_table => 'user_friend', :association_foreign_key => 'user_id', :foreign_key => 'friend_id'
   has_and_belongs_to_many :friends_of, :class_name => 'User', :join_table => 'user_friend', :association_foreign_key => 'friend_id', :foreign_key => 'user_id'
   belongs_to :team
+  belongs_to :city
   
   
   validates_presence_of     :login
@@ -70,10 +71,6 @@ class User < ActiveRecord::Base
       return true if friend == user
     end
     return false
-  end
-  
-  def city
-    return "Wien" # attr_read oder so || wien
   end
 
   def name

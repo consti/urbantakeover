@@ -3,6 +3,8 @@
 
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
+  include GeolocationSystem
+
   before_filter :login_from_cookie
   
   helper :all # include all helpers, all the time

@@ -63,7 +63,7 @@ private
     unless spot
       #maybe it's an address:
       address = target
-      address += ", #{user.city}" if user.city # TODO: make city omitable if i'm somewhere else
+      address += ", #{user.city.name}" unless address.include? "," # indicates a spot with a city
 
       geocodes = Geocoding.get(address)
       if geocodes.empty?
@@ -99,7 +99,7 @@ private
   def claim_by_name_and_address spot_name, spot_address
     #default: try to tag address
     address = spot_address
-    address += ", #{user.city}" if user.city # TODO: make city omitable if i'm somewhere else
+    address += ", #{user.city.name}" unless address.include? "," # indicates a spot with a city
 
     geocodes = Geocoding.get(address) # HARHAR - users can easily find their own stuffz
     if geocodes.empty?

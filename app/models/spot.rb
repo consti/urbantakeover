@@ -8,6 +8,7 @@ class Spot < ActiveRecord::Base
   
   has_many :claims, :order => "created_at DESC"
   has_many :stuffs
+  belongs_to :city
 
 
   #todo: turn me into a before_save filter
