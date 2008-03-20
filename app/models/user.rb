@@ -121,7 +121,7 @@ class User < ActiveRecord::Base
     self.scores.inject(0) {|n, s| n += s.points} 
   end
 
-  def can_edit_spots? spot
+  def can_claim? spot
     return spot.current_owner != self
   end
 
