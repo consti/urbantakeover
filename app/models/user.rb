@@ -155,11 +155,11 @@ class User < ActiveRecord::Base
       points = 100
     else
       #tagged other city!!!
-      points = 1000
+      points = 200
     end
     
     if my_claim.crossed_claim
-      my_claim.crossed_claim.user.score -10, "fck! crossed by #{self.name} at #{spot.name}"
+      my_claim.crossed_claim.user.score -20, "fck! crossed by #{self.name} at #{spot.name}"
       self.score points, "crossed #{my_claim.crossed_claim.user.name} @ #{spot.name}"
     else
       self.score points, "claimed #{spot.name}"
