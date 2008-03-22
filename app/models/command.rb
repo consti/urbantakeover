@@ -33,7 +33,8 @@ class Command < ActiveRecord::Base
 
 private
   def twitter_ohai
-    user.notify_twitter "hi, i'm the urbantakeover bot. send 'd cpu claim spot @ address' to mark something claimed."
+    user.notify_twitter "ohai, i'm the urbantakeover bot. send 'd cpu claim spot @ address' to mark something claimed."
+    return "replied ohai!"
   end
   
   def add_friend friend_name

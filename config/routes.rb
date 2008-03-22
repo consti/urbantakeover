@@ -4,6 +4,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.settings '/settings', :controller => 'user', :action => 'settings'
   map.howto '/howto', :controller => 'claims', :action => 'howto'
+  map.faq '/faq', :controller => 'claims', :action => 'faq'
   map.claim '/claim', :controller => 'claims', :action => 'new'
   map.login '/login', :controller => 'user', :action => 'login'
   map.highscore '/highscore', :controller => 'score', :action => 'index'

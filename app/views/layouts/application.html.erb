@@ -42,6 +42,7 @@
   
 
   | <%= link_to 'how to play', howto_path %>
+  | <%= link_to 'FAQ', faq_path %>
 
 
   <% if logged_in? %>
@@ -56,9 +57,13 @@
 
 <p style="color: green"><%= flash[:notice] %></p>
 
-<%= yield  %>
+<div id="content">
+  <%= yield  %>
+</div>
 
-<div id="footer" style="clear: both">
+<div style="clear: both;"><!-- ohai, i'm the clear div to make the footer margin-top work --></div>
+
+<div id="footer">
   <p>2008 (cc-tba) <a class="72dpiarmy" href="http://72dpiarmy.com"><span>72dpi</span>army</a> | <a href="mailto://team@urbantakeover.at">contact us</a></p>
 </div>
 </body>

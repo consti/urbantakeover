@@ -1,5 +1,5 @@
 class ClaimsController < ApplicationController
-  before_filter :login_required, :except => [:log, :howto, :recent]
+  before_filter :login_required, :except => [:log, :howto, :faq, :recent]
   
   def my
     @claims = current_user.claims
@@ -35,6 +35,9 @@ class ClaimsController < ApplicationController
   end
   
   def howto
+  end
+  
+  def faq
   end
   
   # GET /recent
