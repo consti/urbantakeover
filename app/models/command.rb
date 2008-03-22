@@ -6,7 +6,10 @@ class Command < ActiveRecord::Base
   def run!
     parts = self.text.downcase.strip.split(" ")
     # claim spot_name [@ addresse]
-    if parts[0] == "claim"
+    if parts[0] == "hi"
+      return twitter_ohai()
+
+    elsif parts[0] == "claim"
       return claim_spot(parts[1, parts.size].join(" ")) #spot beschreibung wieder zusammensetzen
 
     elsif parts[0] == 'friend'
@@ -29,6 +32,10 @@ class Command < ActiveRecord::Base
   end
 
 private
+  def twitter_ohai
+    user.notify_twitter "hi, i'm the urbantakeover bot. send 'd cpu claim spot @ address' to mark something claimed."
+  end
+  
   def add_friend friend_name
     friend = User.find_by_login(friend_name)
     if (friend != self.user) and (not friend.friend_of? self.user)
