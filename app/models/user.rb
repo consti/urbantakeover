@@ -21,8 +21,9 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password,                   :if => :password_required?
   validates_length_of       :login,    :within => 1..32
   validates_uniqueness_of   :login, :case_sensitive => false
-  validates_uniqueness_of   :email, :case_sensitive => false, :if => Proc.new { |user| user.email != nil }
-  validates_uniqueness_of   :twittername, :if => Proc.new { |user| user.twittername != nil and not user.twittername.empty? }
+  validates_uniqueness_of   :email, :case_sensitive => false, :if => Proc.new { |user| not user.email.empty? }
+  validates_format_of :email, :with => /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i, :if => Proc.new { |user| not user.email.empty?}
+  validates_uniqueness_of   :twittername, :if => Proc.new { |user| not user.twittername.empty? }
   validate :colour_is_somewhat_visible
   
   before_save :encrypt_password
@@ -143,6 +144,7 @@ class User < ActiveRecord::Base
   end
   
   def send_notify message
+    # don't call this function "notify". it will wreak havoc and send all kind of strange "before_save", "after_save" messages. ruby built in function names & message passing system gone wild ^_^
     if should_twitter?
       notify_twitter(message)
     elsif should_mail? # if i'm notified via sms, i don't want a mail aswell (especially since some users get twitter notify mails)
@@ -151,11 +153,11 @@ class User < ActiveRecord::Base
   end
   
   def should_twitter?
-    (not twittername.empty?) and is_notify_mail_on? #and ENV["RAILS_ENV"] == 'production' 
+    (not twittername.empty?) and is_notify_mail_on? and ENV["RAILS_ENV"] == 'production' 
   end
   
   def should_mail?
-    (not email.empty?) and is_notify_mail_on? #and ENV["RAILS_ENV"] == 'production' 
+    (not email.empty?) and is_notify_mail_on? and ENV["RAILS_ENV"] == 'production' 
   end
   
   def is_notify_mail_on?

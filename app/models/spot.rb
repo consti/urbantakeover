@@ -34,7 +34,7 @@ class Spot < ActiveRecord::Base
     latitude.strip!
     tupalo_link = (item/"guid").text
 
-    return Spot.create :name => name, :geolocation_x => longitude, :geolocation_y => latitude, :tupalo_link => tupalo_link    
+    return Spot.create(:name => name, :geolocation_x => longitude, :geolocation_y => latitude, :tupalo_link => tupalo_link)
   end
 
   def geolocate_address
