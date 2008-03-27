@@ -5,6 +5,7 @@
 unless spots.empty?
   map.center_zoom_init(spots[-1].geolocation, 14)  # zoom to last spot
   
+  markers = []
   spots.each do |spot|
   
     info_lines = []
@@ -20,19 +21,23 @@ unless spots.empty?
       info_lines << link_to("Spot on Tupalo", spot.tupalo_link)
     end
   
-    marker = GMarker.new(spot.geolocation,
+    markers << GMarker.new(spot.geolocation,
       :title => spot.name, :info_window => info_lines.join("<br/>"))  
-      map.overlay_init(marker)
     
     if spot.current_owner
       #radius around spots
-      #map.overlay_init(GPolygon.new(circle_points(spot.geolocation_x, spot.geolocation_y, 0.002), spot.current_owner.colour_1, 0, 0.5, spot.current_owner.colour_1, 0.5))
+      map.overlay_init(GPolygon.new(circle_points(spot.geolocation_x, spot.geolocation_y, 0.002), spot.current_owner.colour_1, 0, 0.5, spot.current_owner.colour_1, 0.5))
     end
     
     if params[:focus] and params[:focus] == spot.name
       map.center_zoom_init(spot.geolocation, 15)
     end
   end
+  
+  managed_markers= ManagedMarker.new(markers,10)
+
+  mm = GMarkerManager.new(map,:managed_markers => [managed_markers])
+  map.declare_init(mm,"mgr")  
 end
 %>
 <%= map.div(:width => 550, :height => 400) %>
