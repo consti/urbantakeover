@@ -14,7 +14,7 @@
   <% if logged_in? %>
     <p>
     y0! <%= format_user current_user %>
-    ("#{current_user.total_score} points")
+    (<%="#{current_user.total_score} points"%>)
     |
     <%= link_to 'my spots', :controller => :claims, :action => :my %>
     |

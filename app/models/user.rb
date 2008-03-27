@@ -29,9 +29,28 @@ class User < ActiveRecord::Base
   before_save :update_twitter_friend
   before_validation :random_color_if_not_set
   before_validation :set_city
+  before_validation :clean_notify_fields
   before_create :initial_score_before
   after_create :initial_score_after
   
+  after_save :save_team
+  
+  def save_team
+    team.save if team
+  end
+
+  def colour_3= value
+    team.colour = value if team
+  end
+  
+  def colour_3
+    team.colour if team
+  end
+
+  def clean_notify_fields
+    twittername.strip!
+    email.strip!
+  end
 
   def before_destroy
     raise "not allowed to destroy users!"

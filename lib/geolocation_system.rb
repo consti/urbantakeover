@@ -2,10 +2,9 @@ module GeolocationSystem
   protected
     def current_city
       if logged_in?
-        return current_user.city
+        current_user.city
       else
-        #TODO: find by ip address in session
-        return City.find_by_name 'Wien'
+        City.find_by_name 'Wien' #TODO: find by ip address in session
       end
     end
     
