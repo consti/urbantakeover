@@ -27,7 +27,7 @@ class ClaimsController < ApplicationController
       return
     end
 
-    command = Command.create(:user => current_user, :text => text)
+    command = Command.create(:user => current_user, :text => text, :source => "web")
     result = command.run!
     flash[:notice] = result || "sry, something went wrong. no result text??? o_O'"
     

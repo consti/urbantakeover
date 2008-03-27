@@ -49,20 +49,20 @@ Rails::Initializer.run do |config|
   TWITTER = Twitter::Base.new(PRIVATE_API_CONFIG['twitter']['email'], PRIVATE_API_CONFIG['twitter']['password'])
 
   # thanx http://www.wanlord.com/articles/2007/11/29/sending-email-using-actionmailer-and-gmail
-  #require 'tlsmail'
-  #Net::SMTP.enable_tls(OpenSSL::SSL::VERIFY_NONE)
-  #ActionMailer::Base.delivery_method = :smtp
-  #
-  #ActionMailer::Base.smtp_settings = {
-  #  :address => 'smtp.gmail.com',
-  #  :port => 587,
-  #  :domain => '72dpiarmy.com',
-  #  :authentication => :plain,
-  #  :user_name => PRIVATE_API_CONFIG['gmail']['email'],
-  #  :password => PRIVATE_API_CONFIG['gmail']['password'],
-  #}
-  #
-  #config.action_mailer.raise_delivery_errors = true
+  require 'tlsmail'
+  Net::SMTP.enable_tls(OpenSSL::SSL::VERIFY_NONE)
+  config.action_mailer.delivery_method = :smtp
+  
+  config.action_mailer.smtp_settings = {
+    :address => 'smtp.gmail.com',
+    :port => 587,
+    :domain => PRIVATE_API_CONFIG['gmail']['domain'],
+    :authentication => :plain,
+    :user_name => "%s@%s" % [ PRIVATE_API_CONFIG['gmail']['user'], PRIVATE_API_CONFIG['gmail']['domain'] ],
+    :password => PRIVATE_API_CONFIG['gmail']['password'],
+  }
+  
+  config.action_mailer.raise_delivery_errors = true
 
 
   # Use the database for sessions instead of the cookie-based default,

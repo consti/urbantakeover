@@ -127,7 +127,7 @@ class User < ActiveRecord::Base
       message = description
     end
 
-    self.notify! message
+    self.notify message
   end
   
   def total_score
@@ -142,9 +142,12 @@ class User < ActiveRecord::Base
     is_admin?
   end
   
-  def notify! message
-    notify_twitter(message) if should_twitter?
-    notify_mail(message) if should_mail? #maybe only mail if no twitter was send => no double notifications. but stickiness... and they can turn it off. but convention > configuration. aaaargh
+  def notify message
+    if should_twitter?
+      notify_twitter(message)
+    elsif should_mail? # if i'm notified via sms, i don't want a mail aswell (especially since some users get twitter notify mails)
+      notify_mail(message) 
+    end
   end
   
   def should_twitter?
@@ -244,7 +247,7 @@ class User < ActiveRecord::Base
     end
     
     def notify_mail message
-      begin
+      begin # maybe this try except is not needed
         NotifyMailer.deliver_message(self, message)
       rescue => e
         logger.error(e)

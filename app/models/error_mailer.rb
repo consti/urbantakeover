@@ -7,8 +7,8 @@ class ErrorMailer < ActionMailer::Base
      # Setting the content-type like this does:
      content_type "text/html" 
 
-     @recipients         = 'team@72dpiarmy.com'
-     @from               = 'bugs@72dpiarmy.com'
+     @recipients         = 'team@urbantakeover.at'
+     @from               = 'bugs@urbantakeover.at'
      @subject            = "[Error] exception in #{env['REQUEST_URI']}" 
      @sent_on            = sent_on
      @body["exception"]  = exception

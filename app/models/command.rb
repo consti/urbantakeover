@@ -1,6 +1,7 @@
 class Command < ActiveRecord::Base
   validates_presence_of :user
   validates_presence_of :text
+  validates_presence_of :source
   belongs_to :user
   
   def run!

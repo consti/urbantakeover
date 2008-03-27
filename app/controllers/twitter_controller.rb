@@ -52,7 +52,7 @@ private
     user = User.find_by_twittername username
     return "fuck, no user found for #{username}" unless user
     
-    command = Command.create(:user => user, :text => message)
+    command = Command.create(:user => user, :text => message, :source => 'twitter')
     return command.run!
   end
 end
