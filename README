@@ -5,6 +5,7 @@ am besten ruby-gems holen und dann per sudo gem install rails installieren
 
 * sudo gem install ym4r -y
 * sudo gem install twitter -y
+* sudo gem install tlsmail -y
 
 
 == run

@@ -46,14 +46,6 @@ class User < ActiveRecord::Base
       self.errors.add "Colour 1 and 2 can't be the same. Other players won't be able to read your name, kbai?!"
     end
   end
-
-  def should_twitter?
-    return ENV["RAILS_ENV"] == 'production'
-  end
-  
-  def should_mail?
-    return false
-  end
   
 #  validate :leetness_of_password
 #  
@@ -131,9 +123,27 @@ class User < ActiveRecord::Base
     is_admin?
   end
   
-  def notify
-    self.notify_twitter if should_twitter?
-    self.notify_mail if should_mail?
+  def notify! message
+    notify_twitter(message) if should_twitter?
+    notify_mail(message) if should_mail? #maybe only mail if no twitter was send => no double notifications. but stickiness... and they can turn it off. but convention > configuration. aaaargh
+  end
+  
+  def should_twitter?
+    (not twittername.empty?) and is_notify_mail_on? and ENV["RAILS_ENV"] == 'production' 
+  end
+  
+  def should_mail?
+    (not email.empty?) and is_notify_mail_on? #and ENV["RAILS_ENV"] == 'production' 
+  end
+  
+  def is_notify_mail_on?
+    # soon to be turned into a database field @hacketyhack
+    true
+  end
+
+  def is_notify_twitter_on?
+    # soon to be turned into a database field @hacketyhack 
+    true
   end
     
   def claim spot
@@ -214,8 +224,12 @@ class User < ActiveRecord::Base
       crypted_password.blank? || !password.blank?
     end
     
-    def notify_mail
-      raise "implement me"
+    def notify_mail message
+      begin
+        NotifyMailer.deliver_message(self, message)
+      rescue => e
+        logger.error(e)
+      end
     end
 
     def notify_twitter message

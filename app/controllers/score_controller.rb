@@ -10,11 +10,7 @@ class ScoreController < ApplicationController
     @teams = Team.find :all
     @teams = @teams.sort_by(&:score).reverse[0...10]
   end
-  
-  def my
-    @user = current_user
-  end
-  
+    
   def dismiss
     current_user.scores_seen_until = Time.now
     current_user.save!

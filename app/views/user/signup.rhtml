@@ -2,20 +2,35 @@
 
 <%= error_messages_for :user %>
 <% form_for :user do |f| -%>
-<p><label for="login">Login</label><br/>
-<%= f.text_field :login %></p>
+  <table>
+    <tr>
+      <td>
+      <h3>The basic information</h3>
+      <p><label for="login">Login</label><br/>
+      <%= f.text_field :login %></p>
 
-<p><label for="twittername">Twitter Username</label><br/>
-<%= f.text_field :twittername %></p>
+      <p><label for="password">Password</label><br/>
+      <%= f.password_field :password %></p>
 
-<p><label for="email">Email</label><br/>
-<%= f.text_field :email %></p>
+      <p><label for="password_confirmation">Confirm Password</label><br/>
+      <%= f.password_field :password_confirmation %></p>
 
-<p><label for="password">Password</label><br/>
-<%= f.password_field :password %></p>
+      <p><%= submit_tag 'Sign up' %></p>
+    </td>
+    <td>
+      <h3>How do you want to be notified?</h3>
+      <p><label for="twittername">via Twitter. My username is: </label><br/>
+      <%= f.text_field :twittername %></p>
+      
+      <p><label for="email">via Email. My Mail Address is: </label><br/>
+      <%= f.text_field :email %></p>
 
-<p><label for="password_confirmation">Confirm Password</label><br/>
-<%= f.password_field :password_confirmation %></p>
+      <h3>Are you on Flickr? (<em>Foto Upload = moar points!</em>)</h3>
+      Implemented soonish.
+      <p><label for="flickr">Twitter Username is</label><br/>
+      <%= f.text_field :flickr %></p>
+    </td>
+  </tr>
+  </table>
 
-<p><%= submit_tag 'Sign up' %></p>
 <% end -%>

@@ -1,9 +1,0 @@
-<h2>All <%= @user.total_score %> points of <%= format_user @user %></h2>
-
-<ul>
-<% for score in @user.scores %>
-  <li>
-  <%= score.points %> for <%= score.description %>
-  </li>
-<% end %>
-</ul>
