@@ -21,6 +21,7 @@ class Command < ActiveRecord::Base
 
     elsif (parts[0] == 'h') or (parts[0] == 'help')
       return ["'claim spotname'", "'claim spot @ address'", "'team teamname'","'help'"].join("\n")
+
     else
       #per default: treat as claim. eg: "d cbo metalab @ rathausstraße 6"
       return claim_spot(parts.join(" "))
@@ -30,7 +31,7 @@ class Command < ActiveRecord::Base
 
 private
   def twitter_ohai
-    user.notify "ohai, i'm the urbantakeover bot. send 'd cpu claim spot @ address' to mark something claimed."
+    user.send_notify "ohai, i'm the urbantakeover bot. send 'd cpu claim spot @ address' to mark something claimed."
     return "replied ohai!"
   end
   
@@ -43,7 +44,7 @@ private
       friend.score 50, "added as friend by #{user.login}"
       return "BAM! 5 points for adding #{friend.login} as friend" #TODO: send sms to user when .score!
     else
-      user.notify "sry, already friends with #{friend.login}"
+      user.send_notify "sry, already friends with #{friend.login}"
       return "SRY, Already friends with #{friend.login}!"
     end
   end
@@ -76,11 +77,11 @@ private
 
         if not spot
           # no tupalo spot, must have really been an address
-          user.notify "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ address'."
+          user.send_notify "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ address'."
           return "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ $address'."      
         end
       elsif geocodes.size > 1
-        user.notify "plz write exact address, multiple spots found. like #{geocodes.first.address}"
+        user.send_notify "plz write exact address, multiple spots found. like #{geocodes.first.address}"
         return "sry, multiple spots found. for #{address}. eg: #{geocodes.first.address}."
       else
         geocode = geocodes.first
@@ -93,7 +94,7 @@ private
     end
     
     unless user.can_claim? spot
-      user.notify "lol, you already own #{spot.name}!"
+      user.send_notify "lol, you already own #{spot.name}!"
       return "you already own #{spot.name}"
     end
     
@@ -108,10 +109,10 @@ private
 
     geocodes = Geocoding.get(address) # HARHAR - users can easily find their own stuffz
     if geocodes.empty?
-      user.notify "plz: claim like '#{spot_name} @ Musterstraße 12'"
+      user.send_notify "plz: claim like '#{spot_name} @ Musterstraße 12'"
       return "no address found for '#{address}'"
     elsif geocodes.size > 1
-      user.notify "plz write exact address, multiple spots found. like #{geocodes.first.address}"
+      user.send_notify "plz write exact address, multiple spots found. like #{geocodes.first.address}"
       return "sry, multiple spots found. for #{address}"
     else
       geocode = geocodes.first
@@ -135,14 +136,14 @@ private
       if self.user.can_claim? spot
         claim = self.user.claim spot
         if old_name
-          user.notify "lol! you rebranded #{old_name} to #{spot.name}!"
+          user.send_notify "lol! you rebranded #{old_name} to #{spot.name}!"
           return "bam! 10 points for claiming #{spot.name} (renamed from #{old_name})"
         else
           # TODO: previous user get points for giving this a good name
           return "bam! 10 points for claiming #{spot.name}"
         end
       else
-        user.notify "lol! #{spot.name} is already yours!"
+        user.send_notify "lol! #{spot.name} is already yours!"
         return "#{spot.name} already belongs to #{user.name}" # TODO: update me if there are new conditions
       end
     end
@@ -156,11 +157,11 @@ private
         return "BAM! joined team #{team.name}"
       else
         err = team.errors.full_messages.join(', ')
-        user.notify "sry, can't join team #{team.name}? contact team@72dpiarmy.com plz!"
+        user.send_notify "sry, can't join team #{team.name}? contact team@72dpiarmy.com plz!"
         return "sry, can't join team #{team.name}? #{err}"
       end
     else
-      user.notify "huh? you're already in team #{team.name}!"
+      user.send_notify "huh? you're already in team #{team.name}!"
       return "huh? you're already in team #{team.name}!"
     end
   end

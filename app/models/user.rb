@@ -127,7 +127,7 @@ class User < ActiveRecord::Base
       message = description
     end
 
-    self.notify message
+    self.send_notify message
   end
   
   def total_score
@@ -142,7 +142,7 @@ class User < ActiveRecord::Base
     is_admin?
   end
   
-  def notify message
+  def send_notify message
     if should_twitter?
       notify_twitter(message)
     elsif should_mail? # if i'm notified via sms, i don't want a mail aswell (especially since some users get twitter notify mails)
@@ -151,7 +151,7 @@ class User < ActiveRecord::Base
   end
   
   def should_twitter?
-    (not twittername.empty?) and is_notify_mail_on? and ENV["RAILS_ENV"] == 'production' 
+    (not twittername.empty?) and is_notify_mail_on? #and ENV["RAILS_ENV"] == 'production' 
   end
   
   def should_mail?
