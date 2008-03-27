@@ -6,9 +6,8 @@ class User < ActiveRecord::Base
   attr_protected :twitter_friend_with
   
 
-  has_many :claims, :order => "created_at desc"
-  has_many :stickers
-  has_many :scores, :order => "created_at desc"
+  has_many :claims, :order => "created_at desc", :dependent => :destroy
+  has_many :scores, :order => "created_at desc", :dependent => :destroy
   has_and_belongs_to_many :friends, :class_name => 'User', :join_table => 'user_friend', :association_foreign_key => 'user_id', :foreign_key => 'friend_id'
   has_and_belongs_to_many :friends_of, :class_name => 'User', :join_table => 'user_friend', :association_foreign_key => 'friend_id', :foreign_key => 'user_id'
   belongs_to :team
@@ -33,6 +32,11 @@ class User < ActiveRecord::Base
   before_create :initial_score_before
   after_create :initial_score_after
   
+
+  def before_destroy
+    raise "not allowed to destroy users!"
+  end
+
   def set_city
     self.city = City.find_by_name "Wien" # HACKETY HACK
   end
@@ -46,16 +50,9 @@ class User < ActiveRecord::Base
   def should_twitter?
     return ENV["RAILS_ENV"] == 'production'
   end
-
-  def update_twitter_friend
-    if self.twitter_friend_with != self.twittername:
-      begin
-        TWITTER.create_friendship self.twittername if should_twitter?
-      rescue Exception => e
-        RAILS_DEFAULT_LOGGER.error("Twitter error while creating_friendship with #{self.twittername}. Exception: #{e.to_s}.")
-      end
-      self.twitter_friend_with = self.twittername
-    end
+  
+  def should_mail?
+    return false
   end
   
 #  validate :leetness_of_password
@@ -119,7 +116,7 @@ class User < ActiveRecord::Base
       message = description
     end
 
-    self.notify_twitter message
+    self.notify! message
   end
   
   def total_score
@@ -134,17 +131,11 @@ class User < ActiveRecord::Base
     is_admin?
   end
   
-  def notify_twitter message
-    if self.twittername
-      begin
-        #TODO: probably very stupid, should be done differently. code copied from http://snippets.dzone.com/posts/show/3714 (for rest see environment.rb)
-        TWITTER.d(self.twittername, message) if should_twitter?
-      rescue Exception => e
-        RAILS_DEFAULT_LOGGER.error("Twitter error while sending to #{self.twittername}. Message: #{message}. Exception: #{e.to_s}.")
-      end
-    end
+  def notify
+    self.notify_twitter if should_twitter?
+    self.notify_mail if should_mail?
   end
-  
+    
   def claim spot
     return nil unless self.can_claim? spot
 
@@ -221,5 +212,29 @@ class User < ActiveRecord::Base
     
     def password_required?
       crypted_password.blank? || !password.blank?
+    end
+    
+    def notify_mail
+      raise "implement me"
+    end
+
+    def notify_twitter message
+      begin
+        #TODO: probably very stupid, should be done differently. code copied from http://snippets.dzone.com/posts/show/3714 (for rest see environment.rb)
+        TWITTER.d(self.twittername, message) if should_twitter?
+      rescue Exception => e
+        RAILS_DEFAULT_LOGGER.error("Twitter error while sending to #{self.twittername}. Message: #{message}. Exception: #{e.to_s}.")
+      end
+    end
+    
+    def update_twitter_friend
+      if self.twitter_friend_with != self.twittername:
+        begin
+          TWITTER.create_friendship self.twittername if should_twitter? 
+        rescue Exception => e
+          RAILS_DEFAULT_LOGGER.error("Twitter error while creating_friendship with #{self.twittername}. Exception: #{e.to_s}.")
+        end
+        self.twitter_friend_with = self.twittername
+      end
     end
 end

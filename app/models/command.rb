@@ -17,11 +17,7 @@ class Command < ActiveRecord::Base
 
     elsif parts[0] == 'team'
       return join_team( parts[1, parts.size].join(" "))
-        
-    elsif parts[0] == 'cross'
-      return "not implemented yet fully und so"
 
-      return cross_spot(parts[1, parts.size].join(" "))
     elsif (parts[0] == 'h') or (parts[0] == 'help')
       return ["'claim spotname'", "'claim spot @ address'", "'team teamname'","'help'"].join("\n")
     else
@@ -33,7 +29,7 @@ class Command < ActiveRecord::Base
 
 private
   def twitter_ohai
-    user.notify_twitter "ohai, i'm the urbantakeover bot. send 'd cpu claim spot @ address' to mark something claimed."
+    user.notify "ohai, i'm the urbantakeover bot. send 'd cpu claim spot @ address' to mark something claimed."
     return "replied ohai!"
   end
   
@@ -46,7 +42,7 @@ private
       friend.score 50, "added as friend by #{user.login}"
       return "BAM! 5 points for adding #{friend.login} as friend" #TODO: send sms to user when .score!
     else
-      user.notify_twitter "sry, already friends with #{friend.login}"
+      user.notify "sry, already friends with #{friend.login}"
       return "SRY, Already friends with #{friend.login}!"
     end
   end
@@ -79,11 +75,11 @@ private
 
         if not spot
           # no tupalo spot, must have really been an address
-          user.notify_twitter "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ address'."
+          user.notify "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ address'."
           return "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ $address'."      
         end
       elsif geocodes.size > 1
-        user.notify_twitter "plz write exact address, multiple spots found. like #{geocodes.first.address}"
+        user.notify "plz write exact address, multiple spots found. like #{geocodes.first.address}"
         return "sry, multiple spots found. for #{address}. eg: #{geocodes.first.address}."
       else
         geocode = geocodes.first
@@ -96,7 +92,7 @@ private
     end
     
     unless user.can_claim? spot
-      user.notify_twitter "lol, you already own #{spot.name}!"
+      user.notify "lol, you already own #{spot.name}!"
       return "you already own #{spot.name}"
     end
     
@@ -111,10 +107,10 @@ private
 
     geocodes = Geocoding.get(address) # HARHAR - users can easily find their own stuffz
     if geocodes.empty?
-      user.notify_twitter "plz: claim like '#{spot_name} @ Musterstraße 12'"
+      user.notify "plz: claim like '#{spot_name} @ Musterstraße 12'"
       return "no address found for '#{address}'"
     elsif geocodes.size > 1
-      user.notify_twitter "plz write exact address, multiple spots found. like #{geocodes.first.address}"
+      user.notify "plz write exact address, multiple spots found. like #{geocodes.first.address}"
       return "sry, multiple spots found. for #{address}"
     else
       geocode = geocodes.first
@@ -138,14 +134,14 @@ private
       if self.user.can_claim? spot
         claim = self.user.claim spot
         if old_name
-          user.notify_twitter "lol! you rebranded #{old_name} to #{spot.name}!"
+          user.notify "lol! you rebranded #{old_name} to #{spot.name}!"
           return "bam! 10 points for claiming #{spot.name} (renamed from #{old_name})"
         else
           # TODO: previous user get points for giving this a good name
           return "bam! 10 points for claiming #{spot.name}"
         end
       else
-        user.notify_twitter "lol! #{spot.name} is already yours!"
+        user.notify "lol! #{spot.name} is already yours!"
         return "#{spot.name} already belongs to #{user.name}" # TODO: update me if there are new conditions
       end
     end
@@ -159,51 +155,12 @@ private
         return "BAM! joined team #{team.name}"
       else
         err = team.errors.full_messages.join(', ')
-        user.notify_twitter "sry, can't join team #{team.name}? contact team@72dpiarmy.com plz!"
+        user.notify "sry, can't join team #{team.name}? contact team@72dpiarmy.com plz!"
         return "sry, can't join team #{team.name}? #{err}"
       end
     else
-      user.notify_twitter "huh? you're already in team #{team.name}!"
+      user.notify "huh? you're already in team #{team.name}!"
       return "huh? you're already in team #{team.name}!"
-    end
-  end
-
-  def cross_spot spot_description
-    if not spot_description.include? "@"
-      return "must tell where you crossed #{spot_description}. ie 'crossed oneup @ metalab'"
-    end
-    
-    s = spot_description.split("@")
-    user_name = s[0].strip.downcase
-    spot_name_or_address = s[1].strip.downcase
-    
-    user = User.find_by_login user_name
-    unless user
-      return "no user called #{user_name}, sorry can't cross."
-    end
-
-    spot = Spot.find_by_name(spot_name_or_address)
-    unless spot
-      geocodes = Geocoding.get(spot_name_or_address)
-      if geocodes.empty?
-         return "sorry, can't understand address #{spot_address}"
-      elsif geocodes.size > 1
-         return "multiple addresses found, specify address exactly. eg #{geocodes.first.address}"
-      else
-         geocode = geocodes.first
-         spot = Spot.find_by_address geocode.address
-         unless spot
-           return "no spot found at adress #{geocode.address}, can't cross #{user.login} there!"
-         end
-      end
-    end
-    
-    if user.can_claim? spot
-      #TODO: notify old user (also with just re-claiming)
-      user.claim spot
-      return "yay, snatched spot from #{user.login}!"  
-    else
-      return "can't cross yourself!"
     end
   end
 end

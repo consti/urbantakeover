@@ -27,12 +27,12 @@ class TwitterController < ApplicationController
                          :password_confirmation => password)
 
       unless user.save
-        user.notify_twitter "failed to create user #{username}! contact team@72dpiarmy.com plz!"
+        user.notify "failed to create user #{username}! contact team@72dpiarmy.com plz!"
         err = user.errors.full_messages.join(", ")
         return render :text => "wtf? fail create user: #{err}"
       end
       
-      user.notify_twitter "ohai #{username}! your password for http://urbantakeover.at is #{password}. enjoy! send 'claim spot' to play!"
+      user.notify "ohai #{username}! your password for http://urbantakeover.at is #{password}. enjoy! send 'claim spot' to play!"
 
       return render :text => "created user #{username} and following on twitter"
     end
