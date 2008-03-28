@@ -1,21 +1,25 @@
 <h2><%= format_user @user %> <% if @user.team %> of team <%= format_team @user.team %> <% end -%></h2>
 <% if logged_in? and current_user.is_admin? %>
- <%= link_to 'edit', :action => :edit, :id => @user %>
+ <%= link_to 'edit', :action => :edit, :id => @user %> |
 <% end %>
+<%= link_to "add as friend", :controller => 'user', :action => 'add_friend', :id => @user %>
 
 <ul>
   <li>Score: <%= @user.total_score %> points</li>
   <% if @user.team %>
     <li>Team Score: <%= @user.team.score %> points</li>
   <% end %>
-  <li>City: <%= @user.city %></li>
+  <li>City: <%= @user.city.name %></li>
 
   <% if @user.twittername %>
     <li>Twitter: <%= h @user.twittername %></li>
   <% end %>
   
-  <li>Friends: <%= @user.friends.collect {|f| format_user f }.join(", ") %></li>
+  <% unless @user.friends.empty? %>
+    <li>Friends: <%= @user.friends.collect {|f| format_user f }.join(", ") %></li>
+  <% end %>
 </ul>
+
 
 <h2>currently owns</h2>
 <%= render(:partial => 'claims/my_spots', :locals => {:user => @user}) %>
