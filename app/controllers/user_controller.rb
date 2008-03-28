@@ -15,7 +15,7 @@ class UserController < ApplicationController
     redirect_to root_url
   end
   
-  def show_by_login
+  def show_by_name
     @user = User.find_by_login params[:name]
     return redirect_back_or_default(root_url) unless @user
     show

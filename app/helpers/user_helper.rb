@@ -9,6 +9,6 @@ module UserHelper
       style += " color: #{user.colour_2};"
     end
 
-    link_to(h(user.login), {:controller => :user, :action => :show, :id => user}, :class => 'user-name', :style => style)
+    link_to(h(user.login), {:controller => :user, :action => :show_by_name, :name => user.login}, :class => 'user-name', :style => style)
   end
 end
