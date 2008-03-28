@@ -2,7 +2,7 @@
 <% if logged_in? and current_user.is_admin? %>
  <%= link_to 'edit', :action => :edit, :id => @user %> |
 <% end %>
-<%= link_to "add as friend", :controller => 'user', :action => 'add_friend', :id => @user %>
+<%= link_to "add as friend", :controller => 'claims', :action => 'new' %>
 
 <ul>
   <li>Score: <%= @user.total_score %> points</li>
@@ -17,6 +17,10 @@
   
   <% unless @user.friends.empty? %>
     <li>Friends: <%= @user.friends.collect {|f| format_user f }.join(", ") %></li>
+  <% end %>
+  
+  <% unless @user.friends_of.empty? %>
+    <li>Friends of: <%= @user.friends_of.collect {|f| format_user f }.join(", ") %></li>
   <% end %>
 </ul>
 

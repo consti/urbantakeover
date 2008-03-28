@@ -37,6 +37,12 @@ private
   
   def add_friend friend_name
     friend = User.find_by_login(friend_name)
+
+    unless friend
+      user.send_notify "lol! no user #{friend_name} found."
+      return "lol! no user #{friend_name} found." #TODO: get rid of this duplicates
+    end
+
     if (friend != self.user) and (not friend.friend_of? self.user)
       self.user.friends << friend
       self.user.save!

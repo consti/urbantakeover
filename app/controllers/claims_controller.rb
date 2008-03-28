@@ -22,6 +22,8 @@ class ClaimsController < ApplicationController
       text = "claim #{params[:spot]} @ #{params[:address]}"
     elsif params[:team]
       text = "team #{params[:team]}"
+    elsif params[:friend]
+        text = "friend #{params[:friend]}"
     else
       flash[:notice] = "no command set?"
       return
