@@ -46,9 +46,9 @@ private
     if (friend != self.user) and (not friend.friend_of? self.user)
       self.user.friends << friend
       self.user.save!
-      user.score 50, "added #{friend.login} as friend"
+      user.send_notify "yay! added #{friend.login} as friend"
       friend.score 50, "added as friend by #{user.login}"
-      return "BAM! 5 points for adding #{friend.login} as friend" #TODO: send sms to user when .score!
+      return "BAM! 50 points for adding #{friend.login} as friend" #TODO: send sms to user when .score!
     else
       user.send_notify "sry, already friends with #{friend.login}"
       return "SRY, Already friends with #{friend.login}!"
