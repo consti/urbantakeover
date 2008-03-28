@@ -48,7 +48,7 @@ private
       self.user.save!
       user.send_notify "yay! added #{friend.login} as friend"
       friend.score 50, "added as friend by #{user.login}"
-      return "BAM! 50 points for adding #{friend.login} as friend" #TODO: send sms to user when .score!
+      return "yay! added #{friend.login} as friend" #TODO: send sms to user when .score!
     else
       user.send_notify "sry, already friends with #{friend.login}"
       return "SRY, Already friends with #{friend.login}!"
