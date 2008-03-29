@@ -253,6 +253,7 @@ class User < ActiveRecord::Base
         NotifyMailer.deliver_message(self, message)
       rescue => e
         logger.error(e)
+        #TODO: MAIL ME
       end
     end
 
@@ -260,7 +261,7 @@ class User < ActiveRecord::Base
       begin
         #TODO: probably very stupid, should be done differently. code copied from http://snippets.dzone.com/posts/show/3714 (for rest see environment.rb)
         TWITTER.d(self.twittername, message) if should_twitter?
-      rescue Exception => e
+      rescue Exception => e        
         RAILS_DEFAULT_LOGGER.error("Twitter error while sending to #{self.twittername}. Message: #{message}. Exception: #{e.to_s}.")
       end
     end

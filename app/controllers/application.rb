@@ -4,6 +4,7 @@
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include GeolocationSystem
+  include ExceptionNotifiable
 
   before_filter :login_from_cookie
   
@@ -12,22 +13,4 @@ class ApplicationController < ActionController::Base
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => 'd865e93d462697055b1bdba47fcabd7f'
-  
-  
-  protected
-  
-    def log_error(exception) 
-      super(exception)
-
-      begin
-        ErrorMailer.deliver_snapshot(
-          exception, 
-          clean_backtrace(exception), 
-          @session.instance_variable_get("@data"), 
-          @params, 
-          @request.env)
-      rescue => e
-        logger.error(e)
-      end
-    end
 end

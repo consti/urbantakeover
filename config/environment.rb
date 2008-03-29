@@ -64,7 +64,6 @@ Rails::Initializer.run do |config|
   
   config.action_mailer.raise_delivery_errors = true
 
-
   # Use the database for sessions instead of the cookie-based default,
   # which shouldn't be used to store highly confidential information
   # (create the session table with 'rake db:sessions:create')
@@ -81,3 +80,6 @@ Rails::Initializer.run do |config|
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
 end
+
+ExceptionNotifier.exception_recipients = %w(team@72dpiarmy.com) 
+ExceptionNotifier.sender_address = %("UTO Bug" <team@72dpiarmy.com>)
