@@ -1,0 +1,8 @@
+@oneup 
+  => login via email oder username * besseres changelog als scores tabelle
+  => neues datenbankmodel für actions => active record inheritance
+  => claimed
+  => crossed
+  => joined
+  => buffed
+  => frontpage 3.0 (score, changelog)
