@@ -3,7 +3,7 @@
 <% spots, map = get_map_data(@spots) %>
 <%
 unless spots.empty?
-  map.center_zoom_init(spots[-1].geolocation, 14)  # zoom to last spot
+  map.center_zoom_init(Claim.find(:first, :order => "created_at desc").spot.geolocation, 14)  # zoom to last claim
   
   markers = []
   spots.each do |spot|
