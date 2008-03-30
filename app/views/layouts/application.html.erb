@@ -13,22 +13,22 @@
 <div id="user-nav">
   <% if logged_in? %>
     <p>
-    y0! <%= format_user current_user %>
-    (<%="#{current_user.total_score} points"%>)
+    <%= format_user current_user %>
+    (<%= format_score current_user %>)
     |
     <%= link_to 'my spots', :controller => :claims, :action => :my %>
     |
     <%= link_to 'my settings', settings_url %>
     |
-    <%= link_to 'log out', :controller => :user, :action => :logout %>
+    <%= link_to 'log out', logout_url %>
     </p>
     
     <%= render :partial => 'score/new_scores_flash', :locals => {:user => current_user} %>
   <% else %>
     <p>
-    <%= link_to 'log in', :controller => :user, :action => :login %>
+    <%= link_to 'log in', login_url %>
     |
-    <%= link_to 'sign up', :controller => :user, :action => :signup %>
+    <%= link_to 'sign up', signup_url %>
     </p>
 
   <% end %>
@@ -36,9 +36,9 @@
 
 <div>
   
-  <h1><a class="title" href="<%= root_url %>">urbantakeover  <span class="small">(<%= Claim.count %> up)</span></a></h1>
+  <h1><a class="title" href="<%= root_url %>"><%= print_pwnzing_logo %> <!-- OVER NINE THOUSAND? (props @ diemade)--> <span class="small">(<%= Claim.count %> up)</span></a></h1>
   <div class="menu">
-  <%= link_to 'claim spot', :controller => :claims, :action => :new %>
+  <%= link_to 'send command', :controller => :claims, :action => :new %>
   
 
   | <%= link_to 'how to play', howto_path %>

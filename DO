@@ -13,7 +13,8 @@ action_log
   => joined
   => buffed
   => frontpage 3.0 (score, changelog)
-  
+
+  20% of hardcore users users have iphones => iphone geolocate application
 
 sushimako
 * spot view

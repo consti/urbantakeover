@@ -117,7 +117,7 @@ class User < ActiveRecord::Base
     self.score 50, "signed up"
   end
 
-  def score(points, description)
+  def score!(points, description)
     self.scores.create :points => points, :description => description
 
     if points > 0
@@ -131,7 +131,8 @@ class User < ActiveRecord::Base
     self.send_notify message
   end
   
-  def total_score
+  def score points=nil, description=nil
+    return score!(points, description) unless points.nil?
     self.scores.inject(0) {|n, s| n += s.points} 
   end
 
@@ -201,7 +202,7 @@ class User < ActiveRecord::Base
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
-    u = find_by_login(login) # need to get the salt
+    u = find_by_login(login) || find_by_email(login)
     u && u.authenticated?(password) ? u : nil
   end
 

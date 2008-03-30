@@ -7,6 +7,11 @@ ActionController::Routing::Routes.draw do |map|
   map.faq '/faq', :controller => 'claims', :action => 'faq'
   map.claim '/claim', :controller => 'claims', :action => 'new'
   map.login '/login', :controller => 'user', :action => 'login'
+  map.logout '/logout', :controller => 'user', :action => 'logout'
+  map.signup '/signup', :controller => 'user', :action => 'signup'
+  map.settings '/settings', :controller => 'user', :action => 'settings'
+  map.connect '/profile', :controller => 'user', :action => 'settings'
+  map.home '/home', :controller => 'user', :action => 'home'
   map.highscore '/highscore', :controller => 'score', :action => 'index'
   map.root :controller => 'claims', :action => 'recent'
   
