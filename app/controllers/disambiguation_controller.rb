@@ -1,30 +1,26 @@
 # The friendly link'er is used to give people helpful links when they go to http://uto.io/something
 # name refactorization welcome ;)
 
-class FriendlynkerController < ApplicationController
-
+class DisambiguationController < ApplicationController
+  @@models = [User, Spot, Team]
+  
   def index
     name = params[:name]
-    user = User.find_by_login name
-    spot = Spot.find_by_name name
-    
-    # TODO: all temporary redirect code, here be no permalinks!
-    if user and spot
-      redirect_to(:action => :disambiguate, :name => name)
-    elsif user
-      redirect_to(:controller => :user, :action => :show_by_name, :name => name)
-    elsif spot
-      redirect_to(:controller => :spots, :action => :show_by_name, :name => name)
+    objects = []
+    @@models.each do |model|
+      objects += model.find_all_by_name(params[:name])
+    end
+
+    if objects.length == 1
+      object = objects.first
+      return redirect_to(:controller => object.class.name.downcase, :action => :show_by_name, :name => name)
     else
-      # TODO: redirect to 404 page and send proper error response @hacketyhack
-      flash[:notice] = "sorry, nothing found"
-      redirect_to root_url
+      session[:ambiguate_objects] = objects
+      redirect_to :action => :disambiguate
     end
   end
 
   def disambiguate
-    @name = params[:name]
-    @user = User.find_by_login @name
-    @spot = Spot.find_by_name @name
+    @objects = session[:ambiguate_objects]
   end
 end

@@ -38,5 +38,10 @@ module ApplicationHelper
     
     green_percentage_character_count = (Claim.count/points_per_character).floor
     fancy_name = '<span class="green">%s</span>%s' % [name[0...green_percentage_character_count], name[green_percentage_character_count,name.length]]
+    if Claim.count < score_goal
+      fancy_name + "<!-- #{Claim.count} < nine thousand (props @ diemade)-->"
+    else
+      fancy_name + "FUCK YEAH => OVER NINE THOUSAND!!! (PWND DIE MADE)"
+    end
   end
 end

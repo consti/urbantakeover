@@ -15,10 +15,11 @@ ActionController::Routing::Routes.draw do |map|
   map.highscore '/highscore', :controller => 'score', :action => 'index'
   map.root :controller => 'claims', :action => 'recent'
   
-  map.connect '/:name', :controller => 'friendlynker', :action => 'index' # TODO: :controller => 'disambiguator', :action => 'user_or_spot_or_what'
-  map.connect '/which/:name', :controller => 'friendlynker', :action => 'disambiguate'
+  map.connect '/:name', :controller => 'disambiguation', :action => 'index' # TODO: :controller => 'disambiguator', :action => 'user_or_spot_or_what'
+  map.connect '/which/:name', :controller => 'disambiguation', :action => 'disambiguate'
   map.connect '/user/:name', :controller => 'user', :action => 'show_by_name'
-  map.connect '/spot/:name', :controller => 'spots', :action => 'show_by_name'
+  map.connect '/spot/:name', :controller => 'spot', :action => 'show_by_name'
+  map.connect '/team/:name', :controller => 'team', :action => 'show_by_name'
 
 
 

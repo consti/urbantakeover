@@ -36,6 +36,15 @@ class User < ActiveRecord::Base
   
   after_save :save_team
   
+  
+  def self.find_all_by_name name
+    self.find_all_by_login name
+  end
+  
+  def self.find_by_name name
+    self.find_by_login name
+  end
+
   def save_team
     team.save if team
   end

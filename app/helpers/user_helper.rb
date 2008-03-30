@@ -13,7 +13,7 @@ module UserHelper
   end
   
   def format_score user
-    "%s points" % user.score.to_s unless user.team
+    return("%s points" % user.score.to_s) if user.team.nil?
     "%s/%s team points" % [user.score, user.team.score]
   end
 end

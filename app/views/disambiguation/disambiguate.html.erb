@@ -1,5 +1,9 @@
-<h1>Ohai, haz found moar than one:</h1>
+<h1>Huh? Haz found moar than one!</h1>
 
-<h2>User <%= format_user @user %></h2>
-<h2>Spot <%= format_spot @spot %></h2>
+<ul>
+  <% for object in @objects %>
+  <li><h2><%= object.class.name %> <%= self.send "format_#{object.class.name.downcase}", object %></h2></li>
+  <% end %>
+</ul>
+
 
