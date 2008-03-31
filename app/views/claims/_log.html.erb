@@ -4,7 +4,7 @@
   <% for claim in claims %>
     <li>
     <% if claim.crossed_claim %>
-      from <%= format_user claim.crossed_claim.user %>
+            <%= format_user claim.user %> crossed <%= format_user claim.crossed_claim.user %> at <%= format_spot claim.spot %>
     <% else %>
       <%= format_user claim.user %> claimed <%= format_spot claim.spot %>  
     <% end %>
