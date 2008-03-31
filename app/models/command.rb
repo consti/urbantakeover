@@ -4,6 +4,11 @@ class Command < ActiveRecord::Base
   validates_presence_of :source
   belongs_to :user
   
+  def self.run_for user, command, source="web"
+    c = Command.create :user => user, :text => command, :source => source
+    c.run!
+  end
+
   def run!
     command, arguments = self.text.downcase.strip.split(" ", 2)
     # claim spot_name [@ addresse]

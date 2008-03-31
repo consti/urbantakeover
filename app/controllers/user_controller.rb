@@ -43,10 +43,9 @@ class UserController < ApplicationController
   
   def add_friend
     friend = User.find(params[:id])
-    if friend != current_user
-      current_user.friends << friend
-      current_user.save!
-    end
+    
+    Command.run_for current_user, "friend #{friend.name}", "web"
+    
     redirect_back_or_default :controller => 'posts', :action => 'show', :name => friend.name
   end
   

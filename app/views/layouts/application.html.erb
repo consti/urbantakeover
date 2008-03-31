@@ -22,8 +22,6 @@
     |
     <%= link_to 'log out', logout_url %>
     </p>
-    
-    <%= render :partial => 'score/new_scores_flash', :locals => {:user => current_user} %>
   <% else %>
     <p>
     <%= link_to 'log in', login_url %>
@@ -56,6 +54,11 @@
 </div>
 
 <p style="color: green"><%= flash[:notice] %></p>
+
+<% for line in flash[:scores] %>
+  <p style="color: blue;"><%= line %></p>
+<% end %>
+
 
 <div id="content">
   <%= yield  %>

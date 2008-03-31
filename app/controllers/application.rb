@@ -7,7 +7,26 @@ class ApplicationController < ActionController::Base
   include ExceptionNotifiable
 
   before_filter :login_from_cookie
+  before_filter :flashify_new_scores
   
+  def flashify_new_scores
+    return unless logged_in?
+    scores = current_user.scores.find :all, :conditions => ["created_at > ?", current_user.scores_seen_until]
+    current_user.scores_seen_until = Time.now
+    current_user.save
+    
+    flash[:scores] = []    
+    scores.each do |score|
+      flash[:scores] << if score.points > 0
+        "#{score.description}, get #{score.points} points!"
+      elsif score.points < 0
+        "#{score.description}, loose #{score.points.abs} points!"
+      else
+        description
+      end
+    end
+  end
+
   helper :all # include all helpers, all the time
 
   # See ActionController::RequestForgeryProtection for details
