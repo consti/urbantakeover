@@ -6,3 +6,13 @@ class NilClass
     return true
   end
 end
+
+class String
+  def uppercase
+    upcase
+  end
+ 
+  def uppercase!
+    upcase!
+  end
+end

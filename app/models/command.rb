@@ -33,7 +33,12 @@ class Command < ActiveRecord::Base
 
     else
       #per default: treat as claim. eg: "d cbo metalab @ rathausstraße 6"
-      return claim_spot(parts.join(" "))
+      # TODO: send mail to us "feature request"
+      user = User.find_by_login "oneup"
+      user.send_notify "[feature request]: #{self.text}" if user
+
+      #try this anyway
+      return claim_spot(arguments)
     end
       
   end  
