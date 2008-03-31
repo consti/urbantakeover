@@ -92,8 +92,12 @@ module ExceptionNotifiable
             when Proc then deliverer.call(self)
           end
 
-          ExceptionNotifier.deliver_exception_notification(exception, self,
+          begin
+            ExceptionNotifier.deliver_exception_notification(exception, self,
             request, data)
+          rescue
+            # logger.log("FCK FCK FCK exception notify did not work")
+          end
       end
     end
 end
