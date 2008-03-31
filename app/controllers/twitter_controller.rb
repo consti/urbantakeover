@@ -20,10 +20,10 @@ class TwitterController < ApplicationController
     username = params[:user]
     user = User.find_by_twittername username
     unless user
-      password = "%04d" % (1+rand(9999))
+
       user = User.create(:twittername => username,
                          :login => username,
-                         :password => password,
+                         :password => User.generate_password,
                          :password_confirmation => password)
 
       unless user.save

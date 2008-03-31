@@ -15,6 +15,20 @@ class UserController < ApplicationController
     home
   end
   
+  def forgot_password
+    return unless request.post?
+
+    user = User.find_by_name params[:name]
+
+    new_password = User.generate_password
+    user.password = new_password
+    user.password_confirmation = user.password
+
+    user.save!
+    user.send_notify "Your new password is #{new_password}."
+  end
+    
+  
   def show_by_name
     @user = User.find_by_login params[:name]
     return redirect_back_or_default(root_url) unless @user

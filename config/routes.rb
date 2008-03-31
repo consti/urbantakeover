@@ -8,6 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   map.claim '/claim', :controller => 'claims', :action => 'new'
   map.login '/login', :controller => 'user', :action => 'login'
   map.logout '/logout', :controller => 'user', :action => 'logout'
+  map.logout '/recover_password', :controller => 'user', :action => 'forgot_password'
   map.signup '/signup', :controller => 'user', :action => 'signup'
   map.settings '/settings', :controller => 'user', :action => 'settings'
   map.connect '/profile', :controller => 'user', :action => 'settings'

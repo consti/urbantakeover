@@ -36,13 +36,16 @@ class User < ActiveRecord::Base
   
   after_save :save_team
   
+  def self.generate_password
+    password = "%04d" % (1+rand(9999))
+  end
   
   def self.find_all_by_name name
     self.find_all_by_login name
   end
   
   def self.find_by_name name
-    self.find_by_login name
+    self.find_by_login(name) || self.find_by_email(name)
   end
 
   def save_team
@@ -185,6 +188,7 @@ class User < ActiveRecord::Base
 
     my_claim = Claim.create :user => self, :spot => spot
     
+    points = 100
     if my_claim.crossed_claim
       my_claim.crossed_claim.user.score -20, "fck! crossed by #{self.name} at #{spot.name}"
       self.score points, "crossed #{my_claim.crossed_claim.user.name} @ #{spot.name}"

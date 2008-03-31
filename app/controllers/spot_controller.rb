@@ -24,7 +24,9 @@ class SpotController < ApplicationController
   # GET /spots/1
   # GET /spots/1.xml
   def show
-    @spot ||= Spot.find(params[:id])
+    @spot ||= Spot.find_by_name(params[:id])
+    @spot ||= Spot.find(params[:id])
+
     params[:focus] = @spot.name
 
     respond_to do |format|
