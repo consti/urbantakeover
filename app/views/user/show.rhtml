@@ -4,41 +4,30 @@
 <% end %>
 <%= link_to "add as friend", :controller => 'claims', :action => 'new' %>
 
+<h3>Score: <%= format_score @user %></h3>
+
+
+<h2>Friends</h2>
 <ul>
-  <li>Score: <%= format_score @user %></li>
-  <li>City: <%= @user.city.name %></li>
+<% unless @user.friends.empty? %>
+  <li>Friends: <%= @user.friends.collect {|f| format_user f }.join(", ") %></li>
+<% end %>
 
-  <% if @user.twittername %>
-    <li>Twitter: <%= h @user.twittername %></li>
-  <% end %>
-  
-  <% unless @user.friends.empty? %>
-    <li>Friends: <%= @user.friends.collect {|f| format_user f }.join(", ") %></li>
-  <% end %>
-  
-  <% unless @user.friends_of.empty? %>
-    <li>Friends of: <%= @user.friends_of.collect {|f| format_user f }.join(", ") %></li>
-  <% end %>
+<% unless @user.friends_of.empty? %>
+  <li>Friends of: <%= @user.friends_of.collect {|f| format_user f }.join(", ") %></li>
+<% end %>
+
+<% unless @user.twittername.empty? %>
+  <li>See also: <a href="http://twitter.com/<%= h @user.twittername %>/friends"><%= h @user.twittername %></a>'s friends on Twitter</li>
+<% end %>
+
+<% unless @user.flickr.empty? %>
+  <li>See also: <a href="http://flickr.com/people/<%= h @user.flickr %>/contacts/"><%= h @user.flickr %></a>'s friends on Flickr</li>
 </ul>
+<% end %>
 
 
-<h2>currently owns</h2>
+<h2><%= h @user.name%>'s Spots</h2>
 <%= render(:partial => 'claims/my_spots', :locals => {:user => @user}) %>
 
-<h2>claim log</h2>
-  
-<ul>
-<% for claim in @claims %>
-  <li>
-    <%= format_spot claim.spot  %> at <%= interval_to_now claim.created_at %>
-    <% if claim.spot.first_claim_after(claim) %>
-      <ul>
-      <li>
-        <% reclaim = claim.spot.first_claim_after(claim) %>
-        spot lost to <%= format_user reclaim.user %> after <%= format_interval(reclaim.created_at - claim.created_at) %>.
-      </li>
-      </ul>
-    <% end %>
-  </li>
-<% end %>
-</ul>
+<%= todo "DRAW MAP with this users spots/areas." %>

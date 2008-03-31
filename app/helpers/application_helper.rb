@@ -44,4 +44,8 @@ module ApplicationHelper
       fancy_name + "FUCK YEAH => OVER NINE THOUSAND!!! (PWND DIE MADE)"
     end
   end
+  
+  def todo what
+    "TODO %s <a href=\"mailto://team@72dpiarmy.com\">mail us if this is important to you</a>" % what
+  end
 end

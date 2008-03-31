@@ -74,6 +74,8 @@ class UserController < ApplicationController
       @user.save
       flash[:notice] = 'Changes saved, kbai!'
       current_user.reload
+      
+      redirect_to :action => :show, :id => @user
     end
 
   rescue ActiveRecord::RecordInvalid
