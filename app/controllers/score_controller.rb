@@ -5,7 +5,7 @@ class ScoreController < ApplicationController
     #TODO: faked for now. real' me.
     
     @users = User.find :all
-    @users = @users.sort_by(&:total_score).reverse[0...10]
+    @users = @users.sort_by(&:score).reverse[0...10]
     
     @teams = Team.find :all
     @teams = @teams.sort_by(&:score).reverse[0...10]

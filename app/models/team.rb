@@ -10,7 +10,7 @@ class Team < ActiveRecord::Base
   end
   
   def score
-    self.users.inject(0) {|n, u| n += u.total_score }
+    self.users.inject(0) {|n, u| n += u.score }
   end
   
   def rank

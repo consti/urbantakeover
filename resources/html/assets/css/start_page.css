@@ -14,17 +14,15 @@ Author URI: http://www.72dpiarmy.com
 /* =about		            */
 #about {
 	font-size: 1.6em;
-	background: #eee;
-	border-bottom: 1px solid #ccc;
-	padding: 1em;
+	padding: 2em 0;
 	}
 	#about p { color: #000; margin: 0;} 
 
 /*--------------------------*/
 /* =activity	            */
-#game_activity { float: left; width: 36em; border-right: 1px solid #ccc; margin-right: -1px; padding-bottom: 2em;}
+#game_activity { float: left; width: 36em; margin-right: -1px; padding-bottom: 2em;}
 	
-	.day_activity { float: left; width: 100%; border-bottom: 1px solid #ccc; margin-bottom: 2em;}
+	.day_activity { float: left; width: 100%; margin-bottom: 2em;}
 	
 		.date { 
 			float: left;
@@ -32,7 +30,6 @@ Author URI: http://www.72dpiarmy.com
 			color: #444; 
 			width: 3em; 
 			background: #eee;
-			border:  1px solid #ccc;
 			margin-right: 2em;
 			padding: 0.25em 0.7em;  
 			}
@@ -55,6 +52,5 @@ Author URI: http://www.72dpiarmy.com
 #recent_spots {
 	float: left;
 	width: 54.9em;
-	border-left: 1px solid #ccc;
 	padding: 0 0 2em 5em;
 	}
