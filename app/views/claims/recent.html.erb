@@ -1,3 +1,4 @@
+
 <div style="float: left; width: 450px;">
   <h2>What's going on?</h2>
   <%= render :partial => 'claims/log', :locals => {:claims => @recent_claims} %>
@@ -8,4 +9,6 @@
   <h2>Spots</h2>
 
   <%= show_map %>
+  
+  <%= render_partial 'proof/flickr' %>
 </div>
