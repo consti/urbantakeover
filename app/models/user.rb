@@ -175,14 +175,6 @@ class User < ActiveRecord::Base
 
     my_claim = Claim.create :user => self, :spot => spot
     
-    if my_claim.spot.address.empty? or my_claim.spot.address.include?(self.city.name)
-      #tagged in own city or unknown
-      points = 100
-    else
-      #tagged other city!!!
-      points = 200
-    end
-    
     if my_claim.crossed_claim
       my_claim.crossed_claim.user.score -20, "fck! crossed by #{self.name} at #{spot.name}"
       self.score points, "crossed #{my_claim.crossed_claim.user.name} @ #{spot.name}"
