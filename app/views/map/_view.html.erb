@@ -26,7 +26,7 @@ unless spots.empty?
     
     if spot.current_owner
       #radius around spots
-      #map.overlay_init(GPolygon.new(circle_points(spot.geolocation_x, spot.geolocation_y, 0.002), spot.current_owner.colour_1, 0, 0.5, spot.current_owner.colour_1, 0.5))
+      map.overlay_init(GPolygon.new(circle_points(spot.geolocation_x, spot.geolocation_y, 0.002), spot.current_owner.colour_1, 0, 0.5, spot.current_owner.colour_1, 0.5))
     end
     
     if params[:focus] and params[:focus] == spot.name
@@ -34,7 +34,7 @@ unless spots.empty?
     end
   end
   
-  managed_markers= ManagedMarker.new(markers,10)
+  managed_markers= ManagedMarker.new(markers,1)
 
   mm = GMarkerManager.new(map,:managed_markers => [managed_markers])
   map.declare_init(mm,"mgr")  
