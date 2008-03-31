@@ -58,8 +58,8 @@ class User < ActiveRecord::Base
   end
 
   def clean_notify_fields
-    twittername.strip!
-    email.strip!
+    twittername.strip! unless twittername.empty?
+    email.strip! unless email.empty?
   end
 
   def before_destroy

@@ -5,21 +5,25 @@ class Command < ActiveRecord::Base
   belongs_to :user
   
   def run!
-    parts = self.text.downcase.strip.split(" ")
+    command, arguments = self.text.downcase.strip.split(" ", 2)
     # claim spot_name [@ addresse]
-    if parts[0] == "hi"
+    
+    if command == "hi"
       return twitter_ohai()
 
-    elsif parts[0] == "claim"
-      return claim_spot(parts[1, parts.size].join(" ")) #spot beschreibung wieder zusammensetzen
+    elsif command == "claim"
+      return claim_spot(arguments) #spot beschreibung wieder zusammensetzen
 
-    elsif parts[0] == 'friend'
-      return add_friend(parts[1, parts.size].join(" "))
+    elsif command == 'friend'
+      return add_friend(arguments)
 
-    elsif parts[0] == 'team'
-      return join_team( parts[1, parts.size].join(" "))
+    elsif command == 'team'
+      return join_team(arguments)
+    
+    elsif command == 'seen'
+      return seen(arguments)
 
-    elsif (parts[0] == 'h') or (parts[0] == 'help')
+    elsif (command == 'h') or (command == 'help')
       return ["'claim spotname'", "'claim spot @ address'", "'team teamname'","'help'"].join("\n")
 
     else
@@ -27,7 +31,7 @@ class Command < ActiveRecord::Base
       return claim_spot(parts.join(" "))
     end
       
-  end
+  end  
 
 private
   def twitter_ohai
