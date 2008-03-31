@@ -2,7 +2,13 @@
   <h3><%= "%d. %s" % [claims[0].created_at.day, claims[0].created_at.month] %></h3>
   <ul>
   <% for claim in claims %>
-    <li><%=format_user claim.user %> took <%= format_spot claim.spot %> <%= if claim.crossed_claim then "from #{format_user claim.crossed_claim.user} " end %> at <%= "%02d:%02d" % [claim.created_at.hour, claim.created_at.min] %></li>
+    <li>
+    <% if claim.crossed_claim %>
+      from <%= format_user claim.crossed_claim.user %>
+    <% else %>
+      <%= format_user claim.user %> claimed <%= format_spot claim.spot %>  
+    <% end %>
+      at <%= "%02d:%02d" % [claim.created_at.hour, claim.created_at.min] %></li>
   <% end %>
   </ul>
 <% end %>

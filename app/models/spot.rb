@@ -9,6 +9,9 @@ class Spot < ActiveRecord::Base
   has_many :claims, :order => "created_at DESC", :dependent => :destroy
   has_many :stuffs, :dependent => :destroy
   belongs_to :city
+  
+  #has_many :spots # spots inside this spot
+  #has_one :spot # parent spot
 
 
   #todo: turn me into a before_save filter

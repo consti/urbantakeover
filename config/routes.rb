@@ -22,7 +22,6 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/team/:name', :controller => 'team', :action => 'show_by_name'
 
 
-
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

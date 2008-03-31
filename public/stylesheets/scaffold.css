@@ -162,7 +162,7 @@ marquee {
 /* 72dpi logo link */
 #footer p a:link, #footer p a:visited {
   color: #959595;
-  text-decoration: none;
+  text-decoration: underline;
 }
 #footer p a:link span, #footer p a:visited span { color: #99cc00; }
 
