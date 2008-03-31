@@ -33,11 +33,19 @@ class User < ActiveRecord::Base
   before_validation :clean_notify_fields
   before_create :initial_score_before
   after_create :initial_score_after
+  after_create :add_initial_friend
   
   after_save :save_team
   
   def self.generate_password
     password = "%04d" % (1+rand(9999))
+  end
+  
+  def add_initial_friend
+    u = User.find_by_login "oneup"
+    return unless u
+    self.friends << u
+    self.save
   end
   
   def self.find_all_by_name name
