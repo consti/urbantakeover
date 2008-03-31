@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :spots
+  map.resources :spot
   map.resources :users
 
   map.settings '/settings', :controller => 'user', :action => 'settings'
