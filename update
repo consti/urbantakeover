@@ -1,0 +1,26 @@
+#!/usr/local/bin/ruby
+
+#restart the server 
+
+alias :old_print :print
+def print s
+  old_print "#{s}\n"
+  STDOUT.flush
+end
+
+
+print "update from git"
+`/home/consti/opt/bin/git pull origin master`
+
+print "finding mongrel"
+mongrel_line = `ps -x`.find { |line| line.include? 'mongel' }
+
+if mongrel_line
+  pid = mongrel_line.stip.split(" ", 2).first
+  print `kill #{pid}`
+end
+
+print `export GEM_PATH=~/gems`
+print `./autostart.cgi`
+
+print "now start script/console production and send an update message via TWITTER.post 'i fixded this'"
