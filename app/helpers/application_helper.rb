@@ -28,4 +28,20 @@ module ApplicationHelper
   def interval_to_now timestamp
     return "#{format_interval(Time.now - timestamp)} ago"
   end
+  
+  def print_pwnzing_logo
+    # the closer we get to OVER NINETHOUSAND the moar characters are green
+    name = "urbantakeover"
+    score_goal = 9000
+    
+    points_per_character = 9000/name.length
+    
+    green_percentage_character_count = (Claim.count/points_per_character).floor
+    fancy_name = '<span class="green">%s</span>%s' % [name[0...green_percentage_character_count], name[green_percentage_character_count,name.length]]
+    if Claim.count < score_goal
+      fancy_name + "<!-- #{Claim.count} < nine thousand (props @ diemade)-->"
+    else
+      fancy_name + "FUCK YEAH => OVER NINE THOUSAND!!! (PWND DIE MADE)"
+    end
+  end
 end

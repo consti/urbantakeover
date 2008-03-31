@@ -1,4 +1,4 @@
-class SpotsController < ApplicationController
+class SpotController < ApplicationController
   before_filter :login_required, :only => [:new, :edit, :create, :update, :destroy]
 
   def authorized?

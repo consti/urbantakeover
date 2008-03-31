@@ -3,16 +3,16 @@ class UserController < ApplicationController
   
   # TODO: refactor me! get rid of settings/profile distinction
   def settings
-    profile
-  end
-
-  def profile
     redirect_to :action => 'edit', :id => current_user.id
   end
   
-  # say something nice, you goof!  something sweet.
-  def index
+  def home
+    flash[:notice] = "Ohai #{current_user.name} :)" if logged_in?
     redirect_to root_url
+  end
+  
+  def index
+    home
   end
   
   def show_by_name
@@ -74,7 +74,7 @@ class UserController < ApplicationController
       self.current_user.remember_me # always remember :)
       cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
       #flash[:notice] = "Logged in successfully"
-      redirect_back_or_default(:controller => '/user', :action => 'index')
+      redirect_back_or_default home_url
     else
       flash[:notice] = "Password? LAWL!!!"
     end
@@ -95,8 +95,8 @@ class UserController < ApplicationController
     self.current_user.forget_me if logged_in?
     cookies.delete :auth_token
     reset_session
-    flash[:notice] = "You have been logged out."
-    redirect_back_or_default(:controller => '/user', :action => 'index')
+    flash[:notice] = "You is teh leave? Kbai! :("
+    redirect_back_or_default root_url
   end
   
   

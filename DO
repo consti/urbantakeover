@@ -1,0 +1,29 @@
+action_log
+  google for active record inheritance
+  script/generate model ActionLog
+  code Claim < ActionLog
+  code Cross < ActionLog
+  code JoinTeam < ActionLog
+
+@oneup
+  => login via email oder username * besseres changelog als scores tabelle
+  => neues datenbankmodel für actions => active record inheritance
+  => claimed
+  => crossed
+  => joined
+  => buffed
+  => frontpage 3.0 (score, changelog)
+
+  20% of hardcore users users have iphones => iphone geolocate application
+
+sushimako
+* spot view
+** spot name in liste nicht anzeigen
+** zum richtigen spot springen
+* git deploy auf server
+* team vector auswertung (cluster gruppieren by abstand, ym4r) 
+* stats stats stats!
+* password cleanup
+** -update twitter password-^done^
+** -update gmail password-^done^
+** -update server => https://github.com/sushimako/urbantakeover/wikis/server-howto-^done^
