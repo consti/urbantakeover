@@ -12,7 +12,7 @@ module UserHelper
     link_to(h(user.login), {:controller => :user, :action => :show_by_name, :name => user.login}, :class => 'user-name', :style => style)
   end
   
-  def format_score user
+  def format_user_score user
     return("%s points" % user.score.to_s) if user.team.nil?
     "%s/%s team points" % [user.score, user.team.score]
   end

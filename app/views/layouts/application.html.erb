@@ -14,7 +14,7 @@
   <% if logged_in? %>
     <p>
     <%= format_user current_user %>
-    (<%= format_score current_user %>)
+    (<%= format_user_score current_user %>)
     |
     <%= link_to 'my spots', :controller => :claims, :action => :my %>
     |
