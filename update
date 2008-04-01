@@ -9,18 +9,21 @@ def print s
 end
 
 
-print "update from git"
+print "updating from git"
 `/home/consti/opt/bin/git pull origin master`
 
-print "finding mongrel"
-mongrel_line = `ps -x`.find { |line| line.include? 'mongel' }
+pid = nil
+`ps x`.each_line { |line| pid = line.strip.split(" ").first  if line.include? 'mongrel' }
 
-if mongrel_line
-  pid = mongrel_line.stip.split(" ", 2).first
+if pid
+  print "stopping old server"
   print `kill #{pid}`
 end
 
+print "starting server"
 print `export GEM_PATH=~/gems`
-print `./autostart.cgi`
+`./autostart.cgi`
 
-print "now start script/console production and send an update message via TWITTER.post 'i fixded this'"
+print "all done"
+
+print "run script/console production => TWITTER.post 'i fixded this'"
