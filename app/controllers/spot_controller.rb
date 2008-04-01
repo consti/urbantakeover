@@ -25,7 +25,7 @@ class SpotController < ApplicationController
   # GET /spots/1.xml
   def show
     @spot ||= Spot.find_by_name(params[:id])
-    @spot ||=Spot.find(params[:id])
+    @spot ||=Spot.find(params[:id]) # for some strange reasons "= Spot" does not compute
 
     params[:focus] = @spot.name
 
