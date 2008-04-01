@@ -55,10 +55,11 @@
 
 <p style="color: green"><%= flash[:notice] %></p>
 
-<% for line in flash[:scores] %>
-  <p style="color: blue;"><%= line %></p>
+<% unless flash[:scores].empty? %>
+  <% for line in flash[:scores] %>
+    <p style="color: blue;"><%= line %></p>
+  <% end %>
 <% end %>
-
 
 <div id="content">
   <%= yield  %>
