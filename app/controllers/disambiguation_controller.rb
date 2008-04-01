@@ -17,7 +17,7 @@ class DisambiguationController < ApplicationController
   end
 
   def disambiguate
-    @objects = find_ambiguate_by name
+    @objects = find_ambiguate_by params[:name]
   end
   
   private
