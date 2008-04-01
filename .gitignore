@@ -7,3 +7,4 @@ config/database.yml
 config/private_api_key.yml
 lol.ohai
 autostart.cgi
+git
