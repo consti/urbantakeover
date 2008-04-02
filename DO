@@ -1,3 +1,13 @@
+add_friend per klick auf website fertig machen
+
+* einfach sticker auf website bestellen °!!!!!!!!!!!!!!111elf
+  * formular
+  * senden
+  * lone wolf pack
+  * team packs (30 30 30)
+* teamfarbe = primärfarbe
+
+
 action_log
   google for active record inheritance
   script/generate model ActionLog

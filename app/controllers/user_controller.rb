@@ -46,7 +46,7 @@ class UserController < ApplicationController
     
     Command.run_for current_user, "friend #{friend.name}", "web"
     
-    redirect_back_or_default :controller => 'posts', :action => 'show', :name => friend.name
+    redirect_back_or_default :controller => 'user', :action => 'show_by_name', :name => friend.name
   end
   
   def remove_friend
@@ -55,7 +55,7 @@ class UserController < ApplicationController
       current_user.friends.delete friend
       current_user.save!
     end
-    redirect_back_or_default :controller => 'posts', :action => 'show', :name => friend.name
+    redirect_back_or_default :controller => 'user', :action => 'show_by_name', :name => friend.name
   end
   
   

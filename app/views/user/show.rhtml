@@ -2,7 +2,7 @@
 <% if logged_in? and current_user.is_admin? %>
  <%= link_to 'edit', :action => :edit, :id => @user %> |
 <% end %>
-<%= link_to "add as friend", :controller => 'claims', :action => 'new' %>
+<%= link_to "add as friend", :controller => 'user', :action => 'add_friend', :id => @user.id %>
 
 <h3>Score: <%= format_user_score @user %></h3>
 
