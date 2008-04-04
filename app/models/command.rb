@@ -49,7 +49,7 @@ class Command < ActiveRecord::Base
       self.user.friends << friend
       self.user.save!
       friend.score 50, "added as friend by #{user.login}"
-      return user.send_notify "yay! added #{friend.login} as friend"
+      return user.send_notify("yay! added #{friend.login} as friend")
     else
       return user.send_notify("sry, already friends with #{friend.login}")
     end
@@ -75,7 +75,7 @@ class Command < ActiveRecord::Base
         return user.send_notify("BAM! joined team #{team.name}")
       else
         err = team.errors.full_messages.join(', ')
-        return user.send_notify "sry, can't join team #{team.name}? #{err}"
+        return user.send_notify("sry, can't join team #{team.name}? #{err}")
       end
     else
       return user.send_notify("huh? you're already in team #{team.name}!")

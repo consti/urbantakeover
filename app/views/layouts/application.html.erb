@@ -55,8 +55,8 @@
 
 <p style="color: green"><%= flash[:notice] %></p>
 
-<% if flash and flash[:scores] %>
-  <% for line in flash[:scores] %>
+<% if @scores %>
+  <% for line in @scores %>
     <p style="color: blue;"><%= line %></p>
   <% end %>
 <% end %>
