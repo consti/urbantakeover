@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
   end
   
   def self.find_by_name name
-    self.find_by_login(name) || self.find_by_email(name)
+    self.find_by_login(name) ||self.find_by_email(name) #no whitespace after || because ruby says so :/
   end
 
   def save_team
@@ -171,6 +171,7 @@ class User < ActiveRecord::Base
     elsif should_mail? # if i'm notified via sms, i don't want a mail aswell (especially since some users get twitter notify mails)
       notify_mail(message) 
     end
+    message
   end
   
   def should_twitter?

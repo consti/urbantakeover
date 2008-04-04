@@ -23,10 +23,9 @@ class ClaimsController < ApplicationController
     elsif params[:team]
       text = "team #{params[:team]}"
     elsif params[:friend]
-        text = "friend #{params[:friend]}"
+      text = "friend #{params[:friend]}"
     else
-      flash[:notice] = "no command set?"
-      return
+      text = params[:command]
     end
 
     command = Command.create(:user => current_user, :text => text, :source => "web")

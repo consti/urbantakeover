@@ -25,6 +25,11 @@
   <%= submit_tag 'go' %>
 <% end %>
 
+<h3>Command</h3>
+<% form_tag do %>
+  <%= text_field_tag 'command', '' %>
+  <%= submit_tag 'go' %>
+<% end %>
 
 <h2>Need help?</h2>
 <p>No worries; instructions are <em><%= link_to 'here', howto_path %></em>.</p>

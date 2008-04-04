@@ -8,68 +8,54 @@ class Command < ActiveRecord::Base
     c = Command.create :user => user, :text => command, :source => source
     c.run!
   end
+  
+  def h
+    help
+  end
+  
+  def help
+    user.send_notify ["'claim spotname'", "'claim spot @ address'", "'team teamname'","'help'"].join("\n")
+  end
+  
+  def allowed_commands
+    self.methods - ['run!']
+  end
 
   def run!
     command, arguments = self.text.downcase.strip.split(" ", 2)
-    # claim spot_name [@ addresse]
-    
-    if command == "hi"
-      return twitter_ohai()
 
-    elsif command == "claim"
-      return claim_spot(arguments) #spot beschreibung wieder zusammensetzen
+    return self.send(command, arguments) if allowed_commands.include? command
 
-    elsif command == 'friend'
-      return add_friend(arguments)
+    #per default: treat as claim and/or feature request. eg: "d cbo metalab @ rathausstraße 6"
+    user = User.find_by_login "oneup"
+    user.send_notify "[feature request]: #{self.text}" if user
 
-    elsif command == 'team'
-      return join_team(arguments)
-    
-    elsif command == 'seen'
-      return seen(arguments)
-
-    elsif (command == 'h') or (command == 'help')
-      return ["'claim spotname'", "'claim spot @ address'", "'team teamname'","'help'"].join("\n")
-
-    else
-      #per default: treat as claim. eg: "d cbo metalab @ rathausstraße 6"
-      # TODO: send mail to us "feature request"
-      user = User.find_by_login "oneup"
-      user.send_notify "[feature request]: #{self.text}" if user
-
-      #try this anyway
-      return claim_spot(arguments)
-    end
-      
+    #try this anyway
+    return claim(arguments)      
   end  
 
-private
-  def twitter_ohai
+  def hi arguments
     user.send_notify "ohai, i'm the urbantakeover bot. send 'd cpu claim spot @ address' to mark something claimed."
-    return "replied ohai!"
   end
   
-  def add_friend friend_name
+  def friend friend_name
     friend = User.find_by_login(friend_name)
 
     unless friend
-      user.send_notify "lol! no user #{friend_name} found."
-      return "lol! no user #{friend_name} found." #TODO: get rid of this duplicates
+      return user.send_notify("lol! no user #{friend_name} found.")
     end
 
     if (friend != self.user) and (not friend.friend_of? self.user)
       self.user.friends << friend
       self.user.save!
-      user.send_notify "yay! added #{friend.login} as friend"
       friend.score 50, "added as friend by #{user.login}"
-      return "yay! added #{friend.login} as friend" #TODO: send sms to user when .score!
+      return user.send_notify("yay! added #{friend.login} as friend")
     else
-      user.send_notify "sry, already friends with #{friend.login}"
-      return "SRY, Already friends with #{friend.login}!"
+      return user.send_notify("sry, already friends with #{friend.login}")
     end
   end
     
-  def claim_spot spot_description
+  def claim spot_description
     if spot_description.include? "@"
       s = spot_description.split("@")
       spot_name = s[0].strip.downcase
@@ -81,6 +67,42 @@ private
     end
   end
   
+  def team team_name
+    team = Team.find_or_create_by_name team_name
+    if not team.users.include? user
+      team.users << user
+      if team.save
+        return user.send_notify("BAM! joined team #{team.name}")
+      else
+        err = team.errors.full_messages.join(', ')
+        return user.send_notify("sry, can't join team #{team.name}? #{err}")
+      end
+    else
+      return user.send_notify("huh? you're already in team #{team.name}!")
+    end
+  end
+
+  def buff args
+    user_name, spot_name = args.split("@")
+    user_name.strip!
+    spot_name.strip!
+    
+    buff_user = User.find_by_name user_name
+    spot = Spot.find_by_name spot_name
+    
+    if (not buff_user) or (not spot)
+      return user.send_notify("huh? no user #{user_name} or spot #{spot_name} found.")
+    end
+    
+    buff_user_claim = spot.claims.find :first, :conditions => ['user_id = ?', buff_user.id], :order => "created_at DESC"
+    return user.send_notify("huh? user #{buff_user.name} is not at #{spot.name}!") unless buff_user_claim
+    
+    buff_user_claim.destroy
+    buff_user.score -100, "buffed by #{user.name} @ #{spot.name}"
+    user.score 0, "buffed #{buff_user.name} @ #{spot.name}"
+  end
+
+private
   #TODO: refactor me
   #TODO: space indicates possible address ;)
   def claim_by_name_or_address target
@@ -167,22 +189,5 @@ private
         return "#{spot.name} already belongs to #{user.name}" # TODO: update me if there are new conditions
       end
     end
-  end
-  
-  def join_team team_name
-    team = Team.find_or_create_by_name team_name
-    if not team.users.include? user
-      team.users << user
-      if team.save
-        return "BAM! joined team #{team.name}"
-      else
-        err = team.errors.full_messages.join(', ')
-        user.send_notify "sry, can't join team #{team.name}? contact team@72dpiarmy.com plz!"
-        return "sry, can't join team #{team.name}? #{err}"
-      end
-    else
-      user.send_notify "huh? you're already in team #{team.name}!"
-      return "huh? you're already in team #{team.name}!"
-    end
-  end
+  end  
 end

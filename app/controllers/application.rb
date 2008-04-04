@@ -15,9 +15,9 @@ class ApplicationController < ActionController::Base
     current_user.scores_seen_until = Time.now
     current_user.save
     
-    flash[:scores] = []    
+    @scores = []    
     scores.each do |score|
-      flash[:scores] << if score.points > 0
+      @scores << if score.points > 0
         "#{score.description}, get #{score.points} points!"
       elsif score.points < 0
         "#{score.description}, loose #{score.points.abs} points!"
