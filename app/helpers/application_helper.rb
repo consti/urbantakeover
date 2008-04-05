@@ -46,6 +46,6 @@ module ApplicationHelper
   end
   
   def todo what
-    "TODO %s <a href=\"mailto://team@72dpiarmy.com\">mail us if this is important to you</a>" % what
+    '<p class="todo">TODO %s <a href="mailto://team@72dpiarmy.com">mail us if this is important to you</a></p>' % what
   end
 end

@@ -33,7 +33,7 @@ unless spots.empty?
       map.center_zoom_init(spot.geolocation, 15)
     end
   end
-  
+
   managed_markers= ManagedMarker.new(markers,1)
 
   mm = GMarkerManager.new(map,:managed_markers => [managed_markers])
