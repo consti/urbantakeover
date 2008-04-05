@@ -21,19 +21,19 @@
 
 	<% form_for(@order, :url=> {:controller => 'sticker', :action => 'order'}) do |f| %>
 	  <p>
-	    Name: <%= f.text_field :name %>
+	    Name:<br/> <%= f.text_field :name %>
 	  </p>
 
 	  <p>
-	    Street: <%= f.text_field :street %>
+	    Street:<br/> <%= f.text_field :street %>
 	  </p>
 
 	  <p>
-	    Zip-Code &amp; City: <%= f.text_field :city, :html => {:rows => 3} %>
+	    Zip-Code &amp; City:<br/> <%= f.text_field :city, :html => {:rows => 3} %>
 	  </p>
 
 	 <p>
-		    You can add a personal Note / Request / Comment: <textarea cols="40" id="order_text" name="order[text]" rows="3"></textarea>
+		    You can add a personal Note / Request / Comment:<br/> <textarea cols="40" id="order_text" name="order[text]" rows="3"></textarea>
 		  </p>
 	
 	  <p>
