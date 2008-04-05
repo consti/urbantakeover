@@ -1,0 +1,45 @@
+<div id="left">
+<h2>Print your own Stickers for free</h2>
+<ul>
+	<li>Download the <%= link_to "sticker pdf",  "http://localhost:3000/files/urbantakeover_a4_ohai.pdf" %></li>
+	<li>Get Sticker Paper for your printer <%= todo "link to the correct zweckform paper on amazon" %></li>
+	<li>Print your own stickers :)</li>
+</ul>
+
+<%= todo "generate a custom sticker pdf in your colour"%>
+
+</div>
+
+<div id="right">
+	<h2>Order Stickers from us</h2>
+
+	We suggest 50 Stickers for 4,- €, but while we're in beta you can pay as you wish (even get them for free).
+	
+	<%= todo "we don't link your address to your user account for privacy reasons. if you'd like us to connect your urbantakeover user and your address - to not have to write your address here every time you want to order stickers:"%>
+	
+	<%= error_messages_for :order %>
+
+	<% form_for(@order, :url=> {:controller => 'sticker', :action => 'order'}) do |f| %>
+	  <p>
+	    Name: <%= f.text_field :name %>
+	  </p>
+
+	  <p>
+	    Street: <%= f.text_field :street %>
+	  </p>
+
+	  <p>
+	    Zip-Code &amp; City: <%= f.text_field :city, :html => {:rows => 3} %>
+	  </p>
+
+	 <p>
+		    You can add a personal Note / Request / Comment: <textarea cols="40" id="order_text" name="order[text]" rows="3"></textarea>
+		  </p>
+	
+	  <p>
+	    <%= f.submit "Order" %>
+	  </p>
+	<% end %>
+	
+
+</div>

@@ -247,3 +247,20 @@ a.title {
   margin: 24px;
   border: 2px solid red:;
 }
+
+.todo {
+  font-size: 66%;
+  color: #666;
+}
+
+/* site layout*/
+
+div#left {
+  float: left;
+  width: 450px;
+}
+
+div#right { 
+  float: left;
+  width: 500px;
+}

@@ -1,6 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :spot
   map.resources :users
+  map.resources :orders
 
   map.settings '/settings', :controller => 'user', :action => 'settings'
   map.howto '/howto', :controller => 'claims', :action => 'howto'
@@ -14,6 +15,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/profile', :controller => 'user', :action => 'settings'
   map.home '/home', :controller => 'user', :action => 'home'
   map.highscore '/highscore', :controller => 'score', :action => 'index'
+  map.sticker '/sticker', :controller => 'sticker', :action => 'index'
+  map.stickers '/stickers', :controller => 'sticker', :action => 'index'
+  
   map.root :controller => 'claims', :action => 'recent'
   
   map.connect '/:name', :controller => 'disambiguation', :action => 'index'

@@ -1,4 +1,42 @@
-add_friend per klick auf website fertig machen
+* urban takeover application runterladbar machen
+
+
+* tumblr about page kopieren
+* erkälrung auf website
+  * sticker schreiben
+  * sticker kleben
+  * sms schreiben
+  * auf karte den sticker sehen & punkte bekommen (super mario point get über der karte)
+
+* auf frontpage "claim here knopf"
+
+* anleitung müdnlich
+  * sticker geben
+  * name => kleben
+  * auf website ein fetter "i claimed this" knopf (w/ flickr bild upload), or: my claim foto for is on flickr on (2 flickr links akzeptieren)
+  * monatlicher gewinner
+
+
+* redesign frontpage
+
+
+	frontpage ("the pitch")
+
+  """" CLAIM HERE""""
+
+  """" VIENNA """"
+  """ THE MAP """ (zoom to interesting position in vienna on default) 
+
+  """" HIGHSCORE """"
+
+  """" REGISTER TO SEE WHO TAGGED WHERE """"
+  
+  
+* seller backend
+  * destroy addresses after send
+  
+  
+* urban takeover team invite
 
 * einfach sticker auf website bestellen °!!!!!!!!!!!!!!111elf
   * formular
