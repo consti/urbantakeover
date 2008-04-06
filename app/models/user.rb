@@ -148,7 +148,7 @@ class User < ActiveRecord::Base
       message = description
     end
 
-    self.send_notify message
+    self.notify_all message
   end
   
   def score points=nil, description=nil
@@ -164,7 +164,7 @@ class User < ActiveRecord::Base
     is_admin?
   end
   
-  def send_notify message
+  def notify_all message
     # don't call this function "notify". it will wreak havoc and send all kind of strange "before_save", "after_save" messages. ruby built in function names & message passing system gone wild ^_^
     if should_twitter?
       notify_twitter(message)
@@ -190,6 +190,24 @@ class User < ActiveRecord::Base
   def is_notify_twitter_on?
     # soon to be turned into a database field @hacketyhack 
     true
+  end
+  
+  def notify_mail message
+    begin # maybe this try except is not needed
+      NotifyMailer.deliver_message(self, message)
+    rescue => e
+      logger.error(e)
+      #TODO: MAIL US
+    end
+  end
+
+  def notify_twitter message
+    begin
+      #TODO: probably very stupid, should be done differently. code copied from http://snippets.dzone.com/posts/show/3714 (for rest see environment.rb)
+      TWITTER.d(self.twittername, message) if should_twitter?
+    rescue Exception => e        
+      RAILS_DEFAULT_LOGGER.error("Twitter error while sending to #{self.twittername}. Message: #{message}. Exception: #{e.to_s}.")
+    end
   end
     
   def claim spot
@@ -261,24 +279,6 @@ class User < ActiveRecord::Base
     
     def password_required?
       crypted_password.blank? || !password.blank?
-    end
-    
-    def notify_mail message
-      begin # maybe this try except is not needed
-        NotifyMailer.deliver_message(self, message)
-      rescue => e
-        logger.error(e)
-        #TODO: MAIL ME
-      end
-    end
-
-    def notify_twitter message
-      begin
-        #TODO: probably very stupid, should be done differently. code copied from http://snippets.dzone.com/posts/show/3714 (for rest see environment.rb)
-        TWITTER.d(self.twittername, message) if should_twitter?
-      rescue Exception => e        
-        RAILS_DEFAULT_LOGGER.error("Twitter error while sending to #{self.twittername}. Message: #{message}. Exception: #{e.to_s}.")
-      end
     end
     
     def update_twitter_friend

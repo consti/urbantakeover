@@ -28,7 +28,12 @@ class ApplicationController < ActionController::Base
   end
 
   helper :all # include all helpers, all the time
-
+  
+  helper_method :app_path
+  def app_path
+    "/files/Urban Takeover.zip"
+  end
+  
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => 'd865e93d462697055b1bdba47fcabd7f'

@@ -14,7 +14,7 @@ class Command < ActiveRecord::Base
   end
   
   def help
-    user.send_notify ["'claim spotname'", "'claim spot @ address'", "'team teamname'","'help'"].join("\n")
+    user.notify_all ["'claim spotname'", "'claim spot @ address'", "'team teamname'","'help'"].join("\n")
   end
   
   def allowed_commands
@@ -23,35 +23,35 @@ class Command < ActiveRecord::Base
 
   def run!
     command, arguments = self.text.downcase.strip.split(" ", 2)
-
+    arguments ||= "" # if not set in split
     return self.send(command, arguments) if allowed_commands.include? command
 
     #per default: treat as claim and/or feature request. eg: "d cbo metalab @ rathausstraße 6"
-    user = User.find_by_login "oneup"
-    user.send_notify "[feature request]: #{self.text}" if user
+    admin_user = User.find_by_login "oneup"
+    admin_user.notify_mail "[UTO feature]: #{self.text} by #{user.name}" if admin_user
 
     #try this anyway
     return claim(arguments)      
   end  
 
   def hi arguments
-    user.send_notify "ohai, i'm the urbantakeover bot. send 'd cpu claim spot @ address' to mark something claimed."
+    user.notify_all "ohai, i'm the urbantakeover bot. send 'd cpu claim spot @ address' to mark something claimed."
   end
   
   def friend friend_name
     friend = User.find_by_login(friend_name)
 
     unless friend
-      return user.send_notify("lol! no user #{friend_name} found.")
+      return user.notify_all("lol! no user #{friend_name} found.")
     end
 
     if (friend != self.user) and (not friend.friend_of? self.user)
       self.user.friends << friend
       self.user.save!
       friend.score 50, "added as friend by #{user.login}"
-      return user.send_notify("yay! added #{friend.login} as friend")
+      return user.notify_all("yay! added #{friend.login} as friend")
     else
-      return user.send_notify("sry, already friends with #{friend.login}")
+      return user.notify_all("sry, already friends with #{friend.login}")
     end
   end
     
@@ -72,13 +72,13 @@ class Command < ActiveRecord::Base
     if not team.users.include? user
       team.users << user
       if team.save
-        return user.send_notify("BAM! joined team #{team.name}")
+        return user.notify_all("BAM! joined team #{team.name}")
       else
         err = team.errors.full_messages.join(', ')
-        return user.send_notify("sry, can't join team #{team.name}? #{err}")
+        return user.notify_all("sry, can't join team #{team.name}? #{err}")
       end
     else
-      return user.send_notify("huh? you're already in team #{team.name}!")
+      return user.notify_all("huh? you're already in team #{team.name}!")
     end
   end
 
@@ -91,11 +91,11 @@ class Command < ActiveRecord::Base
     spot = Spot.find_by_name spot_name
     
     if (not buff_user) or (not spot)
-      return user.send_notify("huh? no user #{user_name} or spot #{spot_name} found.")
+      return user.notify_all("huh? no user #{user_name} or spot #{spot_name} found.")
     end
     
     buff_user_claim = spot.claims.find :first, :conditions => ['user_id = ?', buff_user.id], :order => "created_at DESC"
-    return user.send_notify("huh? user #{buff_user.name} is not at #{spot.name}!") unless buff_user_claim
+    return user.notify_all("huh? user #{buff_user.name} is not at #{spot.name}!") unless buff_user_claim
     
     buff_user_claim.destroy
     buff_user.score -100, "buffed by #{user.name} @ #{spot.name}"
@@ -119,11 +119,11 @@ private
 
         if not spot
           # no tupalo spot, must have really been an address
-          user.send_notify "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ address'."
+          user.notify_all "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ address'."
           return "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ $address'."      
         end
       elsif geocodes.size > 1
-        user.send_notify "plz write exact address, multiple spots found. like #{geocodes.first.address}"
+        user.notify_all "plz write exact address, multiple spots found. like #{geocodes.first.address}"
         return "sry, multiple spots found. for #{address}. eg: #{geocodes.first.address}."
       else
         geocode = geocodes.first
@@ -136,7 +136,7 @@ private
     end
     
     unless user.can_claim? spot
-      user.send_notify "lol, you already own #{spot.name}!"
+      user.notify_all "lol, you already own #{spot.name}!"
       return "you already own #{spot.name}"
     end
     
@@ -151,10 +151,10 @@ private
 
     geocodes = Geocoding.get(address) # HARHAR - users can easily find their own stuffz
     if geocodes.empty?
-      user.send_notify "plz: claim like '#{spot_name} @ Musterstraße 12'"
+      user.notify_all "plz: claim like '#{spot_name} @ Musterstraße 12'"
       return "no address found for '#{address}'"
     elsif geocodes.size > 1
-      user.send_notify "plz write exact address, multiple spots found. like #{geocodes.first.address}"
+      user.notify_all "plz write exact address, multiple spots found. like #{geocodes.first.address}"
       return "sry, multiple spots found. for #{address}"
     else
       geocode = geocodes.first
@@ -178,14 +178,14 @@ private
       if self.user.can_claim? spot
         claim = self.user.claim spot
         if old_name
-          user.send_notify "lol! you rebranded #{old_name} to #{spot.name}!"
+          user.notify_all "lol! you rebranded #{old_name} to #{spot.name}!"
           return "bam! 10 points for claiming #{spot.name} (renamed from #{old_name})"
         else
           # TODO: previous user get points for giving this a good name
           return "bam! 10 points for claiming #{spot.name}"
         end
       else
-        user.send_notify "lol! #{spot.name} is already yours!"
+        user.notify_all "lol! #{spot.name} is already yours!"
         return "#{spot.name} already belongs to #{user.name}" # TODO: update me if there are new conditions
       end
     end

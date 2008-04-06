@@ -25,7 +25,7 @@ class UserController < ApplicationController
     user.password_confirmation = user.password
 
     user.save!
-    user.send_notify "Your new password is #{new_password}."
+    user.notify_all "Your new password is #{new_password}."
   end
     
   
