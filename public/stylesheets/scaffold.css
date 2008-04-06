@@ -249,8 +249,12 @@ a.title {
 }
 
 .todo {
-  font-size: 66%;
-  color: #666;
+  font-size: 67%;
+  color: #667;
+}
+
+.todo a {
+  color: #667;
 }
 
 /* site layout*/
