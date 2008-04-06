@@ -4,6 +4,7 @@ class StickerController < ApplicationController
     @order = Order.new(params[:order])
     return unless request.post?
     @order.save!
+    OrderMailer.deliver_mailorder(@order)
     redirect_to :action => 'get'
   rescue ActiveRecord::RecordInvalid
     render :action => 'index'
