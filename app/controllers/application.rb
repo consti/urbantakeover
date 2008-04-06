@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
       elsif score.points < 0
         "#{score.description}, loose #{score.points.abs} points!"
       else
-        description
+        score.description
       end
     end
   end
