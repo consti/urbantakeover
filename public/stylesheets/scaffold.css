@@ -225,7 +225,7 @@ a.title {
 
 .menu a:link, .menu a:visited {
   color: #666;
-  text-decoration:none;
+  text-decoration: underline;
 }
 
 .menu a:hover, .menu a:active {
@@ -258,9 +258,11 @@ a.title {
 div#left {
   float: left;
   width: 450px;
+  margin-top: 6px;
 }
 
 div#right { 
   float: left;
   width: 500px;
+  margin-top: 6px;
 }
