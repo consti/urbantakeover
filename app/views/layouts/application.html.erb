@@ -36,8 +36,8 @@
   
   <h1><a class="title" href="<%= root_url %>"><%= print_pwnzing_logo %></a></h1>
   <div class="menu">
-  <%= link_to 'send command', :controller => :claims, :action => :new %>
-  
+  <%= link_to 'claim spot', :controller => :claims, :action => :new %>
+  | <%= link_to 'team', sticker_path %>
   | <%= link_to 'FAQ', faq_path %>
   | <%= link_to 'get stickers', sticker_path %>
 
