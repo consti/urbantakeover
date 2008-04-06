@@ -17,6 +17,7 @@ ActionController::Routing::Routes.draw do |map|
   map.highscore '/highscore', :controller => 'score', :action => 'index'
   map.sticker '/sticker', :controller => 'sticker', :action => 'index'
   map.stickers '/stickers', :controller => 'sticker', :action => 'index'
+  map.order '/stickers', :controller => 'sticker', :action => 'index'
   
   map.root :controller => 'claims', :action => 'recent'
   

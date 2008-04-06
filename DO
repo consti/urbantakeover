@@ -1,5 +1,4 @@
-* urban takeover application runterladbar machen
-
+* rank änderungen per sms mitbekommen
 
 * tumblr about page kopieren
 * erkälrung auf website

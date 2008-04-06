@@ -1,11 +1,15 @@
 class StickerController < ApplicationController
 
   def index
-    @order = Order.new    
-  end
-
-  def order
     @order = Order.new(params[:order])
-    @order.save
+    return unless request.post?
+    @order.save!
+    OrderMailer.deliver_mailorder(@order)
+    redirect_to :action => 'get'
+  rescue ActiveRecord::RecordInvalid
+    render :action => 'index'
+  end
+  
+  def get
   end
 end

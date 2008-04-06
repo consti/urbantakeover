@@ -19,7 +19,7 @@
 	
 	<%= error_messages_for :order %>
 
-	<% form_for(@order, :url=> {:controller => 'sticker', :action => 'order'}) do |f| %>
+	<% form_for(@order, :url=> {:controller => 'sticker', :action => 'index'}) do |f| %>
 	  <p>
 	    Name:<br/> <%= f.text_field :name %>
 	  </p>

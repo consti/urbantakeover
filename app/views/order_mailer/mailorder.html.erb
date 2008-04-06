@@ -1,0 +1,13 @@
+<p>Ohai, someone ordered stickers:</p>
+
+<h3>Address</h3>
+<p>
+<%= @order.name %><br/>
+<%= @order.street %><br/>
+<%= @order.city%>
+</p>
+
+<h3>Note</h3>
+<%= @order.text || "(no note)" %>
+
+<h2>Send Stickers nao!</h2>
