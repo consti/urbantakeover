@@ -36,6 +36,7 @@ class ClaimsController < ApplicationController
   end
   
   def howto
+    redirect_to :action => 'faq' # don't break previous links to this page
   end
   
   def faq
