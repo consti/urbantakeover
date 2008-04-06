@@ -11,7 +11,9 @@
 
 <p>Address: <%= @spot.address %></p>
 
-<p>Current owner: <%= format_user @spot.current_owner %></p>
+<% if @spot.current_owner %>
+  <p>Current owner: <%= format_user @spot.current_owner %></p>
+<% end %>
 
 <h2>Log</h2>
 
