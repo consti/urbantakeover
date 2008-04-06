@@ -53,7 +53,9 @@ class User < ActiveRecord::Base
   end
   
   def self.find_by_name name
-    self.find_by_login(name) ||self.find_by_email(name) #no whitespace after || because ruby says so :/
+    u = self.find_by_login(name)
+    return self.find_by_email(name) unless u
+    u
   end
 
   def save_team
