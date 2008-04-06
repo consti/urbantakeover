@@ -262,11 +262,11 @@ a.title {
 div#left {
   float: left;
   width: 450px;
-  margin-top: 6px;
+  margin-right: 12px;
 }
 
 div#right { 
   float: left;
-  width: 500px;
-  margin-top: 6px;
+  width: 450px;
+  margin-left: 12px;
 }

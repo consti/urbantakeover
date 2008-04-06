@@ -1,5 +1,8 @@
 <%= GMap.header %>  
 
+<div id="map" style="width:550px; height:400px; background: #eee url('images/throbber.gif') no-repeat center center" ></div>
+
+
 <% spots, map = get_map_data(@spots) %>
 <%
 unless spots.empty?
@@ -40,5 +43,4 @@ unless spots.empty?
   map.declare_init(mm,"mgr")  
 end
 %>
-<%= map.div(:width => 550, :height => 400) %>
 <%= map.to_html %>
