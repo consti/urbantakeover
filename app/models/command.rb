@@ -14,7 +14,7 @@ class Command < ActiveRecord::Base
   end
   
   def help
-    user.notify_all ("Commands: " + ["'claim spotname'", "'claim spot @ address'", "'team teamname'","'help'", "'friend friendname'"].join("\n"))
+    user.notify_all("Commands: " + ["'claim spotname'", "'claim spot @ address'", "'team teamname'","'help'", "'friend friendname'"].join("\n"))
   end
   
   def allowed_commands
