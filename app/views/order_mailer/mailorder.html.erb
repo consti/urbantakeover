@@ -1,13 +1,18 @@
-<p>Ohai, someone ordered stickers:</p>
+Ohai Team UTO,
 
-<h3>Address</h3>
-<p>
-<%= @order.name %><br/>
-<%= @order.street %><br/>
-<%= @order.city%>
-</p>
+someone ordered stickers:
 
-<h3>Note</h3>
-<%= @order.text || "(no note)" %>
+== Address
 
-<h2>Send Stickers nao!</h2>
+<%= h @order.name %>
+<%= h @order.street %>
+<%= h @order.city%>
+<%= h @order.country %>
+
+== Note
+<%= h(@order.text || "(no note)") %>
+
+Send Stickers nao!
+
+kbai,
+Glados
