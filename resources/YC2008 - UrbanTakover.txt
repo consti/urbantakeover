@@ -1,0 +1,164 @@
+== company & product
+
+name: 72dpi collective / http://72dpiarmy.com
+phone: +43 650 6667989 (oneup)
+team: oneup stereotype sushimako consti
+
+product: UrbanTakeover - a google maps/flickr/twitter based game http://urbantakeover.at
+
+
+== What are we going to make?
+
+We're creating a game. People "claim" spots in the city by marking them in the real world using stickers and then sending us the spot name+location via text message (or GPS enabled camera, via the website, iPhone app, ...). Players fight for monthly highscore fame.
+
+Players can get branded sticker packs for free (advertisement backed) or buy Stickers (optional: custom cut).
+
+Besides advertising (ie: Marketing Teams posting stickers), the data we collect through the game (spotname + location + image) can be used for Microsoft Photosynth or plain old geolocation tagging, just widespread. Additional Ideas pending (We pick up new uses as we play along with our prototype).
+
+It's an Augmented Reality Game / Guerilla Marketing Tool using Streetart Paradigms, Google Maps, Flickr, Twitter, Short Message Services and Rounded Corners.
+
+
+== The founders
+
+Florian Lauber, 22, sushimako, flo@qatfy.at, http://qatfy.at, Software Engineer @ Nessus.at & Student of Mathematics @ Technical University Vienna
+
+Florian Hufsky, 21, oneup, hello@geeq.at, http://geeq.at, Software Engineer @ 5uper.net & Graphics Design @ Die Angewandte "Academy of Applied Arts" Vienna
+
+Leo Sierek, 24, stereotype, leosierek@gmail.com, http://ceetah.soup.io, Web Designer at http://mmc-agentur.at
+
+Constantin Hofstetter, 22, Consti@Consti.de, http://consti.de,
+Teachers Assistent at the University of Vienna (Insitute of
+Distributed and Multimedia Systems), Student at the University of
+Vienna (Major in Medical Information Technology)
+
+
+=== Education
+
+Florian Hufsky, "DieAngewandte" University of Applied Arts Vienna / Graphics Design (Master of Arts)
+
+Florian Lauber, Technical University Vienna / Mathematics of Economics (Bachelor/Master of Science)
+
+Constantin Hofstetter, University Vienna / Bacc. Medical Information Technology
+
+Leo Sierek, NAWI Vienna / Biology (Bachelor), Vienna University of Economics and Business Administration / Business Administration (Bachelor)
+
+
+=== Something impressive we did
+
+Florian H: Co-founded http://soup.io , Founded the Austrian Pirate Party http://ppoe.or.at , happened to get to the Ars Electronica Festival founding the Graffiti Research Lab Vienna by accident http://graffitiresearchlab.at & created the game "Super Mario War" http://smw.72dpiarmy.com which still thrives through community created content since 2003. Cooks delicous selfmade noodles: http://flickr.com/photos/1000points/2034720523/ .
+
+Florian L: Cooks delicious caffeine cookies http://www.flickr.com/photos/sushimako/tags/caffeinecookies/ . Organized the Viennese "Leiwandville" for ~70 people at last years Chaos Communication Camp in Berlin http://events.ccc.de/camp/2007/LeiwandVille . Currently is in the NetzNetz Viennese netculture funding committee. http://netznetz.at
+
+Leo Sierek: Cooks delicous Wok Food. Designs kickass websites.
+
+Constantin: Outstanding Student Award in Computer Servicing Technology, was in the major press in Germany about different security holes he found and had a lot of fun as one of the founders of the (now disbanded) y3knetwork. Also in Web 2.0, databases and medical information technology.
+
+
+=== oneup hacks non-computer systems
+
+This one time, at band camp, I founded the Austrian Pirate Party. In 2007 co-organized the first European Pirate Party Conference: http://nextsteppolitics09.org/
+
+This opened a backdoor to the Viennese art scene / art funding scene, got me contacts in all over europe and in the Austrian media landscape.
+
+
+
+=== what our team did together in the past
+
+Leo & Florian created BeatNinja together. A prototype for a timing based music game. http://vimeo.com/701096
+
+
+All team members each other for approximately 1 1/2 years. We met at the Viennese hackerspace "metalab" (http://metalab.at).
+
+
+== What's new about what we're doing?
+
+The idea of Geolocation based gaming exists, but has not yet been taken further than scavenger hunt games.
+
+
+== What we understand, that other companies don't
+
+Florian H. has experience in Streetart through co-founding http://graffitiresearchlab.at.
+
+Most of us played Magic the Gathering and know the addictiveness of Trading Card games. Combined with Streetart Culture and Stickers designed by Artists from the Scene this makes an addictive mix.
+
+Also: We want to reclaim our city!!!
+
+
+== Competitors
+
+Kirkland North et al. are similar, but focusses on moving troops around, where our players redefine the playscape on the fly. (Round based Risk against 3D FPS style Capture The Flag)
+
+German clone: http://web194.login-62.hoststar.ch/targot/ (Funded by techies, no clue about gaming)
+
+
+== How will we make money
+
+* Offering sticker subscriptions to players
+* Advertisement on free stickers
+* Promotion Teams with Branded Stickers
+* Sub-games in the game as Guerilla Marketing
+
+
+== time invested so far / LOC 
+
+About a month, 1100 Lines of Ruby.
+
+
+== How long till prototype?
+
+We're already selling sticker packs.
+
+
+== Incorporated? Funding?
+
+Expected: 5000,- €  and a SMS gateway from Telekom Austria's NetCultureLab (we still own 100% of the project).
+
+
+== Percentage for founders
+
+23% 23% 23% 23%
+
+
+== If we fund you, which of the founders will commit to working exclusively (no school, no other jobs) on this project for the next year?
+
+Florian H, Leo
+
+=== Others - Why not?
+
+Florian L: Wants to finish University.
+Constantin: Wants to finish University.
+
+
+== Commitments during june-august2008?
+
+No.
+
+
+== Commitments in the future
+
+Consti, Flo, Flo: Finishing grad school.
+Leo: No.
+
+
+==  noncompetes or intellectual property agreements?
+
+No.
+
+
+== Was any of your code written by someone who is not one of your founders?
+
+No.
+
+
+== Other ideas?
+
+A viral photo tagging game on Flickr. People tag items in photos to "collect" them. Our bot searches through flickr for certain tags and posts a comment with the updated player statistics.
+
++ Teach the internet image recognition
++ Have fun playing Dungeons & Dragons in "Real Life"
++ Or "DeadRising" photography mode. ;)
+
+
+== Something surprising
+
+Fight Night Round 2 on the XBox 360 is this console generations Tetris. Even though the game is a Boxing Simulation (...), the game mechanics are more like a reaction based puzzle game. Also: the (non existent and still) User Interface is pure User Interface Design Awesomeness!
