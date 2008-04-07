@@ -1,0 +1,13 @@
+<% if logged_in? %>
+  <% if current_user.team %>
+    <h2>Your Team: <%= format_team current_user.team%></h2>
+  <% else %>
+    <%= todo 'create / edit your team. you can join a team now via <a href="/claim">sending a "team teamname" command</a>' %>
+  <% end %>
+<% end %>
+
+<h2>Teams</h2>
+<ul>
+<% Team.find(:all).each do |team| %>
+  <li><%= format_team team %></li>
+<% end %>
