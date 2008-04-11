@@ -6,14 +6,17 @@
 
   <% spots, map = get_map_data(@spots)
     spots ||= []
-    json = spots.collect do |spot|
-      user_infos = spot.claims.collect { |claim| '["%s", "%s", "%s"]' % [claim.user.name, claim.user.colour_1, claim.user.colour_2] }
-      
-      '["%s", "%s", [%s], "%s", %f, %f]' % [spot.name, spot.address, user_infos.join(", "), spot.current_owner.colour_1, spot.geolocation_x, spot.geolocation_y]
+    spot_json = spots.collect do |spot|
+      [spot.name,
+      spot.address,
+      spot.claims.collect { |claim| [claim.user.name, claim.user.colour_1, claim.user.colour_2] },
+      spot.current_owner.colour_1,
+      spot.geolocation_x,
+      spot.geolocation_y]
     end
   %>
   
-  var json = [<%=json.join(", ")%>];
+  var json = <%= spot_json.to_json %>;
 
   mapini();
   
