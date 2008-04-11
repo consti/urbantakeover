@@ -15,4 +15,13 @@ class String
   def uppercase!
     upcase!
   end
+  
+  def starts_with? what
+    self[0...what.size] == what
+  end
+  
+  def ends_with? what
+    self[-what.size, what.size] == what
+  end
+  
 end

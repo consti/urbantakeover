@@ -15,9 +15,16 @@ class Spot < ActiveRecord::Base
 
 
   #todo: turn me into a before_save filter
-  before_validation :geolocate_address
+  before_validation :geolocate_if_necessary
   
   def self.create_by_tupalo name
+    stuff = self.geolocate_from_tupalo name
+    return nil if stuff.empty?
+    longitude, latitude, tupalo_link = stuff
+    return Spot.create(:name => name, :geolocation_x => longitude, :geolocation_y => latitude, :tupalo_link => tupalo_link)
+  end
+  
+  def self.geolocate_from_tupalo name
     #tries to fetch the spot from tupalo
     begin
       doc = Hpricot(open("http://tupalo.com/vienna/search/#{CGI.escape(name)}.rss"))
@@ -27,26 +34,40 @@ class Spot < ActiveRecord::Base
     end
 
     items = (doc/"item")
-    
-    return nil if items.size != 1
-    
-    item = items.first
-    location = (item/"georss:point").text
-    longitude, latitude = location.strip.split(" ")
-    longitude.strip!
-    latitude.strip!
-    tupalo_link = (item/"guid").text
 
-    return Spot.create(:name => name, :geolocation_x => longitude, :geolocation_y => latitude, :tupalo_link => tupalo_link)
+    for item in items
+      next unless (item/"title").text.downcase.starts_with? name.downcase
+      
+      location = (item/"georss:point").text
+      longitude, latitude = location.strip.split(" ")
+      tupalo_link = (item/"guid").text
+    
+      # todo: fetch address from tupalo wenn die scheiss idioten die gfickte dumme drecks api endlich hinbekommen scheiss inkompetenzler echt. warum muss man hier alles selber machen, geht gehts sterben tupalo deppen und überhaut!
+      return [longitude.strip, latitude.strip, tupalo_link]
+    end
+    
+    nil
   end
 
-  def geolocate_address
-    return if not self.address or self.address.empty?
+  def geolocate_if_necessary
+    return if (not self.geolocation_x and not self.geolocation_y)
+    unless self.address.empty?
+      geocodes = Geocoding.get(self.address)
+      unless geocodes.empty?
+        self.geolocation_x = geocodes.first[:latitude]
+        self.geolocation_y = geocodes.first[:longitude]
+      end
+    end
     
-    geocode = Geocoding.get(self.address)
-    return if geocode.empty? # wenn mehrere gefunden, die erstbeste nehmen!
-    self.geolocation_x = geocode[0][:latitude]
-    self.geolocation_y = geocode[0][:longitude]
+    unless self.name.empty?
+      stuff = Spot.geolocate_from_tupalo name
+      unless stuff.empty?
+        longitude, latitude, tupalo_link = stuff
+        self.geolocation_x = longitude
+        self.geolocation_y = latitude
+        self.tupalo_link = tupalo_link
+      end
+    end
   end
 
   def geolocation

@@ -1,6 +1,6 @@
 <%= GMap.header %>
 
-<div id="map" style="width:550px; height:400px; background: #eee url('images/throbber.gif') no-repeat center center" ></div>
+<div id="map" style="width:550px; height:400px; background: #eeeeee url('images/throbber.gif') no-repeat center center" ></div>
 
 <script type="text/javascript">
 
@@ -10,7 +10,7 @@
       [spot.name,
       spot.address,
       spot.claims.collect { |claim| [claim.user.name, claim.user.colour_1, claim.user.colour_2] },
-      spot.current_owner.colour_1,
+      "green", # spot.current_owner.colour_1,
       spot.geolocation_x,
       spot.geolocation_y]
     end

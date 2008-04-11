@@ -71,7 +71,7 @@ function drawArea(center,fillColor,liColor){
 function newMarker(markerLocation, spotId, addr, users, mrkclr, baseIcon) {
 	var utoicon = new GIcon(baseIcon);
 	drawArea(markerLocation,users[0][1],users[0][2]);
-	utoicon.image = "images/marker/"+mrkclr+".png";
+	utoicon.image = "/images/marker/"+mrkclr+".png";
 	var marker=new GMarker(markerLocation, {icon: utoicon, title:'Spot['+spotId+']'});
 	var infoMsg='<a href=\"/spot/'+spotId+'\" class=\"spot-name\">'+spotId+'</a><br/><span class=\"address\">'+addr+'</span><br/>current: <a href=\"/user/'+users[0][0]+'\" class=\"user-name\" style=\"background-color:#'+users[0][1]+';border-color:#'+users[0][2]+';\">'+users[0][0]+'</a><br/>';
 		infoMsg+='here: <a href\"/user/'+users[0][0]+'" class=\"user-name\" style=\"background-color:#'+users[0][1]+';border-color:#'+users[0][2]+';\">'+users[0][0]+'</a>';
