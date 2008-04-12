@@ -7,10 +7,8 @@ function mapini() {
 
 		map.addControl(new GMapTypeControl());
 		map.addControl(new GLargeMapControl());
-		map.addControl(new GScaleControl(200));
-		map.addControl(new GOverviewMapControl());
 
-		map.hideControls();
+		//map.hideControls();
 	
 		map.enableScrollWheelZoom();
 		new GKeyboardHandler(map);		
@@ -24,8 +22,10 @@ function mapini() {
 		var marker, markersArray=[];
 		
 		for (var i=0; i<json.length; i++) {
+			if(json[i][2][0]) {
 			marker=newMarker(new GLatLng(json[i][4], json[i][5]), json[i][0], json[i][1], json[i][2], json[i][3], baseIcon);
 			markersArray.push(marker);
+			}
 		}
 
 		GEvent.addListener(map, "mouseover", function(){
@@ -44,9 +44,10 @@ function mapini() {
 }
 
 
-function drawArea(center,fillColor,liColor){
+
+function drawArea(center,liColor,fillColor){
 	var radius = 0.1; // 100 Meter
-	var nodes = 20; // 40 x Sides
+	var nodes = 10; // 40 x Sides
 	var liWidth = 0; // Width of border
 	var liOpa = 0.7; // Opacity of border
 	var fillOpa = 0.7; // Opacity of fill
@@ -61,9 +62,9 @@ function drawArea(center,fillColor,liColor){
 	(radius/lngConv * Math.sin(i * Math.PI/180)));
 	points.push(pint);
 	}
-	fillColor = '#'+fillColor;
-	liColor = '#'+liColor;
-	var poly = new GPolygon(points,liColor,liWidth,liOpa,fillColor,fillOpa);
+	var fillCol = fillColor || liColor || "#FFFFFF";
+	var liCol = liColor || fillColor || "#FFFFFF";
+	var poly = new GPolygon(points,liCol,liWidth,liOpa,fillCol,fillOpa);
 	map.addOverlay(poly);
 }
 
@@ -71,7 +72,7 @@ function drawArea(center,fillColor,liColor){
 function newMarker(markerLocation, spotId, addr, users, mrkclr, baseIcon) {
 	var utoicon = new GIcon(baseIcon);
 	drawArea(markerLocation,users[0][1],users[0][2]);
-	utoicon.image = "/images/marker/"+mrkclr+".png";
+	utoicon.image = "images/marker/"+mrkclr+".png";
 	var marker=new GMarker(markerLocation, {icon: utoicon, title:'Spot['+spotId+']'});
 	var infoMsg='<a href=\"/spot/'+spotId+'\" class=\"spot-name\">'+spotId+'</a><br/><span class=\"address\">'+addr+'</span><br/>current: <a href=\"/user/'+users[0][0]+'\" class=\"user-name\" style=\"background-color:#'+users[0][1]+';border-color:#'+users[0][2]+';\">'+users[0][0]+'</a><br/>';
 		infoMsg+='here: <a href\"/user/'+users[0][0]+'" class=\"user-name\" style=\"background-color:#'+users[0][1]+';border-color:#'+users[0][2]+';\">'+users[0][0]+'</a>';
