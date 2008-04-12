@@ -1,9 +1,10 @@
 <div id="left">
   <h2>What's new?</h2>
-  <div style="border: 1px solid #999; color: #999; background-color: #eee; padding: 3px;">
-  + The <%=link_to "Urban Takeover Application", app_path %><br/>
-  + Get <%= link_to "Stickers", stickers_path %></div>
-  <%= todo 'show last  <a href="http://twitter.com/cpu">twitter message</a> when twitter is back up' %>
+  <div class="infobox">
+  <ul>
+    <li>Find <%=link_to "Hotspots", hotspots_path %></li>
+    <li>Sry, map is b0rked. We're working on an improved one.</li>
+  </ul></div>
   
   <h2>What's going on?</h2>
   <%= render :partial => 'claims/log', :locals => {:claims => @recent_claims} %>

@@ -1,46 +1,33 @@
-<%= GMap.header %>  
+<%= GMap.header %>
 
-<div id="map" style="width:550px; height:400px; background: #eee url('images/throbber.gif') no-repeat center center" ></div>
+<div id="map" style="width:550px; height:400px; background: #eeeeee url('images/throbber.gif') no-repeat center center" ></div>
 
+<script type="text/javascript">
 
-<% spots, map = get_map_data(@spots) %>
-<%
-unless spots.empty?
-  map.center_zoom_init(Claim.find(:first, :order => "created_at desc").spot.geolocation, 14)  # zoom to last claim
-  
-  markers = []
-  spots.each do |spot|
-  
-    info_lines = []
-    info_lines << "<strong>%s</strong><br/><span class=\"small\">%s</span><br/>current: %s<br/>here: %s<br/>%s" %
-     [format_spot(spot),
+  <% spots, map = get_map_data(@spots)
+    spots ||= []
+    spot_json = spots.collect do |spot|
+      [spot.name,
       spot.address,
-      spot.current_owner ? format_user(spot.current_owner) : "no one",
-      spot.claims.collect{|c| format_user(c.user) }.uniq.join(", "),
-      link_to("Tag on flickr", "http://flickr.com/photos/tags/#{spot.name}")
-    ]
-    
-    if not spot.tupalo_link.empty?
-      info_lines << link_to("Spot on Tupalo", spot.tupalo_link)
+      spot.claims.collect { |claim| [claim.user.name, claim.user.colour_1, claim.user.colour_1] },
+      "green", # spot.current_owner.colour_1,
+      spot.geolocation_x,
+      spot.geolocation_y]
     end
+  %>
   
-    markers << GMarker.new(spot.geolocation,
-      :title => spot.name, :info_window => info_lines.join("<br/>"))  
-    
-    if spot.current_owner
-      #radius around spots
-      map.overlay_init(GPolygon.new(circle_points(spot.geolocation_x, spot.geolocation_y, 0.002), spot.current_owner.colour_1, 0, 0.5, spot.current_owner.colour_1, 0.5))
-    end
-    
-    if params[:focus] and params[:focus] == spot.name
-      map.center_zoom_init(spot.geolocation, 15)
-    end
-  end
+  var json = <%= spot_json.to_json %>;
 
-  managed_markers= ManagedMarker.new(markers,1)
+  mapini();
+  
+  // todo: the spot data is super cacheable!!! w0000t!
 
-  mm = GMarkerManager.new(map,:managed_markers => [managed_markers])
-  map.declare_init(mm,"mgr")  
-end
-%>
-<%= map.to_html %>
+  // todo: onunload call GUnload()
+
+  // todo: zoom
+
+  // todo: refactor code for gods sake
+
+  // todo zoom to spot => name in if params[:focus]
+
+</script>

@@ -257,6 +257,15 @@ a.title {
   color: #667;
 }
 
+.infobox {
+  border: 1px solid #999; color: #999; background-color: #eee; padding: 3px;
+}
+
+.infobox ul {
+  margin: 0 0 0 24px;
+  padding: 0 0 0 0;
+}
+
 /* site layout*/
 
 div#left {
@@ -270,3 +279,5 @@ div#right {
   width: 450px;
   margin-left: 12px;
 }
+
+

@@ -19,6 +19,7 @@ ActionController::Routing::Routes.draw do |map|
   map.stickers '/stickers', :controller => 'sticker', :action => 'index'
   map.team '/team', :controller => 'team', :action => 'index'
   map.order '/stickers', :controller => 'sticker', :action => 'index'
+  map.hotspots '/hotspots', :controller => 'spot', :action => 'hotspots'
   
   map.root :controller => 'claims', :action => 'recent'
   
