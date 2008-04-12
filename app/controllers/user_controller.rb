@@ -114,5 +114,7 @@ class UserController < ApplicationController
     redirect_back_or_default root_url
   end
   
-  
+  def list
+    @users = User.find :all
+  end
 end
