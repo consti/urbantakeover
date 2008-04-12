@@ -8,7 +8,7 @@ function mapini() {
 		map.addControl(new GMapTypeControl());
 		map.addControl(new GLargeMapControl());
 
-		//map.hideControls();
+		map.hideControls();
 	
 		map.enableScrollWheelZoom();
 		new GKeyboardHandler(map);		
