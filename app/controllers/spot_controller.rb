@@ -96,4 +96,9 @@ class SpotController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def hotspots
+    @spots = Spot.find :all
+    @spots = @spots.sort {|s, ss| s.claims.count <=> ss.claims.count }.reverse[0...10]
+  end
 end

@@ -38,10 +38,10 @@
   <h1><a class="title" href="<%= root_url %>"><%= print_pwnzing_logo %></a></h1>
   <div class="menu">
   <%= link_to 'claim spot', :controller => :claims, :action => :new %>
+  | <%= link_to 'highscore', :controller => :score, :action => :index %>
   | <%= link_to 'team', team_path %>
-  | <%= link_to 'FAQ', faq_path %>
   | <%= link_to 'get stickers', sticker_path %>
-
+  | <%= link_to 'hotspots', hotspots_path %>
 
   <% if logged_in? %>
     <% if current_user.can_edit_spots?%>
@@ -49,7 +49,7 @@
     <% end %>
   <% end %>
   
-  | <%= link_to 'highscore', :controller => :score, :action => :index %>
+  | <%= link_to 'FAQ', faq_path %>
   </div>
 </div>
 
