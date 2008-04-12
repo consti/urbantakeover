@@ -1,0 +1,21 @@
+<h2>Hotspots</h2>
+
+<p>This is kind of a travel guide for different cities. These are spots where many uto players are, so they might be interesting locations to visit ;)</p>
+
+<h3>Vienna</h3>
+<ol>
+<% for spot in @spots %>
+  <li>
+    <%= format_spot spot %>: <%= spot.claims.count %> claims
+  </li>
+<% end %>
+</ol>
+
+<h3>Berlin</h3>
+<%= todo "upcoming" %>
+
+<h3>Warsaw</h3>
+<%= todo "upcoming" %>
+
+<h3>Munich</h3>
+<%= todo "upcoming" %>
