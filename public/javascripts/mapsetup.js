@@ -110,7 +110,7 @@ function ClusterMarker($map, $options){
 		this.clusterMarkerIcon=$options.clusterMarkerIcon;
 	}else{
 		this.clusterMarkerIcon=new GIcon();
-		this.clusterMarkerIcon.image='images/marker/group.png';
+		this.clusterMarkerIcon.image='/images/marker/group.png';
 		this.clusterMarkerIcon.iconSize=new GSize(37, 41);
 		this.clusterMarkerIcon.iconAnchor=new GPoint(14, 38);
 		this.clusterMarkerIcon.infoWindowAnchor=new GPoint(14, 38);
