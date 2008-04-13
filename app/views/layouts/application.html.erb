@@ -42,16 +42,19 @@
   | <%= link_to 'team', team_path %>
   | <%= link_to 'get stickers', sticker_path %>
   | <%= link_to 'hotspots', hotspots_path %>
-  | <%= link_to 'chat', chat_path %>
-
+  | <%= link_to 'chat', chat_path %>  
+  | <%= link_to 'FAQ', faq_path %>
+  </div>
+  
   <% if logged_in? %>
-    <% if current_user.can_edit_spots? %>
-      | <%= link_to 'spot list', :controller => :spot, :action => :index %>
+    <% if current_user.is_admin? %>
+      <div class="menu">
+      <%= link_to 'spot list', :controller => :spot, :action => :index %>
+      | <%= link_to 'open orders', :controller => :orders, :action => :open %>
+      </div>
     <% end %>
   <% end %>
   
-  | <%= link_to 'FAQ', faq_path %>
-  </div>
 </div>
 
 <p style="color: green"><%= flash[:notice] %></p>

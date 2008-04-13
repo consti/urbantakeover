@@ -7,4 +7,12 @@ class OrderMailer < ActionMailer::Base
     # Email body substitutions go here
     body :order => order
   end
+  
+  def order_sent(order)
+    recipients order.email
+    from  '"Urban Takeover" <team@72dpiarmy.com>'
+    subject "[UTO Mailorder] order sent for #{order.name}"
+
+    body :order => order
+  end
 end

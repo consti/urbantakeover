@@ -1,0 +1,15 @@
+Ohai <%=h @order.name>,
+
+just so you know; your urbantakeover stickers are on their way to you.
+
+<% unless @order.confirmation_note.empty? %>
+also, we have a note for you:
+<%=h @order.confirmation_note %>
+<% end%>
+
+until they arrive you can check what's goin on on http://urbantakeover.at
+
+also; you can print your own stickers with the sticker pdf from http://urbantakeover.at/stickers
+
+have fun,
+the uto team

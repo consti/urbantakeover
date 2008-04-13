@@ -51,6 +51,7 @@ class Spot < ActiveRecord::Base
 
   def geolocate_if_necessary
     return if (not self.geolocation_x and not self.geolocation_y)
+
     unless self.address.empty?
       geocodes = Geocoding.get(self.address)
       unless geocodes.empty?
