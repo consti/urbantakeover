@@ -20,8 +20,11 @@ if pid
   print `kill #{pid}`
 end
 
-print "starting server"
 print `export GEM_PATH=~/gems`
+print "migrating"
+print `rake db:migrate RAILS_ENV=production`
+print "starting server"
+
 `./autostart.cgi`
 
 print "all done"
