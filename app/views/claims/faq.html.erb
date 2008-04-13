@@ -9,12 +9,13 @@
   <li>be notified, when someone crosses you</li>
 </ol>
 
-
-
-<h2>How do I get Stickers?</h2>
+<h3>How do I get Stickers?</h3>
 <p>You can either print your own, or order some from us. Everything needed is <%= link_to "here", order_url %>.</p>
 
-<h2>More?</h2>
+<h3>Contact us</h3>
+<p>You can reach us via <%= link_to "mail", "mailto://team@72dpiarmy.com" %> or maybe the <%= link_to "urbantakeover chat", chat_path %>.</p>
+
+<h3>More?</h3>
 <ul>
   <li><a href="http://blog.urbantakeover.at">development blog</a></li>
   <li><a href="http://flickr.com/groups/urbantakeover/pool/">urbantakeover flickr pool</a></li>
@@ -30,13 +31,21 @@
   <ol>
     <li>stick sticker - <strong>get your name up on a spot!</strong></li>
     <li>go to <%= link_to "claim spot", claim_path %></li>
-    <li>send command <code>claim spot @ address</code></li>
+    <li>send command <code>claim clubjohn @ doestreet 101</code></li>
     <li><em>points get!</em></li>
   </ol>
 
-  <h3>Claim via SMS</h3>
+  <h3>Claim via Flickr</h3>
+  <ol>
+    <li>Join the <%= link_to "urbantakeover flickr group", "http://flickr.com/groups/urbantakeover/"%></li>
+    <li>Post photo of your claim to flickr</li>
+    <li>Add a description like <code>claim clubjohn @ doestreet 101</code></li>
+    <li><em>points get!</em></li>
+  </ol>
+  
+  <h3>Claim via SMS (powered by <%= link_to "Twitter", "http://twitter.com"%>)</h3>
   <img src="images/howto.png" alt="urban takeover howto flyer"/>
   
-  <h3>Claim via Flickr</h3>
-  <%= todo "planned: extra points for flickr claims (because; proof)"%>
 </div>
+
+<%= todo "<s>additional question form or</s> community forum."%>
