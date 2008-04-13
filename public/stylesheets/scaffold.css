@@ -265,6 +265,10 @@ a.title {
   color: #667;
 }
 
+.widget-loading {
+  background: #eeeeee url('/images/throbber-big.gif') no-repeat center center;
+}
+
 /* site layout*/
 
 div#left {
