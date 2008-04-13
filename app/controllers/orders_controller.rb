@@ -1,4 +1,9 @@
 class OrdersController < ApplicationController
+  before_filter :login_required
+
+  def authorized?
+    current_user.is_admin?
+  end
 
   def open
     @orders = Order.find(:all, :conditions => ["is_done = ?", false])
