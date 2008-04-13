@@ -10,7 +10,7 @@ class DisambiguationController < ApplicationController
     
     if objects.length == 1
       object = objects.first
-      return redirect_to(:controller => object.class.name.downcase, :action => :show_by_name, :name => name)    
+      return redirect_to(:controller => object.class.name.downcase, :action => :show_by_name, :name => object.name)
     else
       redirect_to :action => :disambiguate, :name => name
     end
