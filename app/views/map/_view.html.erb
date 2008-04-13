@@ -17,7 +17,9 @@
   %>
   
   var json = <%= spot_json.to_json %>;
-
+  <% if params[:focus] %>
+    var focus_spot = <%= params[:focus] %>;
+  <% end %>
   mapini();
   
   // todo: the spot data is super cacheable!!! w0000t!
@@ -27,7 +29,5 @@
   // todo: zoom
 
   // todo: refactor code for gods sake
-
-  // todo zoom to spot => name in if params[:focus]
 
 </script>
