@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
   end
 
   def open
-    @orders = Order.find(:all, :conditions => ["is_done = ?", false])
+    @orders = Order.find(:all, :conditions => ["is_done = ?", false], :order => 'created_at asc')
   end
   
   def send_order
