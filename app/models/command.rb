@@ -163,7 +163,7 @@ private
         spot = Spot.create :name => spot_name, :address => geocode.address, :geolocation_x => geocode.latitude, :geolocation_y => geocode.longitude
         spot.save
         self.user.claim spot
-        return "#{self.user.name} conquered a new spot! #{spot_name} @ #{spot.address}"
+        return  "#{self.user.name} conquered a new spot! #{spot_name} @ #{spot.address}"
       end
       
       #reclaim an existing spot

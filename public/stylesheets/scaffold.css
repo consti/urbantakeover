@@ -257,13 +257,12 @@ a.title {
   color: #667;
 }
 
-.infobox {
-  border: 1px solid #999; color: #999; background-color: #eee; padding: 3px;
+.infobox ul li{
+  color: #667;
 }
 
-.infobox ul {
-  margin: 0 0 0 24px;
-  padding: 0 0 0 0;
+.infobox a {
+  color: #667;
 }
 
 /* site layout*/
