@@ -1,7 +1,8 @@
 class SpotController < ApplicationController
   before_filter :login_required, :only => [:new, :edit, :create, :update, :destroy]
+  before_filter :admin_only, :only => [:new, :create, :destroy]
 
-  def authorized?
+  def admin_only
     current_user.is_admin?
   end
 
@@ -49,6 +50,10 @@ class SpotController < ApplicationController
   # GET /spots/1/edit
   def edit
     @spot = Spot.find(params[:id])
+    unless @spot.is_editable_by? current_user
+      flash[:notice] = "no, just no!"
+      redirect_to home_path
+    end
   end
 
 #  # POST /spots
@@ -72,6 +77,11 @@ class SpotController < ApplicationController
   # PUT /spots/1.xml
   def update
     @spot = Spot.find(params[:id])
+
+    unless @spot.is_editable_by? current_user
+      flash[:notice] = "no, just no!"
+      redirect_to home_path
+    end
 
     respond_to do |format|
       if @spot.update_attributes(params[:spot])
