@@ -1,11 +1,11 @@
-Ohai <%=h @order.name>,
+Ohai <%=h @order.name %>,
 
 just so you know; your urbantakeover stickers are on their way to you.
 
 <% unless @order.confirmation_note.empty? %>
 also, we have a note for you:
 <%=h @order.confirmation_note %>
-<% end%>
+<% end %>
 
 until they arrive you can check what's goin on on http://urbantakeover.at
 
