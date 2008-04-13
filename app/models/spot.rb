@@ -109,4 +109,8 @@ class Spot < ActiveRecord::Base
   def first_claim_before claim
     self.claims.find :first, :order => "created_at DESC", :conditions => ["created_at < ?", claim.created_at]
   end
+  
+  def is_editable_by? user
+    (current_owner == user) or (user.is_admin?)
+  end
 end

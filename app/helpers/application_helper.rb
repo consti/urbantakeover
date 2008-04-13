@@ -1,5 +1,9 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  def format_text text
+    RedCloth.new(text, [ :filter_html]).to_html
+  end
+  
   def format_interval(timestamp)
     
     granularity = 1

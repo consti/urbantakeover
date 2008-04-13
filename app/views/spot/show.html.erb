@@ -5,7 +5,7 @@
   Also known as: <%= @spot.stuffs.collect(&:name).join(", ") %>
 <% end %>
 
-<% if logged_in? and current_user.can_edit_spots? %>
+<% if logged_in? and @spot.is_editable_by? current_user %>
   <%= link_to 'Edit', edit_spot_path(@spot) %>
 <% end %>
 
@@ -19,6 +19,10 @@
   <p>On Tupalo: <%= link_to(h(@spot.name), @spot.tupalo_link) %></p>
 <% end %>
 
+<% unless @spot.text.empty? %>
+  <h2>About</h2>
+  <p><%= format_text(@spot.text) %></p>
+<% end %>
 
 <h2>Log</h2>
 
