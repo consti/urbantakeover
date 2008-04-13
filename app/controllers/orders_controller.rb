@@ -17,6 +17,9 @@ class OrdersController < ApplicationController
 
     @order.is_done = true
     if @order.update_attributes(params[:order])
+      unless @order.email.empty?
+        OrderMailer.deliver_order_sent(@order)
+      end
       flash[:notice] = 'Order was marked as sent.'
       redirect_to :action => :open 
     else
