@@ -9,7 +9,7 @@ class TeamController < ApplicationController
     
     unless @team
       flash[:notice] = "no team #{params[:name]} found, sry"
-      redirect_back_or_default home_path
+      return redirect_back_or_default home_path
     end
     
     render :template => 'team/show'
