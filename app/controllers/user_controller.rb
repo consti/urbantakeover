@@ -7,8 +7,13 @@ class UserController < ApplicationController
   end
   
   def home
-    flash[:notice] = "Ohai #{current_user.name} :)" if logged_in?
-    redirect_to root_url
+    # home_path should be used instead of root_path once we have the pitch frontpage & dashboard frontpage ready
+    unless flash[:notice]
+      flash[:notice] = "Welcome home #{current_user.name} :)" if logged_in?
+    end
+    
+
+    redirect_to root_path # redirect to root, because we have no dashboard yet
   end
   
   def index
