@@ -42,9 +42,15 @@ class User < ActiveRecord::Base
   end
   
   def add_initial_friend
-    u = User.find_by_login "oneup"
-    return unless u
-    self.friends << u
+    developers = User.find :all, :conditions => ["login in (?)", ["oneup", "consti", "stereotype", "sushimako"]]
+    return if developers.empty?
+
+    developers.each do |developer|
+      self.friends << developer
+      developer.friends << self
+      developer.save
+    end
+
     self.save
   end
   

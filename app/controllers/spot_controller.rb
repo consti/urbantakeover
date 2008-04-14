@@ -52,7 +52,7 @@ class SpotController < ApplicationController
     @spot = Spot.find(params[:id])
     unless @spot.is_editable_by? current_user
       flash[:notice] = "no, just no!"
-      redirect_to home_path
+      redirect_to root_path
     end
   end
 
@@ -80,7 +80,7 @@ class SpotController < ApplicationController
 
     unless @spot.is_editable_by? current_user
       flash[:notice] = "no, just no!"
-      redirect_to home_path
+      redirect_to root_path
     end
 
     respond_to do |format|
