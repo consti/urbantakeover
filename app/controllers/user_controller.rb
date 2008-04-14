@@ -11,7 +11,6 @@ class UserController < ApplicationController
     unless flash[:notice]
       flash[:notice] = "Welcome home #{current_user.name} :)" if logged_in?
     end
-    
 
     redirect_to root_path # redirect to root, because we have no dashboard yet
   end
