@@ -2,18 +2,21 @@
 <h2>Do what?</h2>
 
 <h3>Claim a known spot</h3>
+<p class="todo">e.g., "metalab" or "rathausstr. 6, vienna"</p>
 <% form_tag do %>
   claim <%= text_field_tag 'target', 'spot or address' %>
   <%= submit_tag 'go' %>
 <% end %>
 
-<h3>Claim a new spot in the city</h3>
+<h3>Claim a new spot in a city</h3>
+<p class="todo">e.g., "MS Germany" @ "Konrad-Zuse-Strasse 1, Unterschleissheim"</p>
 <% form_tag do %>
   claim <%= text_field_tag 'spot', 'spot' %> @ <%= text_field_tag 'address', 'address' %>
   <%= submit_tag 'go' %>
 <% end %>
 
 <h3>Command</h3>
+<p class="todo">e.g., "team teamname" to join a team</p>
 <% form_tag do %>
   <%= text_field_tag 'command', '' %>
   <%= submit_tag 'go' %>
