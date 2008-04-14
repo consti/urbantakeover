@@ -41,7 +41,11 @@ function mapini() {
 		});
 
 		cluster=new ClusterMarker(map, { markers:markersArray } );
-		cluster.fitMapToMarkers();
+		if (focus_spot == "") {
+			cluster.fitMapToMarkers();
+		} else {
+			map.setZoom(15);
+		}
 
 		map.savePosition();
 	}
