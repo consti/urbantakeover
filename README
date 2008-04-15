@@ -13,6 +13,10 @@ am besten ruby-gems holen und dann per sudo gem install rails installieren
 === mit sqlite (default, easy)
 
 cp config/database.example config/database.yml
+mkdir log
+
+nano config/private_api.yml - Aus dem Wiki Passwords reinschreiben
+
 ruby script/server
 
 http://localhost:3000
@@ -22,6 +26,10 @@ http://localhost:3000
 
 cp config/database.example config/database.yml
 vi config/database.yml - datenbankdaten eintragen
+mkdir log
+
+nano config/private_api.yml - Aus dem Wiki Passwords reinschreiben
+
 rake db:migrate
 ruby script/server
 

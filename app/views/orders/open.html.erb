@@ -1,0 +1,6 @@
+<h1>Open Orders</h1>
+<ul>
+  <% for order in @orders %>
+    <li><%= link_to h(order.name), :action => :send_order, :id => order %>
+  <% end %>
+</ul>

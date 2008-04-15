@@ -1,0 +1,48 @@
+<div id="left">
+  	<h2>Order to be sent</h2>
+
+
+
+  	<% form_for(@order, :url=> {:controller => 'orders', :action => 'send_order'}) do |f| %>
+      <h3>Address</h3>
+  	  <p style="font-weight: bold;">
+  	    <%=h @order.name %><br/>
+  	    <%=h @order.street %><br/>
+        <%=h @order.city %><br/>
+        <%=h (@order.country || "-") %>
+  	  </p>
+  	  
+  	  <p style="font-weight: italic;">
+  	    <% unless @order.email.empty? %>
+  	      <%= link_to h(@order.email), "mailto://#{h(@order.email)}" %>
+  	    <% else %>
+  	      (no email given)
+  	    <% end %>
+  	  </p>
+
+      <% unless @order.text.empty? %>
+        <h3>Personal Note / Request / Comment</h3>
+        <p style="font-weight: bold;"><%= format_text @order.text %></p>
+      <% end %>
+
+
+      <h3>Comment for the order confirmation mail</h3>
+      <p><%= f.text_area :confirmation_note, :rows => 6 %></p>
+      
+  	  <p>
+  	    <%= f.submit "i have sent that order" %>
+  	  </p>
+  	<% end %>
+
+
+</div>
+
+<div id="right">
+  <h2>What to send</h2>
+  <ol>
+    <li>50 stickers</li>
+    <li>3 streetartist stickers</li>
+    <li>2 buttons</li>
+    <li>2 anleitungen</li>
+  </ol>
+</div>

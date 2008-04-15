@@ -1,5 +1,9 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  def format_text text
+    RedCloth.new(text, [ :filter_html]).to_html
+  end
+  
   def format_interval(timestamp)
     
     granularity = 1
@@ -43,5 +47,9 @@ module ApplicationHelper
     else
       fancy_name + "FUCK YEAH => OVER NINE THOUSAND!!! (PWND DIE MADE)"
     end
+  end
+  
+  def todo what
+    '<p class="todo">%s <a href="mailto://team@72dpiarmy.com">mail us if this is important to you</a></p>' % what
   end
 end

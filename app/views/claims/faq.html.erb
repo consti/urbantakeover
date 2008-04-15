@@ -1,5 +1,4 @@
-<em>This section is under construction, it's getting better, we promise. In the meanwhile if anything is unclear, you can <a href="mailto://team@urbantakeover.at">contact us</a>.</em>
-
+<div id="left">
 <h2>What is this?</h2>
 <p>UrbanTakeover is an alternate reality game in your city.</p>
 <p>You claim spots/territory by putting up stickers (in real life) and sending us a text message or entering the address on the website.</p>
@@ -10,14 +9,43 @@
   <li>be notified, when someone crosses you</li>
 </ol>
 
-<h2>How do I play?</h2>
-See <%= link_to "how to play", howto_path %>.
+<h3>How do I get Stickers?</h3>
+<p>You can either print your own, or order some from us. Everything needed is <%= link_to "here", order_url %>.</p>
 
-<h2>How do I get stickers?</h2>
-You can either <%= link_to "print your own sticker sheet", "http://urbantakeover.at/files/urbantakeover_a4_ohai.pdf" %> or get some stickers from us. Just <a href="mailto://team@urbantakeover.at">mail us</a> and/or meet us at the <%= link_to "metalab", "http://metalab.at" %>.
+<h3>Contact us</h3>
+<p>You can reach us via <%= link_to "mail", "mailto://team@72dpiarmy.com" %> or maybe the <%= link_to "urbantakeover chat", chat_path %>.</p>
 
-<h2>More?</h2>
+<h3>More?</h3>
 <ul>
-  <li><a href="http://urbantakeover.soup.io">development blog</a></li>
+  <li><a href="http://blog.urbantakeover.at">development blog</a></li>
   <li><a href="http://flickr.com/groups/urbantakeover/pool/">urbantakeover flickr pool</a></li>
 </ul>
+
+</div>
+
+<div id="right">
+  <h2>How do I play?</h2>
+  <p><em>Claim your city! Put stickers up in the city and mark them <%= link_to "on the map", home_url %> via the <%= link_to "website", claim_url %> or sms to <%= link_to "score points", highscore_url %>.</em></p>
+
+  <h3>Claim via Web</h3>
+  <ol>
+    <li>stick sticker - <strong>get your name up on a spot!</strong></li>
+    <li>go to <%= link_to "claim spot", claim_path %></li>
+    <li>send command <code>claim clubjohn @ doestreet 101</code></li>
+    <li><em>points get!</em></li>
+  </ol>
+
+  <h3>Claim via Flickr</h3>
+  <ol>
+    <li>Join the <%= link_to "urbantakeover flickr group", "http://flickr.com/groups/urbantakeover/"%></li>
+    <li>Post photo of your claim to flickr</li>
+    <li>Add a description like <code>claim clubjohn @ doestreet 101</code></li>
+    <li><em>points get!</em></li>
+  </ol>
+  
+  <h3>Claim via SMS (powered by <%= link_to "Twitter", "http://twitter.com"%>)</h3>
+  <img src="images/howto.png" alt="urban takeover howto flyer"/>
+  
+</div>
+
+<%= todo "<s>additional question form or</s> community forum."%>

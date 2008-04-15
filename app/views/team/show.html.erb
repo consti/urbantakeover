@@ -5,6 +5,6 @@
 
 <ul>
 <% for user in @team.users %>
-  <li><%= format_user user %></li>
+  <li><%= format_user user %> <%= format_user_score user%></li>
 <% end %>
 </ul>

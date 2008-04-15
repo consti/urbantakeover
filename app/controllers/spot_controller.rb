@@ -1,7 +1,8 @@
 class SpotController < ApplicationController
   before_filter :login_required, :only => [:new, :edit, :create, :update, :destroy]
+  before_filter :admin_only, :only => [:new, :create, :destroy]
 
-  def authorized?
+  def admin_only
     current_user.is_admin?
   end
 
@@ -18,13 +19,15 @@ class SpotController < ApplicationController
   def show_by_name
     @spot = Spot.find_by_name(params[:name])
     flash[:notice] = "Sry, no Spot #{params[:name]} found." and return redirect_back_or_default root_url unless @spot
-    render :template => 'spots/show'
+    render :template => 'spot/show'
   end
   
   # GET /spots/1
   # GET /spots/1.xml
   def show
-    @spot ||= Spot.find(params[:id])
+    @spot ||= Spot.find_by_name(params[:id])
+    @spot ||=Spot.find(params[:id]) # for some strange reasons "= Spot" does not compute
+
     params[:focus] = @spot.name
 
     respond_to do |format|
@@ -47,6 +50,10 @@ class SpotController < ApplicationController
   # GET /spots/1/edit
   def edit
     @spot = Spot.find(params[:id])
+    unless @spot.is_editable_by? current_user
+      flash[:notice] = "no, just no!"
+      redirect_to root_path
+    end
   end
 
 #  # POST /spots
@@ -71,6 +78,11 @@ class SpotController < ApplicationController
   def update
     @spot = Spot.find(params[:id])
 
+    unless @spot.is_editable_by? current_user
+      flash[:notice] = "no, just no!"
+      redirect_to root_path
+    end
+
     respond_to do |format|
       if @spot.update_attributes(params[:spot])
         flash[:notice] = 'Spot was successfully updated.'
@@ -90,8 +102,13 @@ class SpotController < ApplicationController
     @spot.destroy
 
     respond_to do |format|
-      format.html { redirect_to(spots_url) }
+      format.html { redirect_to(spot_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  def hotspots
+    @spots = Spot.find :all
+    @spots = @spots.sort {|s, ss| s.claims.count <=> ss.claims.count }.reverse[0...10]
   end
 end

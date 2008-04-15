@@ -33,16 +33,35 @@ class User < ActiveRecord::Base
   before_validation :clean_notify_fields
   before_create :initial_score_before
   after_create :initial_score_after
+  after_create :add_initial_friend
   
   after_save :save_team
   
+  def self.generate_password
+    password = "%04d" % (1+rand(9999))
+  end
+  
+  def add_initial_friend
+    developers = User.find :all, :conditions => ["login in (?)", ["oneup", "consti", "stereotype", "sushimako"]]
+    return if developers.empty?
+
+    developers.each do |developer|
+      self.friends << developer
+      developer.friends << self
+      developer.save
+    end
+
+    self.save
+  end
   
   def self.find_all_by_name name
     self.find_all_by_login name
   end
   
   def self.find_by_name name
-    self.find_by_login name
+    u = self.find_by_login(name)
+    return self.find_by_email(name) unless u
+    u
   end
 
   def save_team
@@ -58,8 +77,8 @@ class User < ActiveRecord::Base
   end
 
   def clean_notify_fields
-    twittername.strip!
-    email.strip!
+    twittername.strip! unless twittername.empty?
+    email.strip! unless email.empty?
   end
 
   def before_destroy
@@ -137,7 +156,7 @@ class User < ActiveRecord::Base
       message = description
     end
 
-    self.send_notify message
+    self.notify_all message
   end
   
   def score points=nil, description=nil
@@ -153,13 +172,14 @@ class User < ActiveRecord::Base
     is_admin?
   end
   
-  def send_notify message
+  def notify_all message
     # don't call this function "notify". it will wreak havoc and send all kind of strange "before_save", "after_save" messages. ruby built in function names & message passing system gone wild ^_^
     if should_twitter?
       notify_twitter(message)
     elsif should_mail? # if i'm notified via sms, i don't want a mail aswell (especially since some users get twitter notify mails)
       notify_mail(message) 
     end
+    message
   end
   
   def should_twitter?
@@ -179,20 +199,31 @@ class User < ActiveRecord::Base
     # soon to be turned into a database field @hacketyhack 
     true
   end
+  
+  def notify_mail message
+    begin # maybe this try except is not needed
+      NotifyMailer.deliver_message(self, message)
+    rescue => e
+      logger.error(e)
+      #TODO: MAIL US
+    end
+  end
+
+  def notify_twitter message
+    begin
+      #TODO: probably very stupid, should be done differently. code copied from http://snippets.dzone.com/posts/show/3714 (for rest see environment.rb)
+      TWITTER.d(self.twittername, message) if should_twitter?
+    rescue Exception => e        
+      RAILS_DEFAULT_LOGGER.error("Twitter error while sending to #{self.twittername}. Message: #{message}. Exception: #{e.to_s}.")
+    end
+  end
     
   def claim spot
     return nil unless self.can_claim? spot
 
     my_claim = Claim.create :user => self, :spot => spot
     
-    if my_claim.spot.address.empty? or my_claim.spot.address.include?(self.city.name)
-      #tagged in own city or unknown
-      points = 100
-    else
-      #tagged other city!!!
-      points = 200
-    end
-    
+    points = 100
     if my_claim.crossed_claim
       my_claim.crossed_claim.user.score -20, "fck! crossed by #{self.name} at #{spot.name}"
       self.score points, "crossed #{my_claim.crossed_claim.user.name} @ #{spot.name}"
@@ -256,24 +287,6 @@ class User < ActiveRecord::Base
     
     def password_required?
       crypted_password.blank? || !password.blank?
-    end
-    
-    def notify_mail message
-      begin # maybe this try except is not needed
-        NotifyMailer.deliver_message(self, message)
-      rescue => e
-        logger.error(e)
-        #TODO: MAIL ME
-      end
-    end
-
-    def notify_twitter message
-      begin
-        #TODO: probably very stupid, should be done differently. code copied from http://snippets.dzone.com/posts/show/3714 (for rest see environment.rb)
-        TWITTER.d(self.twittername, message) if should_twitter?
-      rescue Exception => e        
-        RAILS_DEFAULT_LOGGER.error("Twitter error while sending to #{self.twittername}. Message: #{message}. Exception: #{e.to_s}.")
-      end
     end
     
     def update_twitter_friend

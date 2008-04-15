@@ -6,21 +6,27 @@ class DisambiguationController < ApplicationController
   
   def index
     name = params[:name]
-    objects = []
-    @@models.each do |model|
-      objects += model.find_all_by_name(params[:name])
-    end
-
+    objects = find_ambiguate_by name
+    
     if objects.length == 1
       object = objects.first
-      return redirect_to(:controller => object.class.name.downcase, :action => :show_by_name, :name => name)
+      return redirect_to(:controller => object.class.name.downcase, :action => :show_by_name, :name => object.name)
     else
-      session[:ambiguate_objects] = objects
-      redirect_to :action => :disambiguate
+      redirect_to :action => :disambiguate, :name => name
     end
   end
 
   def disambiguate
-    @objects = session[:ambiguate_objects]
+    @objects = find_ambiguate_by params[:name]
+    redirect_to "/404.html" if @objects.empty?
+  end
+  
+  private
+  def find_ambiguate_by name
+    objects = []
+    @@models.each do |model|
+      objects += model.find_all_by_name(name)
+    end
+    objects
   end
 end

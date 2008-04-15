@@ -1,11 +1,16 @@
-<div style="float: left; width: 450px;">
+<div id="left">  
+  <h2>What's new?</h2>
+  <div id="twitter_div" class="infobox"><ul id="twitter_update_list"><li><img src="/images/throbber.gif"/></li></ul></div>
+  
   <h2>What's going on?</h2>
   <%= render :partial => 'claims/log', :locals => {:claims => @recent_claims} %>
   <p><%= link_to "full log", :controller => :claims, :action => :log %></p>
 </div>
 
-<div style="float: left; width: 450px;">
+<div id="right">
   <h2>Spots</h2>
 
   <%= show_map %>
+  
+  <%= render_partial 'proof/flickr' %>
 </div>

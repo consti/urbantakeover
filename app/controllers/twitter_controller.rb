@@ -20,19 +20,13 @@ class TwitterController < ApplicationController
     username = params[:user]
     user = User.find_by_twittername username
     unless user
-      password = "%04d" % (1+rand(9999))
+      password = User.generate_password
       user = User.create(:twittername => username,
                          :login => username,
                          :password => password,
                          :password_confirmation => password)
-
-      unless user.save
-        user.send_notify "failed to create user #{username}! contact team@72dpiarmy.com plz!"
-        err = user.errors.full_messages.join(", ")
-        return render :text => "wtf? fail create user: #{err}"
-      end
-      
-      user.send_notify "ohai #{username}! your password for http://urbantakeover.at is #{password}. enjoy! send 'claim spot' to play!"
+  
+      user.notify_all "welcome #{username}! your password for http://urbantakeover.at is #{password}. send 'd cpu claim spot @ address' or 'd cpu help'."
 
       return render :text => "created user #{username} and following on twitter"
     end

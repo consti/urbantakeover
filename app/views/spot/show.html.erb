@@ -5,21 +5,31 @@
   Also known as: <%= @spot.stuffs.collect(&:name).join(", ") %>
 <% end %>
 
-<% if logged_in? and current_user.can_edit_spots? %>
+<% if logged_in? and @spot.is_editable_by? current_user %>
   <%= link_to 'Edit', edit_spot_path(@spot) %>
 <% end %>
 
 <p>Address: <%= @spot.address %></p>
 
-<p>Current owner: <%= format_user @spot.current_owner %></p>
+<% if @spot.current_owner %>
+  <p>Current owner: <%= format_user @spot.current_owner %></p>
+<% end %>
+
+<% if not @spot.tupalo_link.empty? %>
+  <p>On Tupalo: <%= link_to(h(@spot.name), @spot.tupalo_link) %></p>
+<% end %>
+
+<% unless @spot.text.empty? %>
+  <h2>About</h2>
+  <p><%= format_text(@spot.text) %></p>
+<% end %>
 
 <h2>Log</h2>
 
 <%= render :partial => 'claims/log', :locals => {:claims => @spot.claims} %>
 
 <h2>Images</h2>
-TODO: fetch from flickr tag
-TODO: let users upload (with their stickers on the foto ^__^)
+<%= todo "fetch from flickr / allow for flickr claim proof uploads" %>
 
 </div>
 

@@ -1,0 +1,54 @@
+<h2>Editing <%=format_user @user %></h2>
+
+<%= error_messages_for :user %>
+
+
+<h2>Welcome on board, lol!</h2>
+
+<%= error_messages_for :user %>
+<% form_for :user do |f| -%>
+  <table>
+    <tr>
+      <td>
+      <h3>The basic information</h3>
+      <p><label for="login">Login</label><br/>
+      <%= f.text_field :login %></p>
+
+      <p><label for="password">Password</label><br/>
+      <%= f.password_field :password %></p>
+
+      <p><label for="password_confirmation">Confirm Password</label><br/>
+      <%= f.password_field :password_confirmation %></p>
+
+      <p><label for="colour_1">Your Colours</label><br/>
+      <%= f.text_field :colour_1, :size => 8 %> <%= f.text_field :colour_2, :size => 8 %></p>
+      
+      <% if @user.team %>
+        <p><label for="colour_3">Team Colour</label><br/>
+          <%= f.text_field :colour_3, :size => 8 %>
+        </p>
+      <% end %>
+
+    </td>
+    <td>
+      <h3>How do you want to be notified?</h3>
+      <p><label for="twittername">Twitter</label><br/>
+      <%= f.text_field :twittername %>  <span class="small">Don't forget to add <%= link_to "cpu", "http://twitter.com/cpu"%> as friend to receive notifications.</span></p>
+      
+      <p><label for="email">Email</label><br/>
+      <%= f.text_field :email %></p>
+
+      <h3>Are you on Flickr? (<em>Foto Upload = moar points!</em>)</h3>
+      <p><label for="flickr">Flickr</label><br/>
+      <%= f.text_field :flickr %></p>
+    </td>
+  </tr>
+  </table>
+
+  <% if current_user.is_admin? %>
+    <p><label for="is_admin">Administrator Access</label><br/>
+    <%= f.check_box :is_admin %></p>
+  <% end %>
+
+  <p><%= submit_tag 'Sign up' %></p>
+<% end -%>

@@ -3,7 +3,6 @@
 development:
   adapter: sqlite3
   database: db/development.sqlite3
-  timeout: 5000
 
 # Warning: The database defined as 'test' will be erased and
 # re-generated from your development database when you run 'rake'.
@@ -14,6 +13,9 @@ test:
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+  adapter: mysql
+  database: consti_ut
+  username: consti_ut
+  password: 6ce27508
+  host: localhost
   timeout: 5000

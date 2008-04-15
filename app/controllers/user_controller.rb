@@ -7,13 +7,31 @@ class UserController < ApplicationController
   end
   
   def home
-    flash[:notice] = "Ohai #{current_user.name} :)" if logged_in?
-    redirect_to root_url
+    # home_path should be used instead of root_path once we have the pitch frontpage & dashboard frontpage ready
+    unless flash[:notice]
+      flash[:notice] = "Welcome home #{current_user.name} :)" if logged_in?
+    end
+
+    redirect_to root_path # redirect to root, because we have no dashboard yet
   end
   
   def index
     home
   end
+  
+  def forgot_password
+    return unless request.post?
+
+    user = User.find_by_name params[:name]
+
+    new_password = User.generate_password
+    user.password = new_password
+    user.password_confirmation = user.password
+
+    user.save!
+    user.notify_all "Your new password is #{new_password}."
+  end
+    
   
   def show_by_name
     @user = User.find_by_login params[:name]
@@ -29,11 +47,10 @@ class UserController < ApplicationController
   
   def add_friend
     friend = User.find(params[:id])
-    if friend != current_user
-      current_user.friends << friend
-      current_user.save!
-    end
-    redirect_back_or_default :controller => 'posts', :action => 'show', :name => friend.name
+    
+    Command.run_for current_user, "friend #{friend.name}", "web"
+    
+    redirect_back_or_default :controller => 'user', :action => 'show_by_name', :name => friend.name
   end
   
   def remove_friend
@@ -42,7 +59,7 @@ class UserController < ApplicationController
       current_user.friends.delete friend
       current_user.save!
     end
-    redirect_back_or_default :controller => 'posts', :action => 'show', :name => friend.name
+    redirect_back_or_default :controller => 'user', :action => 'show_by_name', :name => friend.name
   end
   
   
@@ -60,6 +77,8 @@ class UserController < ApplicationController
       @user.save
       flash[:notice] = 'Changes saved, kbai!'
       current_user.reload
+      
+      redirect_to :action => :show, :id => @user
     end
 
   rescue ActiveRecord::RecordInvalid
@@ -99,5 +118,7 @@ class UserController < ApplicationController
     redirect_back_or_default root_url
   end
   
-  
+  def list
+    @users = User.find :all
+  end
 end

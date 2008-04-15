@@ -1,6 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :spots
-  map.resources :users
+  map.resources :spot
 
   map.settings '/settings', :controller => 'user', :action => 'settings'
   map.howto '/howto', :controller => 'claims', :action => 'howto'
@@ -8,19 +7,27 @@ ActionController::Routing::Routes.draw do |map|
   map.claim '/claim', :controller => 'claims', :action => 'new'
   map.login '/login', :controller => 'user', :action => 'login'
   map.logout '/logout', :controller => 'user', :action => 'logout'
+  map.connect '/recover_password', :controller => 'user', :action => 'forgot_password'
   map.signup '/signup', :controller => 'user', :action => 'signup'
   map.settings '/settings', :controller => 'user', :action => 'settings'
   map.connect '/profile', :controller => 'user', :action => 'settings'
   map.home '/home', :controller => 'user', :action => 'home'
   map.highscore '/highscore', :controller => 'score', :action => 'index'
+  map.sticker '/sticker', :controller => 'sticker', :action => 'index'
+  map.stickers '/stickers', :controller => 'sticker', :action => 'index'
+  map.team '/team', :controller => 'team', :action => 'index'
+  map.order '/stickers', :controller => 'sticker', :action => 'index'
+  map.hotspots '/hotspots', :controller => 'spot', :action => 'hotspots'
+  map.connect '/users', :controller => 'user', :action => 'list'
+  map.chat '/chat', :controller => 'chat', :action => 'index'
+  
   map.root :controller => 'claims', :action => 'recent'
   
-  map.connect '/:name', :controller => 'disambiguation', :action => 'index' # TODO: :controller => 'disambiguator', :action => 'user_or_spot_or_what'
+  map.connect '/:name', :controller => 'disambiguation', :action => 'index'
   map.connect '/which/:name', :controller => 'disambiguation', :action => 'disambiguate'
   map.connect '/user/:name', :controller => 'user', :action => 'show_by_name'
   map.connect '/spot/:name', :controller => 'spot', :action => 'show_by_name'
   map.connect '/team/:name', :controller => 'team', :action => 'show_by_name'
-
 
 
   # The priority is based upon order of creation: first created -> highest priority.

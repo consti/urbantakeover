@@ -1,18 +1,12 @@
-<p>
-  Ohai <%= @user.name %>!
-</p>
+Ohai <%= @user.name %>!
 
-<p>
-  <%= @message %>
-</p>
+<%= @message %>
 
-<p>
-  kbai,<br/>
-  CPU
-</p>
+kbai,
+CPU
 
-<hr/>
-<p style="font-size: 80%;">
-  You get this mail, because you're playing <%= link_to "UrbanTakeover", root_url(:host => "urbantakeover.at") %>.<br/>
-  You can change your mail settings at <%= link_to "Your Settings", :host => "urbantakeover.at", :controller => 'user', :action => 'profile' %>
-</p>
+----------
+You get this mail, because you're playing UrbanTakeover (http://urbantakeover.at)
+You can change your mail settings at http://urbantakeover.at/profile
+
+You can also be notified via twitter if you add http://twitter.com/cpu as friend

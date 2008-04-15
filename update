@@ -1,0 +1,32 @@
+#!/usr/local/bin/ruby
+
+#restart the server 
+
+alias :old_print :print
+def print s
+  old_print "#{s}\n"
+  STDOUT.flush
+end
+
+
+print "updating from git"
+`/home/consti/opt/bin/git pull origin master`
+
+pid = nil
+`ps x`.each_line { |line| pid = line.strip.split(" ").first  if line.include? 'mongrel' }
+
+if pid
+  print "stopping old server"
+  print `kill #{pid}`
+end
+
+print `export GEM_PATH=~/gems`
+print "migrating"
+print `rake db:migrate RAILS_ENV=production`
+print "starting server"
+
+`./autostart.cgi`
+
+print "all done"
+
+print "run script/console production => TWITTER.post 'i fixded this'"

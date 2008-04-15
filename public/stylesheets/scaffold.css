@@ -162,7 +162,7 @@ marquee {
 /* 72dpi logo link */
 #footer p a:link, #footer p a:visited {
   color: #959595;
-  text-decoration: none;
+  text-decoration: underline;
 }
 #footer p a:link span, #footer p a:visited span { color: #99cc00; }
 
@@ -225,7 +225,7 @@ a.title {
 
 .menu a:link, .menu a:visited {
   color: #666;
-  text-decoration:none;
+  text-decoration: underline;
 }
 
 .menu a:hover, .menu a:active {
@@ -247,3 +247,40 @@ a.title {
   margin: 24px;
   border: 2px solid red:;
 }
+
+.todo {
+  font-size: 67%;
+  color: #667;
+}
+
+.todo a {
+  color: #667;
+}
+
+.infobox ul li{
+  color: #667;
+}
+
+.infobox a {
+  color: #667;
+}
+
+.widget-loading {
+  background: #eeeeee url('/images/throbber-big.gif') no-repeat center center;
+}
+
+/* site layout*/
+
+div#left {
+  float: left;
+  width: 450px;
+  margin-right: 12px;
+}
+
+div#right { 
+  float: left;
+  width: 450px;
+  margin-left: 12px;
+}
+
+

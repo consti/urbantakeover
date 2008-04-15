@@ -4,58 +4,58 @@ class Command < ActiveRecord::Base
   validates_presence_of :source
   belongs_to :user
   
-  def run!
-    parts = self.text.downcase.strip.split(" ")
-    # claim spot_name [@ addresse]
-    if parts[0] == "hi"
-      return twitter_ohai()
-
-    elsif parts[0] == "claim"
-      return claim_spot(parts[1, parts.size].join(" ")) #spot beschreibung wieder zusammensetzen
-
-    elsif parts[0] == 'friend'
-      return add_friend(parts[1, parts.size].join(" "))
-
-    elsif parts[0] == 'team'
-      return join_team( parts[1, parts.size].join(" "))
-
-    elsif (parts[0] == 'h') or (parts[0] == 'help')
-      return ["'claim spotname'", "'claim spot @ address'", "'team teamname'","'help'"].join("\n")
-
-    else
-      #per default: treat as claim. eg: "d cbo metalab @ rathausstraße 6"
-      return claim_spot(parts.join(" "))
-    end
-      
-  end
-
-private
-  def twitter_ohai
-    user.send_notify "ohai, i'm the urbantakeover bot. send 'd cpu claim spot @ address' to mark something claimed."
-    return "replied ohai!"
+  def self.run_for user, command, source="web"
+    c = Command.create :user => user, :text => command, :source => source
+    c.run!
   end
   
-  def add_friend friend_name
+  def h
+    help
+  end
+  
+  def help
+    user.notify_all("Commands: " + ["'claim spotname'", "'claim spot @ address'", "'team teamname'","'help'", "'friend friendname'"].join("\n"))
+  end
+  
+  def allowed_commands
+    self.methods - ['run!']
+  end
+
+  def run!
+    command, arguments = self.text.downcase.strip.split(" ", 2)
+    arguments ||= "" # if not set in split
+    return self.send(command, arguments) if allowed_commands.include? command
+
+    #per default: treat as claim and/or feature request. eg: "d cbo metalab @ rathausstraße 6"
+    admin_user = User.find_by_login "oneup"
+    admin_user.notify_mail "[UTO feature]: #{self.text} by #{user.name}" if admin_user
+
+    #try this anyway
+    return claim(arguments)      
+  end  
+
+  def hi arguments
+    user.notify_all "ohai, i'm the urbantakeover bot. send 'd cpu claim spot @ address' to mark something claimed."
+  end
+  
+  def friend friend_name
     friend = User.find_by_login(friend_name)
 
     unless friend
-      user.send_notify "lol! no user #{friend_name} found."
-      return "lol! no user #{friend_name} found." #TODO: get rid of this duplicates
+      return user.notify_all("lol! no user #{friend_name} found.")
     end
 
     if (friend != self.user) and (not friend.friend_of? self.user)
       self.user.friends << friend
       self.user.save!
-      user.send_notify "yay! added #{friend.login} as friend"
       friend.score 50, "added as friend by #{user.login}"
-      return "yay! added #{friend.login} as friend" #TODO: send sms to user when .score!
+      return user.notify_all("yay! added #{friend.login} as friend")
     else
-      user.send_notify "sry, already friends with #{friend.login}"
-      return "SRY, Already friends with #{friend.login}!"
+      return user.notify_all("sry, already friends with #{friend.login}")
     end
   end
     
-  def claim_spot spot_description
+  def claim spot_description
     if spot_description.include? "@"
       s = spot_description.split("@")
       spot_name = s[0].strip.downcase
@@ -67,6 +67,42 @@ private
     end
   end
   
+  def team team_name
+    team = Team.find_or_create_by_name team_name
+    if not team.users.include? user
+      team.users << user
+      if team.save
+        return user.notify_all("BAM! joined team #{team.name}")
+      else
+        err = team.errors.full_messages.join(', ')
+        return user.notify_all("sry, can't join team #{team.name}? #{err}")
+      end
+    else
+      return user.notify_all("huh? you're already in team #{team.name}!")
+    end
+  end
+
+  def buff args
+    user_name, spot_name = args.split("@")
+    user_name.strip!
+    spot_name.strip!
+    
+    buff_user = User.find_by_name user_name
+    spot = Spot.find_by_name spot_name
+    
+    if (not buff_user) or (not spot)
+      return user.notify_all("huh? no user #{user_name} or spot #{spot_name} found.")
+    end
+    
+    buff_user_claim = spot.claims.find :first, :conditions => ['user_id = ?', buff_user.id], :order => "created_at DESC"
+    return user.notify_all("huh? user #{buff_user.name} is not at #{spot.name}!") unless buff_user_claim
+    
+    buff_user_claim.destroy
+    buff_user.score -100, "buffed by #{user.name} @ #{spot.name}"
+    user.score 0, "buffed #{buff_user.name} @ #{spot.name}"
+  end
+
+private
   #TODO: refactor me
   #TODO: space indicates possible address ;)
   def claim_by_name_or_address target
@@ -83,11 +119,11 @@ private
 
         if not spot
           # no tupalo spot, must have really been an address
-          user.send_notify "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ address'."
+          user.notify_all "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ address'."
           return "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ $address'."      
         end
       elsif geocodes.size > 1
-        user.send_notify "plz write exact address, multiple spots found. like #{geocodes.first.address}"
+        user.notify_all "plz write exact address, multiple spots found. like #{geocodes.first.address}"
         return "sry, multiple spots found. for #{address}. eg: #{geocodes.first.address}."
       else
         geocode = geocodes.first
@@ -100,7 +136,7 @@ private
     end
     
     unless user.can_claim? spot
-      user.send_notify "lol, you already own #{spot.name}!"
+      user.notify_all "lol, you already own #{spot.name}!"
       return "you already own #{spot.name}"
     end
     
@@ -115,10 +151,10 @@ private
 
     geocodes = Geocoding.get(address) # HARHAR - users can easily find their own stuffz
     if geocodes.empty?
-      user.send_notify "plz: claim like '#{spot_name} @ Musterstraße 12'"
+      user.notify_all "plz: claim like '#{spot_name} @ Musterstraße 12'"
       return "no address found for '#{address}'"
     elsif geocodes.size > 1
-      user.send_notify "plz write exact address, multiple spots found. like #{geocodes.first.address}"
+      user.notify_all "plz write exact address, multiple spots found. like #{geocodes.first.address}"
       return "sry, multiple spots found. for #{address}"
     else
       geocode = geocodes.first
@@ -127,7 +163,7 @@ private
         spot = Spot.create :name => spot_name, :address => geocode.address, :geolocation_x => geocode.latitude, :geolocation_y => geocode.longitude
         spot.save
         self.user.claim spot
-        return "#{self.user.name} conquered a new spot! #{spot_name} @ #{spot.address}"
+        return  "#{self.user.name} conquered a new spot! #{spot_name} @ #{spot.address}"
       end
       
       #reclaim an existing spot
@@ -142,33 +178,14 @@ private
       if self.user.can_claim? spot
         claim = self.user.claim spot
         if old_name
-          user.send_notify "lol! you rebranded #{old_name} to #{spot.name}!"
-          return "bam! 10 points for claiming #{spot.name} (renamed from #{old_name})"
+          return user.notify_all "lol! you rebranded #{old_name} to #{spot.name}!"
         else
           # TODO: previous user get points for giving this a good name
           return "bam! 10 points for claiming #{spot.name}"
         end
       else
-        user.send_notify "lol! #{spot.name} is already yours!"
-        return "#{spot.name} already belongs to #{user.name}" # TODO: update me if there are new conditions
+        return user.notify_all "lol! #{spot.name} is already yours!"
       end
     end
-  end
-  
-  def join_team team_name
-    team = Team.find_or_create_by_name team_name
-    if not team.users.include? user
-      team.users << user
-      if team.save
-        return "BAM! joined team #{team.name}"
-      else
-        err = team.errors.full_messages.join(', ')
-        user.send_notify "sry, can't join team #{team.name}? contact team@72dpiarmy.com plz!"
-        return "sry, can't join team #{team.name}? #{err}"
-      end
-    else
-      user.send_notify "huh? you're already in team #{team.name}!"
-      return "huh? you're already in team #{team.name}!"
-    end
-  end
+  end  
 end
