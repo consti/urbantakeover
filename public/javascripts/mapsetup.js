@@ -79,22 +79,31 @@ function drawArea(center,liColor,fillColor){
 
 function newMarker(markerLocation, spotId, addr, users, mrkclr, baseIcon, selected) {
 	var utoicon = new GIcon(baseIcon);
-	drawArea(markerLocation,users[0][1],users[0][2]);
+	//drawArea(markerLocation,users[0][1],users[0][2]);
 	utoicon.image = "/images/marker/"+mrkclr+".png";
 	var marker=new GMarker(markerLocation, {icon: utoicon, title:'Spot['+spotId+']'});
-	var infoMsg='<a href=\"/spot/'+spotId+'\" class=\"spot-name\">'+spotId+'</a><br/><span class=\"address\">'+addr+'</span><br/>current: <a href=\"/user/'+users[0][0]+'\" class=\"user-name\" style=\"background-color:#'+users[0][1]+';border-color:#'+users[0][2]+';\">'+users[0][0]+'</a><br/>';
-		infoMsg+='here: <a href\"/user/'+users[0][0]+'" class=\"user-name\" style=\"background-color:#'+users[0][1]+';border-color:#'+users[0][2]+';\">'+users[0][0]+'</a>';
+	var infoMsg='<a href=\"/spot/'+spotId+'\" class=\"spot-name\">'+spotId+'</a><br/>';
+		if(addr!=null) {
+			infoMsg+='<span class=\"address\">'+addr+'</span>';
+		} else {
+			infoMsg+='<span class=\"address\">'+spotId+'</span>';
+		}
+		infoMsg+='<br/>current: <a href=\"/user/'+users[0][0]+'\" class=\"user-name\" style=\"background-color:'+users[0][1]+';border-color:'+users[0][2]+';\">'+users[0][0]+'</a><br/>';
+		infoMsg+='here: <a href\"/user/'+users[0][0]+'" class=\"user-name\" style=\"background-color:'+users[0][1]+';border-color:'+users[0][2]+';\">'+users[0][0]+'</a>';
 		for(var i=1;i<users.length; i++) {
-			infoMsg+=', <a href\"/user/'+users[i][0]+'" class=\"user-name\" style=\"background-color:#'+users[i][1]+';border-color:#'+users[i][2]+';\">'+users[i][0]+'</a>';
+			infoMsg+=', <a href\"/user/'+users[i][0]+'" class=\"user-name\" style=\"background-color:'+users[i][1]+';border-color:'+users[i][2]+';\">'+users[i][0]+'</a>';
 		}
 		infoMsg+='<br/><a href=\"http://flickr.com/photos/tags/'+spotId+'\">Tag on flickr</a>';
+	
 	GEvent.addListener(marker, 'click', function() {
 		marker.openInfoWindowHtml(infoMsg);
 	});
+	
 	if (selected) {
         map.setCenter(markerLocation, 13);
 		map.openInfoWindowHtml(marker.getPoint(), infoMsg);
 	}
+	
 	return marker;
 }
 
