@@ -46,6 +46,7 @@ class ClaimsController < ApplicationController
   # GET /recent.xml
   def recent
     @recent_claims = Claim.find :all, :limit => 16, :order => "created_at desc"
+    @recent_spots = @recent_claims.collect({|c| c.spot}).compact
 
     respond_to do |format|
       format.html # index.html.erb
