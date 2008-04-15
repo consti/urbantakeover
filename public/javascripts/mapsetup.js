@@ -1,7 +1,9 @@
 var map, cluster;
+var gmarkers = [];
 
 function mapini() {
 	if (GBrowserIsCompatible()) {
+
 		map=new GMap2(document.getElementById('map'));
 		map.setCenter(new GLatLng(0, 0), 0, G_NORMAL_MAP);
 
@@ -22,10 +24,12 @@ function mapini() {
 		var marker, markersArray=[];
 		
 		for (var i=0; i<json.length; i++) {
-			if(json[i][2][0]) {
-			marker=newMarker(new GLatLng(json[i][4], json[i][5]), json[i][0], json[i][1], json[i][2], json[i][3], baseIcon);
-			markersArray.push(marker);
+			if(json[i][2][0] && json[i][0] == focus_spot) {
+				marker=newMarker(new GLatLng(json[i][4], json[i][5]), json[i][0], json[i][1], json[i][2], json[i][3], baseIcon, true);				
+			} else if (json[i][2][0]) {
+				marker=newMarker(new GLatLng(json[i][4], json[i][5]), json[i][0], json[i][1], json[i][2], json[i][3], baseIcon, false);
 			}
+				markersArray.push(marker);
 		}
 
 		GEvent.addListener(map, "mouseover", function(){
@@ -37,7 +41,11 @@ function mapini() {
 		});
 
 		cluster=new ClusterMarker(map, { markers:markersArray } );
-		cluster.fitMapToMarkers();
+		if (focus_spot == "") {
+			cluster.fitMapToMarkers();
+		} else {
+			map.setZoom(15);
+		}
 
 		map.savePosition();
 	}
@@ -69,7 +77,7 @@ function drawArea(center,liColor,fillColor){
 }
 
 
-function newMarker(markerLocation, spotId, addr, users, mrkclr, baseIcon) {
+function newMarker(markerLocation, spotId, addr, users, mrkclr, baseIcon, selected) {
 	var utoicon = new GIcon(baseIcon);
 	drawArea(markerLocation,users[0][1],users[0][2]);
 	utoicon.image = "/images/marker/"+mrkclr+".png";
@@ -83,6 +91,10 @@ function newMarker(markerLocation, spotId, addr, users, mrkclr, baseIcon) {
 	GEvent.addListener(marker, 'click', function() {
 		marker.openInfoWindowHtml(infoMsg);
 	});
+	if (selected) {
+        map.setCenter(markerLocation, 13);
+		map.openInfoWindowHtml(marker.getPoint(), infoMsg);
+	}
 	return marker;
 }
 
