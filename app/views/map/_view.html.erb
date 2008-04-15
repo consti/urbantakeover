@@ -19,4 +19,10 @@
   var json = <%= spot_json.to_json %>;
   var focus_spot = "<%=h params[:focus] %>";
 
+  mapini(); // I am here now - lets see if its better :)
+
+  // todo: the spot data is super cacheable!!! w0000t!
+  // todo: onunload call GUnload()
+  // todo: refactor code for gods sake
+
 </script>
