@@ -55,7 +55,7 @@ function mapini() {
 
 function drawArea(center,liColor,fillColor){
 	var radius = 0.1; // 100 Meter
-	var nodes = 10; // 10 x Sides
+	var nodes = 10; // 40 x Sides
 	var liWidth = 0; // Width of border
 	var liOpa = 0.7; // Opacity of border
 	var fillOpa = 0.7; // Opacity of fill
@@ -79,7 +79,7 @@ function drawArea(center,liColor,fillColor){
 
 function newMarker(markerLocation, spotId, addr, users, mrkclr, baseIcon, selected) {
 	var utoicon = new GIcon(baseIcon);
-	//drawArea(markerLocation,users[0][1],users[0][2]);
+	drawArea(markerLocation,users[0][1],users[0][2]);
 	utoicon.image = "/images/marker/"+mrkclr+".png";
 	var marker=new GMarker(markerLocation, {icon: utoicon, title:'Spot['+spotId+']'});
 	var infoMsg='<a href=\"/spot/'+spotId+'\" class=\"spot-name\">'+spotId+'</a><br/><span class=\"address\">'+addr+'</span><br/>current: <a href=\"/user/'+users[0][0]+'\" class=\"user-name\" style=\"background-color:#'+users[0][1]+';border-color:#'+users[0][2]+';\">'+users[0][0]+'</a><br/>';
@@ -128,7 +128,7 @@ function ClusterMarker($map, $options){
 		this.clusterMarkerIcon.iconAnchor=new GPoint(14, 38);
 		this.clusterMarkerIcon.infoWindowAnchor=new GPoint(14, 38);
 	}
-	this.clusterMarkerTitle=($options.clusterMarkerTitle)?$options.clusterMarkerTitle:'Click to zoom in and see %count claimed spots';
+	this.clusterMarkerTitle=($options.clusterMarkerTitle)?$options.clusterMarkerTitle:'Click to zoom in and see %count markers';
 	if($options.fitMapMaxZoom){
 		this.fitMapMaxZoom=$options.fitMapMaxZoom;
 	}
