@@ -69,7 +69,7 @@ body {
 
 /*--------------------------*/
 /* =text formating    		*/
-h1, h2, h3 { line-height: 1em;}
+h1, h2, h3 { font-family: Georgia, "Times New Roman", Times, serif; line-height: 1em;}
 
 h1 { font-size: 3em;  margin:  0 0 1em 0;}
 h2 { font-size: 1.9em; margin: 1.5em 0 1em 0;}
