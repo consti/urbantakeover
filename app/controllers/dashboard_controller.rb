@@ -1,25 +1,21 @@
 class DashboardController < ApplicationController
 
-  def urbantakeover
-    @sparklines = {
-      'test' => [1,2,3,4,5,6,7,6,5,4,3,2,1,0,5,1,2,2,2,2]
-    }
+  def admin
+    @sparklines = {}
     
-    days_count = 7*4
+    days_count = 7*6
     
     now = Time.new
     check_day = now - days_count.days
 
-    user_counts = []
-    claim_counts = []
+    what = ['user', 'claim', 'team']
+    what.each { |w| @sparklines[w] = [] }
     while check_day <= now
-      user_counts << User.count(:conditions => ["created_at >= ? and created_at < ?", check_day, check_day+1.days])
-      claim_counts << Claim.count(:conditions => ["created_at >= ? and created_at < ?", check_day, check_day+1.days])
+      what.each do |w|
+        count = w.classify.constantize.count(:conditions => ["created_at >= ? and created_at < ?", check_day, check_day+1.days])
+        @sparklines[w] << count
+      end
       check_day += 1.days
     end
-    
-    @sparklines['users'] = user_counts
-    @sparklines['claims'] = claim_counts
-    
   end
 end
