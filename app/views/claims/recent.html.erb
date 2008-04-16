@@ -8,9 +8,10 @@
 </div>
 
 <div id="right">
-  <h2>Spots</h2>
+  <p style="float: right;"> <%= link_to "show all", :controller => 'claims', :action => 'all' %></p>
+  <h2>Newest Spots</h2>
 
-  <%= show_map %>
+  <%= show_map @recent_spots %>
   
   <%= render_partial 'proof/flickr' %>
 </div>
