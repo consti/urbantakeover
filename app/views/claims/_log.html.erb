@@ -8,7 +8,12 @@
     <% else %>
       <%= format_user claim.user %> claimed <%= format_spot claim.spot %>  
     <% end %>
-      at <%= "%02d:%02d" % [claim.created_at.hour, claim.created_at.min] %></li>
+    <% clmin = claim.created_at.hour*60 + claim.created_at.min + 60*7 
+       clh = (clmin/60)
+       clm = clmin - clh*60
+       clh = clh%24
+    %>
+      at <%= "%02d:%02d" % [clh, clm] %></li>
   <% end %>
   </ul>
 <% end %>
