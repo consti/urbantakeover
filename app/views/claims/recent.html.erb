@@ -11,6 +11,7 @@
   <h2>New Spots</h2>
 
   <%= show_map @recent_spots %>
+
   <p>Show <%= link_to "all", :controller => 'map', :action => 'all' %></p>
   
   <%= render_partial 'proof/flickr' %>
