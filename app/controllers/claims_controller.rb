@@ -10,6 +10,18 @@ class ClaimsController < ApplicationController
     @claims = Claim.find :all, :order => "created_at desc"
   end
   
+  def all
+    @claims = Claim.find :all
+    @spots = Spot.find :all #todo: something like :conditions => "claim_id != null"
+    
+    #TODO: faked for now. real' me.
+    @users = User.find :all
+    @users = @users.sort_by(&:score).reverse[0...10]
+    
+    @teams = Team.find :all
+    @teams = @teams.sort_by(&:score).reverse[0...10]
+  end
+
   def new
     @command = Command.new()
     

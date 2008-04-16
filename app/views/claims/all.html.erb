@@ -1,0 +1,31 @@
+<div id="left">  
+  <h2>Highscore</h2>  
+  <h3>Teams</h3>
+  <ol>
+  <% for team in @teams %>
+    <li>
+      <%= format_team team %>: <%= team.score %> points
+    </li>
+  <% end %>
+  </ol>
+
+  <h3>Users</h3>
+
+  <ol>
+  <% for user in @users %>
+    <li>
+    <%= format_user user %>: <%= user.score %> points
+    </li>
+  <% end %>
+  </ol>
+</div>
+
+<div id="right">
+  <h2>All Spots</h2>
+
+  <%= show_map @spots %>
+
+  <p>Show <%= link_to "all", :controller => 'claims', :action => 'all' %></p>
+  
+  <%= render_partial 'proof/flickr' %>
+</div>
