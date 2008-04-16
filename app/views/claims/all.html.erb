@@ -15,6 +15,7 @@
   <% for user in @users %>
     <li>
     <%= format_user user %>: <%= user.score %> points
+    <%= sparkline user.claims_for_last_days_grouped_by_day(14).collect {|claims| claims.size} %>
     </li>
   <% end %>
   </ol>

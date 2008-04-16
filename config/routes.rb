@@ -22,6 +22,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/users', :controller => 'user', :action => 'list'
   # map.chat '/chat', :controller => 'chat', :action => 'index'
   
+  map.sparklines "sparklines", :controller => "sparklines", :action => "index"
+  map.sparklines "sparklines/:action/:id/image.png", :controller => "sparklines"
+    
   map.root :controller => 'claims', :action => 'recent'
   
   map.connect '/:name', :controller => 'disambiguation', :action => 'index'

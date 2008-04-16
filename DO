@@ -3,6 +3,7 @@
 uto widget link
 uto daily statistics
 
+* uto marker & kreise per svg->png imagemagick command machen: convert a.svg a.png
 
 * user page => link to flickr/twitter via icon (and to user profile page, not friends)
 * user description field => for essence
