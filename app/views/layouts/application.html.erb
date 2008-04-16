@@ -9,7 +9,7 @@
   <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag 'mapsetup' %>
 </head>
-<body>
+<body onunload="try { GUnload(); };">
 
 <div id="user-nav">
   <% if logged_in? %>
