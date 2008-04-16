@@ -15,15 +15,7 @@
   <% for user in @users %>
     <li>
     <%= format_user user %>: <%= user.score %> points
-<%
-def sparkline data
-  s = GoogleChart.sparkline(*data)
-  s.height = 12
-  s.width = data.size*3
-  "<img src=\"#{s.to_url}&chco=4d89f9,c6d9fd\"/>"
-end
-%>
-    <%= sparkline user.claims_for_last_days_grouped_by_day(14).collect {|claims| claims.size*12} %>
+    <%= sparkline user.claims_for_last_days_grouped_by_day(14).collect {|claims| claims.size} %>
     </li>
   <% end %>
   </ol>

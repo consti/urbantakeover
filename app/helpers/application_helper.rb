@@ -4,6 +4,14 @@ module ApplicationHelper
     RedCloth.new(text, [ :filter_html]).to_html
   end
   
+  def sparkline data
+    data = data.map {|d| d*12}
+    s = GoogleChart.sparkline(*data)
+    s.height = 12
+    s.width = data.size*3
+    "<img src=\"#{s.to_url}&chco=4d89f9,c6d9fd\"/>"
+  end
+  
   def format_interval(timestamp)
     
     granularity = 1
