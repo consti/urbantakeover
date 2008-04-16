@@ -301,13 +301,16 @@ ClusterMarker.prototype._preCacheIconBounds=function($indexes){
 
 ClusterMarker.prototype.refresh=function($forceFullRefresh){
 	var i,$marker, $uncachedIconBoundsIndexes=this._filterActiveMapMarkers();
+	//alert(map.getZoom());
 	if(this._activeMarkersChanged || $forceFullRefresh){
 		this._removeClusterMarkers();
+		if(map.getZoom()<14) {
 		if(this.clusteringEnabled && this._map.getZoom()<this._map.getCurrentMapType().getMaximumResolution()){
 			if($uncachedIconBoundsIndexes.length>0){
 				this._preCacheIconBounds($uncachedIconBoundsIndexes);
 			}
 			this._filterIntersectingMapMarkers();
+		}
 		}
 		for(i=this._clusterMarkers.length-1; i>=0; i--){
 			this._map.addOverlay(this._clusterMarkers[i]);
