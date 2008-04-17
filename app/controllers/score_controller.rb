@@ -1,5 +1,5 @@
 class ScoreController < ApplicationController
-  before_filter :login_required, :except => :all
+  before_filter :login_required, :except => [:all]
 
   def index
     redirect_to :controller => :claims, :action => :all
