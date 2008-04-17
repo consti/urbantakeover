@@ -20,7 +20,6 @@ ActionController::Routing::Routes.draw do |map|
   map.hotspots '/hotspots', :controller => 'spot', :action => 'hotspots'
   map.chat '/chat', :controller => 'chat', :action => 'index'
   map.connect '/users', :controller => 'user', :action => 'list'
-  # map.chat '/chat', :controller => 'chat', :action => 'index'
   
   map.sparklines "sparklines", :controller => "sparklines", :action => "index"
   map.sparklines "sparklines/:action/:id/image.png", :controller => "sparklines"
