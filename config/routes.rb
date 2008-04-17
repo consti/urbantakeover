@@ -18,8 +18,13 @@ ActionController::Routing::Routes.draw do |map|
   map.team '/team', :controller => 'team', :action => 'index'
   map.order '/stickers', :controller => 'sticker', :action => 'index'
   map.hotspots '/hotspots', :controller => 'spot', :action => 'hotspots'
+  map.chat '/chat', :controller => 'chat', :action => 'index'
   map.connect '/users', :controller => 'user', :action => 'list'
+  # map.chat '/chat', :controller => 'chat', :action => 'index'
   
+  map.sparklines "sparklines", :controller => "sparklines", :action => "index"
+  map.sparklines "sparklines/:action/:id/image.png", :controller => "sparklines"
+    
   map.root :controller => 'claims', :action => 'recent'
   
   map.connect '/:name', :controller => 'disambiguation', :action => 'index'

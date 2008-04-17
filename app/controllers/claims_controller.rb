@@ -1,6 +1,6 @@
 class ClaimsController < ApplicationController
   before_filter :login_required, :except => [:log, :howto, :faq, :recent]
-  
+
   def my
     @claims = current_user.claims
     @owned_spots = current_user.owned_spots
@@ -10,6 +10,18 @@ class ClaimsController < ApplicationController
     @claims = Claim.find :all, :order => "created_at desc"
   end
   
+  def all
+    @claims = Claim.find :all
+    @spots = Spot.find :all #todo: something like :conditions => "claim_id != null"
+    
+    #TODO: faked for now. real' me.
+    @users = User.find :all
+    @users = @users.sort_by(&:score).reverse[0...10]
+    
+    @teams = Team.find :all
+    @teams = @teams.sort_by(&:score).reverse[0...10]
+  end
+
   def new
     @command = Command.new()
     
@@ -46,6 +58,7 @@ class ClaimsController < ApplicationController
   # GET /recent.xml
   def recent
     @recent_claims = Claim.find :all, :limit => 16, :order => "created_at desc"
+    @recent_spots = @recent_claims.collect{|c| c.spot}.compact
 
     respond_to do |format|
       format.html # index.html.erb

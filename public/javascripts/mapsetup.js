@@ -93,7 +93,7 @@ function newMarker(markerLocation, spotId, addr, users, mrkclr, baseIcon, select
 		for(var i=1;i<users.length; i++) {
 			infoMsg+=', <a href\"/user/'+users[i][0]+'" class=\"user-name\" style=\"background-color:'+users[i][1]+';border-color:'+users[i][2]+';\">'+users[i][0]+'</a>';
 		}
-		infoMsg+='<br/><a href=\"http://flickr.com/photos/tags/'+spotId+'\">Tag on flickr</a>';
+		infoMsg+='<br/><a href=\"http://flickr.com/photos/tags/'+spotId+'\">Tag on flickr</a> & <a href=\"http://flickr.com/search/groups/?q='+spotId+'&w=697289%40N21&m=pool\">in uto group</a>';
 	
 	GEvent.addListener(marker, 'click', function() {
 		marker.openInfoWindowHtml(infoMsg);
@@ -301,13 +301,16 @@ ClusterMarker.prototype._preCacheIconBounds=function($indexes){
 
 ClusterMarker.prototype.refresh=function($forceFullRefresh){
 	var i,$marker, $uncachedIconBoundsIndexes=this._filterActiveMapMarkers();
+	//alert(map.getZoom());
 	if(this._activeMarkersChanged || $forceFullRefresh){
 		this._removeClusterMarkers();
+		if(map.getZoom()<14) {
 		if(this.clusteringEnabled && this._map.getZoom()<this._map.getCurrentMapType().getMaximumResolution()){
 			if($uncachedIconBoundsIndexes.length>0){
 				this._preCacheIconBounds($uncachedIconBoundsIndexes);
 			}
 			this._filterIntersectingMapMarkers();
+		}
 		}
 		for(i=this._clusterMarkers.length-1; i>=0; i--){
 			this._map.addOverlay(this._clusterMarkers[i]);

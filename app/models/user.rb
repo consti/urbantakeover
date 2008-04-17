@@ -276,6 +276,20 @@ class User < ActiveRecord::Base
     self.remember_token            = nil
     save(false)
   end
+  
+  def claims_for_last_days_grouped_by_day days_count
+    # this is totally not 100% correct and probably slow, but 1up doesn't mind as long as it gets the point across
+    now = Time.new
+    check_day = now - days_count.days
+    
+    claims = []
+    while check_day <= now
+      claims << self.claims.find(:all, :conditions => ["created_at >= ? and created_at < ?", check_day, check_day+1.days])
+      check_day += 1.days
+    end
+    
+    claims
+  end
 
   protected
     # before filter 

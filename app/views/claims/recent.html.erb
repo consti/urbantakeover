@@ -1,6 +1,6 @@
 <div id="left">  
-  <h2>What's new?</h2>
-  <div id="twitter_div" class="infobox"><ul id="twitter_update_list"><li><img src="/images/throbber.gif"/></li></ul></div>
+<!--  <h2>What's new?</h2>
+  <div id="twitter_div" class="infobox"><ul><li></li></ul></div> -->
   
   <h2>What's going on?</h2>
   <%= render :partial => 'claims/log', :locals => {:claims => @recent_claims} %>
@@ -8,9 +8,10 @@
 </div>
 
 <div id="right">
-  <h2>Spots</h2>
+  <p style="float: right;"> <%= link_to "show all", :controller => 'claims', :action => 'all' %></p>
+  <h2>Newest Spots</h2>
 
-  <%= show_map %>
+  <%= show_map @recent_spots %>
   
   <%= render_partial 'proof/flickr' %>
 </div>
