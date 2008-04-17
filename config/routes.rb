@@ -9,14 +9,15 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'user', :action => 'logout'
   map.connect '/recover_password', :controller => 'user', :action => 'forgot_password'
   map.signup '/signup', :controller => 'user', :action => 'signup'
-  map.settings '/settings', :controller => 'user', :action => 'settings'
   map.connect '/profile', :controller => 'user', :action => 'settings'
   map.home '/home', :controller => 'user', :action => 'home'
   map.highscore '/highscore', :controller => 'score', :action => 'index'
+
   map.sticker '/sticker', :controller => 'sticker', :action => 'index'
   map.stickers '/stickers', :controller => 'sticker', :action => 'index'
-  map.team '/team', :controller => 'team', :action => 'index'
   map.order '/stickers', :controller => 'sticker', :action => 'index'
+
+  map.team '/team', :controller => 'team', :action => 'index'
   map.hotspots '/hotspots', :controller => 'spot', :action => 'hotspots'
   map.chat '/chat', :controller => 'chat', :action => 'index'
   map.connect '/users', :controller => 'user', :action => 'list'
@@ -24,8 +25,10 @@ ActionController::Routing::Routes.draw do |map|
   map.sparklines "sparklines", :controller => "sparklines", :action => "index"
   map.sparklines "sparklines/:action/:id/image.png", :controller => "sparklines"
     
-  map.root :controller => 'claims', :action => 'recent'
+  # map.root :controller => 'claims', :action => 'recent'
   
+  map.root :controller => 'welcome', :action => 'check'
+    
   map.connect '/:name', :controller => 'disambiguation', :action => 'index'
   map.connect '/which/:name', :controller => 'disambiguation', :action => 'disambiguate'
   map.connect '/user/:name', :controller => 'user', :action => 'show_by_name'

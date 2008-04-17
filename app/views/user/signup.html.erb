@@ -1,7 +1,12 @@
-<h2>Welcome on board, lol!</h2>
+<div>
+  <h1><a class="title" href="<%= root_url %>"><%= print_pwnzing_logo %></a></h1>
+</div>
+
+<h2>Welcome on board!</h2>
 
 <%= error_messages_for :user %>
 <% form_for :user do |f| -%>
+
   <table>
     <tr>
       <td>
@@ -24,16 +29,16 @@
       <p><label for="email">Email</label><br/>
       <%= f.text_field :email %></p>
 
-<!--
       <h3>Are you on Flickr? (<em>Foto Upload = moar points!</em>)</h3>
-      Implemented soonish.
-      <p><label for="flickr">Twitter Username is</label><br/>
+      <span class="todo">Not yet implemented :)</span>
+      <p><label for="flickr">Flickr Username is</label><br/>
       <%= f.text_field :flickr %></p>
--->
+      
     </td>
   </tr>
   </table>
-  
+  <p><span class="todo" style="font-size: 0.8em">And please remember: We are still an early prototype. It could get a little bumpy.. :P</span>
+  </p>
   <p><%= submit_tag 'Sign up' %></p>
 
 <% end -%>

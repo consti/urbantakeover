@@ -1,5 +1,5 @@
 class SpotController < ApplicationController
-  before_filter :login_required, :only => [:new, :edit, :create, :update, :destroy]
+  before_filter :login_required, :only => [:new, :edit, :create, :update, :destroy, :show]
   before_filter :admin_only, :only => [:new, :create, :destroy]
 
   def admin_only
