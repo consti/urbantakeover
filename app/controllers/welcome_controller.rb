@@ -14,6 +14,7 @@ class WelcomeController < ApplicationController
     claims_aweekago = Claim.count_by_sql "SELECT COUNT(*) FROM claims WHERE created_at >= '#{lastweek}' and created_at <= '#{today}'"
     updates_aweekago = Claim.count_by_sql "SELECT COUNT(*) FROM claims WHERE updated_at >= '#{lastweek}' and updated_at <= '#{today}'"
     @crosses_week = updates_aweekago - claims_aweekago
+    @num_claims = Claim.count_by_sql "SELECT COUNT(*) FROM claims"    
     a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] # Will add descriptions, soon
 		@num = a[rand(a.size)]
   end
@@ -31,6 +32,7 @@ class WelcomeController < ApplicationController
      claims_aweekago = Claim.count_by_sql "SELECT COUNT(*) FROM claims WHERE created_at >= '#{lastweek}' and created_at <= '#{today}'"
      updates_aweekago = Claim.count_by_sql "SELECT COUNT(*) FROM claims WHERE updated_at >= '#{lastweek}' and updated_at <= '#{today}'"
      @crosses_week = updates_aweekago - claims_aweekago
+     @num_claims = Claim.count_by_sql "SELECT COUNT(*) FROM claims"    
   end
   
   def check
