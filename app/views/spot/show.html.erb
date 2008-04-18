@@ -29,8 +29,10 @@
 <%= render :partial => 'claims/log', :locals => {:claims => @spot.claims} %>
 
 <h2>Images</h2>
-<%= todo "fetch from flickr / allow for flickr claim proof uploads" %>
-
+images tagged with <%= @spot.name %> in the urbantakeover image pool on flickr<br/>
+<%= render :partial => 'proof/spot_flickr_pool', :locals => {:spot => @spot.name} %><br/>
+images tagged with <%= @spot.name %> in flickr<br/>
+<%= render :partial => 'proof/spot_flickr', :locals => {:spot => @spot.name} %><br/>
 </div>
 
 <div style="float: left; width: 450px;">

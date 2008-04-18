@@ -25,7 +25,9 @@ function mapini() {
 		
 		for (var i=0; i<json.length; i++) {
 			if(json[i][2][0] && json[i][0] == focus_spot) {
-				marker=newMarker(new GLatLng(json[i][4], json[i][5]), json[i][0], json[i][1], json[i][2], json[i][3], baseIcon, true);				
+				marker=newMarker(new GLatLng(json[i][4], json[i][5]), json[i][0], json[i][1], json[i][2], json[i][3], baseIcon, true);
+				map.addOverlay(marker);
+	         	GEvent.trigger(marker, "click");				
 			} else if (json[i][2][0]) {
 				marker=newMarker(new GLatLng(json[i][4], json[i][5]), json[i][0], json[i][1], json[i][2], json[i][3], baseIcon, false);
 			}
@@ -101,7 +103,6 @@ function newMarker(markerLocation, spotId, addr, users, mrkclr, baseIcon, select
 	
 	if (selected) {
         map.setCenter(markerLocation, 13);
-		map.openInfoWindowHtml(marker.getPoint(), infoMsg);
 	}
 	
 	return marker;
