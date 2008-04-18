@@ -1,4 +1,4 @@
-<div style="float: left; width: 450px;">
+<div id="left">
 <h2><%= format_spot @spot %></h2>
 
 <% unless @spot.stuffs.empty? %>
@@ -36,6 +36,7 @@ images tagged with <%= @spot.name %> in the urbantakeover image pool on flickr<b
 <%= render :partial => 'proof/spot_flickr', :locals => {:spot => @spot.name} %></br>
 </div>
 
-<div style="float: left; width: 450px;">
+<div id="right">
 <%= show_map(@spots) %>
+<div class="spacer"><br/></div>
 </div>
