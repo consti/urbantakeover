@@ -31,6 +31,9 @@ a:hover { color: #fff; background-color:#000; }
 
 a img { border: none; }
 
+.left {float: left;}
+.right {float: right;}
+
 .fieldWithErrors {
   padding: 2px;
   background-color: red;
@@ -266,8 +269,6 @@ div#top ul li { float: left; }
 img#logo { position: absolute; z-index: 2; margin-left: 420px; margin-top: 155px; display: none; }
 
 div#subtop { padding: 10px; background-color: #eee; }
-div#subtop span#info { float: left; }
-div#subtop span#login { float: right; }
 
 div#desc { border: 0px solid black; padding-bottom: 40px; }
 

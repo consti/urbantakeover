@@ -6,14 +6,15 @@
 		</ul>		
 		</div>
 		<div id="subtop">
-    <span id="info">
-	  <%= render :partial => 'claims/today', :locals => {:claim => @claims_today} %>
-	   <!-- |  <%= render :partial => 'claims/crosses_week', :locals => {:crosses => @crosses_week} %> | -->
-    | <%= render :partial => 'claims/num_claims', :locals => {:claims => @num_claims} %>  
-	  | <%= render :partial => 'claims/last', :locals => {:claim => @last_claim} %></span>
-			<span id="login"><%= link_to 'log in', login_url %>
-		</span>
-			<br/>
+      <div class="left">
+  	    <%= render :partial => 'claims/today', :locals => {:claim => @claims_today} %>
+  	   <!-- |  <%= render :partial => 'claims/crosses_week', :locals => {:crosses => @crosses_week} %> | -->
+       | <%= render :partial => 'claims/num_claims', :locals => {:claims => @num_claims} %>  
+  	   | <%= render :partial => 'claims/last', :locals => {:claim => @last_claim} %>
+  	  </div>
+	  
+			<div class="right"><%= link_to "highscore", highscore_url %> | <%= link_to 'log in', login_url %></div>
+			<div style="clear: both;"></div>
 		</div>
 
 	  <div id="left">
