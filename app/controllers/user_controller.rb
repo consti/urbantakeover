@@ -1,24 +1,11 @@
 class UserController < ApplicationController
-  before_filter :login_required, :only => [:add_friend, :remove_friend, :edit, :profile, :settings, :show_by_name]
+  before_filter :login_required, :only => [:add_friend, :remove_friend, :edit, :profile, :settings]
   
   # TODO: refactor me! get rid of settings/profile distinction
   def settings
     redirect_to :action => 'edit', :id => current_user.id
   end
-  
-  def home
-    # home_path should be used instead of root_path once we have the pitch frontpage & dashboard frontpage ready
-    unless flash[:notice]
-      flash[:notice] = "Welcome home #{current_user.name} :)" if logged_in?
-    end
-
-    redirect_to root_path # redirect to root, because we have no dashboard yet
-  end
-  
-  def index
-    home
-  end
-  
+      
   def forgot_password
     return unless request.post?
 

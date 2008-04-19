@@ -179,14 +179,18 @@ a.title {
   display: block;
   margin-top: 0;
   padding-top: 0;
-  padding-left: 54px; /* 48 + 6 */
+  padding-left: 60px; /* 48 + 12 */
+  padding-right: 6px;
+  padding-bottom: 3px;
+  padding-top: 3px;
   height: 40px; /* 48 - 8 */
   padding-top: 8px;
   font-size: 26px;
-  background: url('/images/logo.png') no-repeat top left;
+  background: url('/images/logo.png') no-repeat top 6px;
+  background-color: white;
   
   text-decoration: none;
-  color: #959595;
+  color: #666666;
 }
 
 .menu {
@@ -256,24 +260,34 @@ div#right {
 }
 
 div#main { width: 1002px; height: 100%; margin-left: auto; margin-right: auto;}
-div#top { height: 300px; border: 1px solid black;}
-div#img { width: 500px; height: 300px; }
+div#top { height: 300px; }
 div#top ul { margin: 0; padding: 0; list-style-type: none; text-align: center;}
 div#top ul li { float: left; }
 img#logo { position: absolute; z-index: 2; margin-left: 420px; margin-top: 155px; display: none; }
 
-div#subtop { padding: 10px; background-color: #c1d39f; }
+div#subtop { padding: 10px; background-color: #eee; }
 div#subtop span#info { float: left; }
 div#subtop span#login { float: right; }
 
 div#desc { border: 0px solid black; padding-bottom: 40px; }
 
-div#footer { background-color: #EEEEEE; padding: 8px;}
-div#footer span#footnote { float: right; font-size: 0.8em;}
 
 /* areas */
 
 /* 72dpi logo link */
+#footer p a:link, #footer p a:visited {
+color: #959595;
+text-decoration: underline;
+}
+#footer p a:link span, #footer p a:visited span { color: #99cc00; }
+
+-#footer p a:hover, #footer p a:active{
+background-color: #99cc00;
+color: white;
+text-decoration: none;
+}
+
+-#footer p a:hover span, #footer p a:active span { color: white; }
 #footer a:link, #footer a:visited {
   color: #959595;
   text-decoration: underline;

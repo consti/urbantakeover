@@ -12,9 +12,9 @@
 <body onunload="try { GUnload(); } catch(Exception) {};">
 
 	<div id="main">
-  <% if logged_in? %>
-<div id="user-nav">
 
+<div id="user-nav">
+  <% if logged_in? %>
     <p>
     <%= format_user current_user %>
     (<%= format_user_score current_user %>)
@@ -25,7 +25,12 @@
     |
     <%= link_to 'log out', logout_url %>
     </p>
-
+  <% else %>
+    <p>
+      <%= link_to 'log in', login_url %>
+      | <%= link_to 'sign up', signup_url %>
+    </p>
+  <% end%>
 </div>
 
 <div>
@@ -50,7 +55,7 @@
   <% end %>
   
 </div>
-  <% end %>
+
 <p style="color: green"><%= flash[:notice] %></p>
 
 <% if @scores %>
@@ -65,7 +70,7 @@
 <div style="clear: both;"><!-- ohai, i'm the clear div to make the footer margin-top work --></div>
 
 <div id="footer">
-	<span id="footnote"><%= link_to "support chat", chat_url %> | <a href="http://blog.urbantakeover.at">our blog</a> | <a href="mailto://team@urbantakeover.at">get in touch</a> | urbantakeover is handcrafted by <a class="72dpiarmy" href="http://72dpiarmy.com"><span>72dpi</span>army</a> | &copy; 2008</span>
+	<p<%= link_to "support chat", chat_url %> | <a href="http://blog.urbantakeover.at">our blog</a> | <a href="mailto://team@urbantakeover.at">get in touch</a> | urbantakeover is handcrafted by <a class="72dpiarmy" href="http://72dpiarmy.com"><span>72dpi</span>army</a> | &copy; 2008</p>
 	<br/>
 </div>
 

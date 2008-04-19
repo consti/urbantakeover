@@ -10,7 +10,6 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/recover_password', :controller => 'user', :action => 'forgot_password'
   map.signup '/signup', :controller => 'user', :action => 'signup'
   map.connect '/profile', :controller => 'user', :action => 'settings'
-  map.home '/home', :controller => 'user', :action => 'home'
   map.highscore '/highscore', :controller => 'score', :action => 'index'
 
   map.sticker '/sticker', :controller => 'sticker', :action => 'index'
@@ -27,7 +26,10 @@ ActionController::Routing::Routes.draw do |map|
     
   # map.root :controller => 'claims', :action => 'recent'
   
-  map.root :controller => 'welcome', :action => 'check'
+  map.connect '/ohai', :controller => 'dashboard', :action => 'newcomer'
+  map.home '/home', :controller => 'dashboard', :action => 'member'
+  
+  map.root :controller => 'dashboard', :action => 'redirect'
     
   map.connect '/:name', :controller => 'disambiguation', :action => 'index'
   map.connect '/which/:name', :controller => 'disambiguation', :action => 'disambiguate'
