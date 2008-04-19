@@ -15,12 +15,19 @@
   <%= submit_tag 'go' %>
 <% end %>
 
+<h3>Join a team</h3>
+<p class="todo">just enter the team you want to join or create and click 'go'</p>
+<% form_tag do %>
+  <%= text_field_tag 'team', '' %>
+  <%= submit_tag 'go' %>
+<% end %>
+
 <h3>Command</h3>
-<p class="todo">e.g., "team teamname" to join a team</p>
+<p class="todo">e.g., "team teamname" to join a team, "friend nickname" to add a user as friend, "help" for help</p>
 <% form_tag do %>
   <%= text_field_tag 'command', '' %>
   <%= submit_tag 'go' %>
 <% end %>
 
 <h2>Need help?</h2>
-<p>No worries; instructions are <em><%= link_to 'here', howto_path %></em>.</p>
+<p>No worries; instructions are <em><%= link_to 'here', faq_path %></em>.</p>

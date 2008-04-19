@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-  before_filter :login_required, :only => [:add_friend, :remove_friend, :edit, :profile, :settings]
+  before_filter :login_required, :only => [:add_friend, :remove_friend, :edit, :profile, :settings, :show_by_name]
   
   # TODO: refactor me! get rid of settings/profile distinction
   def settings
@@ -95,7 +95,7 @@ class UserController < ApplicationController
       #flash[:notice] = "Logged in successfully"
       redirect_back_or_default home_url
     else
-      flash[:notice] = "Password? LAWL!!!"
+      flash[:notice] = "Sorry - Wrong Password!!"
     end
   end
 
