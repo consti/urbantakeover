@@ -276,22 +276,10 @@ div#desc { border: 0px solid black; padding-bottom: 40px; }
 
 /* 72dpi logo link */
 #footer p a:link, #footer p a:visited {
-color: #959595;
-text-decoration: underline;
-}
-#footer p a:link span, #footer p a:visited span { color: #99cc00; }
-
--#footer p a:hover, #footer p a:active{
-background-color: #99cc00;
-color: white;
-text-decoration: none;
-}
-
--#footer p a:hover span, #footer p a:active span { color: white; }
-#footer a:link, #footer a:visited {
   color: #959595;
   text-decoration: underline;
 }
+
 #footer a:link span, #footer a:visited span { color: #99cc00; }
 
 #footer a:hover, #footer a:active{
@@ -299,6 +287,7 @@ text-decoration: none;
   color: white;
   text-decoration: none;
 }
+
 #footer a:hover span, #footer a:active span { color: white; }
 
 /* Flicker Badge and such */
