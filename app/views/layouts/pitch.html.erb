@@ -5,35 +5,23 @@
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <title>UrbanTakeover - Reclaim your city!</title>
-  <%= stylesheet_link_tag 'scaffold' %>
-  <%= stylesheet_link_tag 'pitch' %>
+  <link rel="stylesheet" href="/stylesheets/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="/stylesheets/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]><link rel="stylesheet" href="/stylesheets/blueprint/ie.css" type="text/css" media="screen, projection" /><![endif]-->
+  <%= stylesheet_link_tag 'scaffold2' %>
   <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag 'mapsetup' %>
 </head>
 <body onunload="try { GUnload(); } catch(Exception) {};">
 
-<div id="main">
+<div class="container">
 
-<p style="color: green"><%= flash[:notice] %></p>
-
-<% if @scores %>
-  <% for line in @scores %>
-    <p style="color: blue;"><%= line %></p>
-  <% end %>
-<% end %>
-
-<div id="content">
   <%= yield  %>
+
+<div id="footer" class="span-24 last">
+	<div class="right small"><%= link_to "support chat", chat_url %> | <a href="http://blog.urbantakeover.at">our blog</a> | <a href="mailto://team@urbantakeover.at">get in touch</a> | urbantakeover is handcrafted by <a class="72dpiarmy" href="http://72dpiarmy.com"><span>72dpi</span>army</a> | &copy; 2008</div>
 </div>
-
-<div style="clear: both;"><!-- ohai, i'm the clear div to make the footer margin-top work --></div>
-
-<div id="footer">
-	<p><%= link_to "support chat", chat_url %> | <a href="http://blog.urbantakeover.at">our blog</a> | <a href="mailto://team@urbantakeover.at">get in touch</a> | urbantakeover is handcrafted by <a class="72dpiarmy" href="http://72dpiarmy.com"><span>72dpi</span>army</a> | &copy; 2008</p>
 </div>
-
-</div>
-
   <script type="text/javascript">
   var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
   document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
