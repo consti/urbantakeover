@@ -10,7 +10,11 @@ class UserController < ApplicationController
     return unless request.post?
 
     user = User.find_by_name params[:name]
-
+    unless user
+      flash[:notice] = "No user #{params[:name]} found"
+      return
+    end
+    
     new_password = User.generate_password
     user.password = new_password
     user.password_confirmation = user.password
