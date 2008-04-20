@@ -8,8 +8,8 @@ class DashboardController < ApplicationController
   end
   
   def test 
-    flickr = Flickr.new '903ed243c4ff3e40e464cf7383a6bc0f'
-    @photos = flickr.photos :tags => 'urbantakeover', :per_page => 24
+    flickr = Flickr.new RAILS_ROOT + "/config/flickr.cache", PRIVATE_API_CONFIG['flickr']['api_key'], PRIVATE_API_CONFIG['flickr']['shared_secret']
+    @photos = flickr.groups.pools.getPhotos("697289@N21")
   end
 
   def member
