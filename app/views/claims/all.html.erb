@@ -1,4 +1,6 @@
-<div id="left">  
+<div class="span-24 lrborder last">
+
+  <div class="span-9 push-1 colborder">
   <h2>Highscore</h2>  
   <h3>Teams</h3>
   <ol>
@@ -8,9 +10,7 @@
     </li>
   <% end %>
   </ol>
-
   <h3>Users</h3>
-
   <ol>
   <% for user in @users %>
     <li>
@@ -19,13 +19,11 @@
     </li>
   <% end %>
   </ol>
-  
-  <%= link_to "show all", :controller => "user", :action => "list" %>
-</div>
+  </div>
 
-<div id="right">
+  <div class="span-13 last">
   <h2>All Spots</h2>
+  <%= show_map @spots, :normal %>
+  </div>
 
-  <%= show_map @spots %>
-<div class="spacer"><br/></div>
 </div>

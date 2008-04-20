@@ -1,28 +1,43 @@
-<h2>Editing spot</h2>
+<div class="span-24 lrborder">
+  <div class="span-23 push-1 last">
+  <h2>Editing spot</h2>
+  <%= error_messages_for :spot %>
 
-<%= error_messages_for :spot %>
-
-<% form_for(@spot) do |f| %>
-  <p>
-    Name: <%= f.text_field :name %>
+  <% form_for(@spot) do |f| %>
+  <div class="span-6">
+  <p><label for="name">Name:</label><br/>
+  <%= f.text_field :name, "class"=>"textfield must" %>
   </p>
-
+  </div>
+  <div class="span-6">
   <p>
-    Address: <%= f.text_field :address %> or geolocation: <%= f.text_field :geolocation_x %> <%= f.text_field :geolocation_y %>
+    <label for="address">Address:</label><br/>
+    <%= f.text_field :address, "class"=>"textfield must" %>
+  </p>
+  </div>
+  <div class="span-2">
+  or 
+  </div>
+  <div class="span-8 last">
+  <label for="geolocation_x">geolocation:</label><br/>x:<%= f.text_field :geolocation_x, "class"=>"textfield must" %><br/>y:<%= f.text_field :geolocation_y, "class"=>"textfield must" %>
+  </div>
+  
+  <p>
+    <label for="tupalo_link">Tupalo Link:</label><br/>
+    <%= f.text_field :tupalo_link, "class"=>'tupalofield optional' %>
   </p>
   
   <p>
-    Tupalo Link: <%= f.text_field :tupalo_link %>
-  </p>
-  
-  <p>
-    Spot Description:<br/> <%= f.text_area :text %>
+    <label for="text">Spot Description:</label>
+    <br/> <%= f.text_area :text, "class"=>'optional' %>
   </p>
 
   <p>
-    <%= f.submit "Update" %>
+    <%= f.submit "Update", "class"=>'submit' %>
   </p>
 <% end %>
 
 <%= link_to 'Show', @spot %> |
 <%= link_to 'Back', spot_path %>
+  </div>
+</div>

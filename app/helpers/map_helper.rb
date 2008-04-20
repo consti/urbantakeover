@@ -10,6 +10,7 @@ module MapHelper
   
   @@classes = {
     :normal => 'normal',
+    :tall => 'tall',
     :small => 'small',
     :small_right => 'small right',
     :wide => 'wide'
