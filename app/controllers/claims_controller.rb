@@ -1,5 +1,5 @@
 class ClaimsController < ApplicationController
-  before_filter :login_required, :except => [:log, :howto, :faq, :recent]
+  before_filter :login_required, :except => [:log, :howto, :faq, :recent, :all]
 
   def my
     @claims = current_user.claims
@@ -60,10 +60,9 @@ class ClaimsController < ApplicationController
     @recent_claims = Claim.find :all, :limit => 16, :order => "created_at desc"
     @recent_spots = @recent_claims.collect{|c| c.spot}.compact
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @recent_claims }
-    end
-
+    #respond_to do |format|
+    #  format.html # index.html.erb
+    #  format.xml  { render :xml => @recent_claims }
+    #end
   end
 end

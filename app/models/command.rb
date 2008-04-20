@@ -14,7 +14,7 @@ class Command < ActiveRecord::Base
   end
   
   def help
-    user.notify_all("Commands: " + ["'claim spotname'", "'claim spot @ address'", "'team teamname'","'help'", "'friend friendname'"].join("\n"))
+    user.notify_all("Commands: " + ["'claim spotname'", "'claim spot @ address, city'", "'team teamname'","'help'", "'friend friendname'"].join("\n"))
   end
   
   def allowed_commands
@@ -35,7 +35,7 @@ class Command < ActiveRecord::Base
   end  
 
   def hi arguments
-    user.notify_all "ohai, i'm the urbantakeover bot. send 'd cpu claim spot @ address' to mark something claimed."
+    user.notify_all "ohai, i'm the urbantakeover bot. send 'd cpu claim spot @ address, city' to mark something claimed."
   end
   
   def friend friend_name
@@ -151,7 +151,7 @@ private
 
     geocodes = Geocoding.get(address) # HARHAR - users can easily find their own stuffz
     if geocodes.empty?
-      user.notify_all "plz: claim like '#{spot_name} @ Musterstraße 12'"
+      user.notify_all "plz: claim like '#{spot_name} @ Musterstraße 12, City'"
       return "no address found for '#{address}'"
     elsif geocodes.size > 1
       user.notify_all "plz write exact address, multiple spots found. like #{geocodes.first.address}"

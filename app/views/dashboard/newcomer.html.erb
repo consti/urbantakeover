@@ -1,0 +1,32 @@
+		<div id="top">
+		<ul>
+			<li><h1><a class="title" href="<%= root_url %>"><%= print_pwnzing_logo %></a></h1>
+			  <%= render :partial => 'dashboard/randomimage', :locals => {:num => @num} %></li>
+			<li><%= show_map @spots, :small %></li>
+		</ul>		
+		</div>
+		<div id="subtop">
+      <div class="left">
+  	    <%= render :partial => 'claims/today', :locals => {:claim => @claims_today} %>
+  	   <!-- |  <%= render :partial => 'claims/crosses_week', :locals => {:crosses => @crosses_week} %> | -->
+       | <%= render :partial => 'claims/num_claims', :locals => {:claims => @num_claims} %>  
+  	   | <%= render :partial => 'claims/last', :locals => {:claim => @last_claim} %>
+  	  </div>
+	  
+			<div class="right"><%= link_to "highscore", highscore_url %> | <%= link_to 'log in', login_url %></div>
+			<div style="clear: both;"></div>
+		</div>
+
+	  <div id="left">
+		  <h2>Ohai!</h2>
+			<ul>
+			<li>UrbanTakeover is a game in your city and on the internet.</li>
+			<li>Conquer your city by tagging spots with your stickers.</li>
+			<li>Claim new spots or cross other players to beat the <%= link_to "highscore", highscore_url %>.</li>
+			</ul>
+	  </div>
+	  
+	  <div id="right">
+	    <h2>Join Now!</h2>
+	    <p><%= link_to 'Sign Up', signup_url %> or order some <%= link_to 'stickers', sticker_url %> to join!</p>
+	  </div>

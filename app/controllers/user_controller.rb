@@ -5,20 +5,7 @@ class UserController < ApplicationController
   def settings
     redirect_to :action => 'edit', :id => current_user.id
   end
-  
-  def home
-    # home_path should be used instead of root_path once we have the pitch frontpage & dashboard frontpage ready
-    unless flash[:notice]
-      flash[:notice] = "Welcome home #{current_user.name} :)" if logged_in?
-    end
-
-    redirect_to root_path # redirect to root, because we have no dashboard yet
-  end
-  
-  def index
-    home
-  end
-  
+      
   def forgot_password
     return unless request.post?
 
@@ -95,7 +82,7 @@ class UserController < ApplicationController
       #flash[:notice] = "Logged in successfully"
       redirect_back_or_default home_url
     else
-      flash[:notice] = "Password? LAWL!!!"
+      flash[:notice] = "Sorry - Wrong Password!!"
     end
   end
 

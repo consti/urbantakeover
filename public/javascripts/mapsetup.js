@@ -25,7 +25,9 @@ function mapini() {
 		
 		for (var i=0; i<json.length; i++) {
 			if(json[i][2][0] && json[i][0] == focus_spot) {
-				marker=newMarker(new GLatLng(json[i][4], json[i][5]), json[i][0], json[i][1], json[i][2], json[i][3], baseIcon, true);				
+				marker=newMarker(new GLatLng(json[i][4], json[i][5]), json[i][0], json[i][1], json[i][2], json[i][3], baseIcon, true);
+				map.addOverlay(marker);
+	         	GEvent.trigger(marker, "click");				
 			} else if (json[i][2][0]) {
 				marker=newMarker(new GLatLng(json[i][4], json[i][5]), json[i][0], json[i][1], json[i][2], json[i][3], baseIcon, false);
 			}
@@ -82,7 +84,7 @@ function newMarker(markerLocation, spotId, addr, users, mrkclr, baseIcon, select
 	//drawArea(markerLocation,users[0][1],users[0][2]);
 	utoicon.image = "/images/marker/"+mrkclr+".png";
 	var marker=new GMarker(markerLocation, {icon: utoicon, title:'Spot['+spotId+']'});
-	var infoMsg='<a href=\"/spot/'+spotId+'\" class=\"spot-name\">'+spotId+'</a><br/>';
+	var infoMsg='<div class="markermsg"><a href=\"/spot/'+spotId+'\" class=\"spot-name\">'+spotId+'</a><br/>';
 		if(addr!=null) {
 			infoMsg+='<span class=\"address\">'+addr+'</span>';
 		} else {
@@ -93,7 +95,7 @@ function newMarker(markerLocation, spotId, addr, users, mrkclr, baseIcon, select
 		for(var i=1;i<users.length; i++) {
 			infoMsg+=', <a href\"/user/'+users[i][0]+'" class=\"user-name\" style=\"background-color:'+users[i][1]+';border-color:'+users[i][2]+';\">'+users[i][0]+'</a>';
 		}
-		infoMsg+='<br/><a href=\"http://flickr.com/photos/tags/'+spotId+'\">Tag on flickr</a> & <a href=\"http://flickr.com/search/groups/?q='+spotId+'&w=697289%40N21&m=pool\">in uto group</a>';
+		infoMsg+='<br/><a href=\"http://flickr.com/photos/tags/'+spotId+'\">Tag on flickr</a> & <a href=\"http://flickr.com/search/groups/?q='+spotId+'&w=697289%40N21&m=pool\">in uto group</a></div>';
 	
 	GEvent.addListener(marker, 'click', function() {
 		marker.openInfoWindowHtml(infoMsg);
@@ -101,7 +103,6 @@ function newMarker(markerLocation, spotId, addr, users, mrkclr, baseIcon, select
 	
 	if (selected) {
         map.setCenter(markerLocation, 13);
-		map.openInfoWindowHtml(marker.getPoint(), infoMsg);
 	}
 	
 	return marker;

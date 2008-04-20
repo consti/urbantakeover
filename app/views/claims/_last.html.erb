@@ -1,0 +1,6 @@
+<% for c in claim %>
+  Last spot claimed was <%= format_spot c.spot %> by <%= format_user c.user %>
+  <% if c.crossed_claim %>
+    (crossed <%= format_user c.crossed_claim.user %>)
+  <% end %>
+<% end %>
