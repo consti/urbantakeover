@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <title>UrbanTakeover - <%= controller.controller_name %>: <%= controller.action_name %></title>
+  <title>urbantakeover - <%= controller.controller_name %>: <%= controller.action_name %></title>
   <link rel="stylesheet" href="/stylesheets/blueprint/screen.css" type="text/css" media="screen, projection" />
   <link rel="stylesheet" href="/stylesheets/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]><link rel="stylesheet" href="/stylesheets/blueprint/ie.css" type="text/css" media="screen, projection" /><![endif]-->
@@ -14,9 +14,9 @@
 </head>
 <body onunload="try { GUnload(); } catch(Exception) {};">
 
-<div class="container showgrid">
+<div class="container">
 
-  <div class="span-24">
+  <div class="span-24 tlrborder">
     <div id="logo_small" onclick="javascript:location.href='/'"><!-- --></div>
     <div id="title" class="span-10 push-1"><a href="<%= root_url %>"><%= print_pwnzing_logo %></a></div>
     <div id="user-nav" class="span-13 last">
@@ -38,6 +38,7 @@
     </div>    
   </div>
   
+  <div class="span-24 lrborder">
   <div id="menu" class="span-23 push-1">
   <%= link_to 'claim spot', :controller => :claims, :action => :new %>
   | <%= link_to 'highscore', :controller => :score, :action => :index %>
@@ -45,27 +46,30 @@
   | <%= link_to 'get stickers', sticker_path %>
   | <%= link_to 'hotspots', hotspots_path %>
   | <%= link_to 'FAQ', faq_path %>
-  </div>
-  
   <% if logged_in? %>
     <% if current_user.is_admin? %>
-      <div class="menu">
+      <br/>
       <%= link_to 'spot list', :controller => :spot, :action => :index %>
       | <%= link_to 'open orders', :controller => :orders, :action => :open %>
       | <%= link_to 'stats', :controller => :dashboard, :action => :admin %>
-      </div>
     <% end %>
   <% end %>
-
-<p style="color: green"><%= flash[:notice] %></p>
-
-<% if @scores %>
-  <% for line in @scores %>
-    <p style="color: blue;"><%= line %></p>
+  </div>
+  
+  <% if :notice == "" %>
+  <div class="infomessage span-22 push-1">
+      <p><%= flash[:notice] %>
+      <% if @scores %>
+        <% for line in @scores %>
+          <br/><span class="blue"><%= line %></span>
+        <% end %>
+        <% end %>
+      </p>
+  </div>
   <% end %>
-<% end %>
-
-  <%= yield  %>
+  </div>
+  
+   <%= yield  %>
 
   <div id="footer" class="span-24 last">
   	<div class="right small"><%= link_to "support chat", chat_url %> | <a href="http://blog.urbantakeover.at">our blog</a> | <a href="mailto://team@urbantakeover.at">get in touch</a> | urbantakeover is handcrafted by <a class="72dpiarmy" href="http://72dpiarmy.com"><span>72dpi</span>army</a> | &copy; 2008</div>
