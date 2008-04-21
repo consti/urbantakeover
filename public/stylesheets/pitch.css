@@ -1,8 +1,0 @@
-div#img { width: 500px; height: 300px; }
-
-.title {
-  position: absolute;
-  z-index: 999;
-  background-color: white;
-  opacity: 0.95;
-}
