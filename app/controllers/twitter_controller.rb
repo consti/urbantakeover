@@ -26,9 +26,12 @@ class TwitterController < ApplicationController
                          :password => password,
                          :password_confirmation => password)
   
+      unless user.errors.empty?
+        raise user.errors
+      end
+ 
       user.notify_all "welcome #{username}! your password for http://urbantakeover.at is #{password}. send 'd cpu claim spot @ address' or 'd cpu help'."
-
-      return render :text => "created user #{username} and following on twitter"
+      return render :text => "created user #{username} and following on twitter"
     end
     
     return render :text => "already here: user #{username}"
