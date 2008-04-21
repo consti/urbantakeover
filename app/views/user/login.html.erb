@@ -1,15 +1,28 @@
-<h2>Hey! Login required. (Or <%= link_to "sign up", :controller => :user, :action => :signup %>!)</h2>
+<div class="span-24 last lrborder">
+  <div class="span-23 push-1 last">
+  <h2>Hey! Login required. (Or <%= link_to "sign up", :controller => :user, :action => :signup %>!)</h2>
 
-<% if request.post? %>
-  <em>Forgot your password? <%= link_to "Recover!", :action => 'forgot_password' %></em>
-<% end %>
+  <% if request.post? %>
+  <div class="span-22 push-1">
+    <em>Forgot your password? <%= link_to "Recover!", :action => 'forgot_password' %></em>
+  </div>  
+  <% end %>
 
-<% form_tag do -%>
-<p><label for="login">Username or E-Mail</label><br/>
-<%= text_field_tag 'login', params[:login] %></p>
-
-<p><label for="password">Password</label><br/>
-<%= password_field_tag 'password' %></p>
-
-<p><%= submit_tag 'Log in' %></p>
-<% end -%>
+  <% form_tag do -%>
+    <div class="span-22 push-1">
+    <p>
+    <label for="login">Username or E-Mail</label><br/>
+    <%= text_field_tag 'login', params[:login], "class"=>'textfield must' %>
+    </p>
+    <p>
+    <label for="password">Password</label><br/>
+    <%= password_field_tag 'password', params[:password], "class"=>'textfield must password' %>
+    </p>
+    </div>
+    
+    <div class="span-22 push-1 last">
+    <%= submit_tag 'Log in', "class"=>'submit' %>
+    </div>
+  <% end -%>
+  </div>
+</div>

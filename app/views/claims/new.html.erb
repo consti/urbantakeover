@@ -1,33 +1,45 @@
-
-<h2>Do what?</h2>
-
-<h3>Claim a known spot</h3>
-<p class="todo">e.g., "metalab" or "rathausstr. 6, vienna"</p>
-<% form_tag do %>
-  claim <%= text_field_tag 'target', 'spot or address' %>
-  <%= submit_tag 'go' %>
-<% end %>
-
-<h3>Claim a new spot in a city</h3>
-<p class="todo">e.g., "MS Germany" @ "Konrad-Zuse-Strasse 1, Unterschleissheim"</p>
-<% form_tag do %>
-  claim <%= text_field_tag 'spot', 'spot' %> @ <%= text_field_tag 'address', 'address' %>
-  <%= submit_tag 'go' %>
-<% end %>
-
-<h3>Join a team</h3>
-<p class="todo">just enter the team you want to join or create and click 'go'</p>
-<% form_tag do %>
-  <%= text_field_tag 'team', '' %>
-  <%= submit_tag 'go' %>
-<% end %>
-
-<h3>Command</h3>
-<p class="todo">e.g., "team teamname" to join a team, "friend nickname" to add a user as friend, "help" for help</p>
-<% form_tag do %>
-  <%= text_field_tag 'command', '' %>
-  <%= submit_tag 'go' %>
-<% end %>
-
-<h2>Need help?</h2>
-<p>No worries; instructions are <em><%= link_to 'here', faq_path %></em>.</p>
+<div class="span-24 lrborder">
+  <div class="span-23 push-1 last">
+  <h2>Do what?</h2>
+  <div class="span-10 colborder">
+  <div class="box">
+  <h3>Claim a known spot</h3>
+  <p class="todo">e.g., "metalab" or "rathausstr. 6, vienna"</p>
+  <% form_tag do %>
+    claim <%= text_field_tag 'target', 'spot or address', "class"=>'textfield optional' %>
+  <%= submit_tag 'go', "class"=>'go' %>
+  <% end %>
+  </div>
+  <div class="box">
+  <h3>Claim a new spot in a city</h3>
+  <p class="todo">e.g., "MS Germany" @ "Konrad-Zuse-Strasse 1, Unterschleissheim"</p>
+  <% form_tag do %>
+  claim <%= text_field_tag 'spot', 'spot', "class"=>'textfield optional' %> @ <%= text_field_tag 'address', 'address', "class"=>'textfield optional' %>
+  <%= submit_tag 'go', "class"=>'go' %>
+  <% end %>
+  </div>
+  </div>
+  <div class="span-11">
+  <div class="box">
+  <h3>Join a team</h3>
+  <p class="todo">just enter the team you want to join or create and click 'go'</p>
+  <% form_tag do %>
+  <%= text_field_tag 'team', '', "class"=>'textfield optional' %>
+  <%= submit_tag 'go', "class"=>'go' %>
+  <% end %>
+  </div>
+  <div class="box">
+  <h3>Raw Command</h3>
+  <p class="todo">e.g., "team teamname" to join a team, "friend nickname" to add a user as friend, "help" for help</p>
+  <% form_tag do %>
+  <%= text_field_tag 'command', '', "class"=>'textfield optional' %>
+  <%= submit_tag 'go', "class"=>'go' %>
+  <% end %>
+  </div>
+  </div>
+  <div class="span-22">
+  <h2>Need help?</h2>
+  <p>No worries; instructions are <em><%= link_to 'here', faq_path %></em>.</p>
+  </div>
+  </div>
+</div>

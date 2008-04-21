@@ -16,10 +16,10 @@ function mapini() {
 		new GKeyboardHandler(map);		
 		
 		var baseIcon = new GIcon();
-		baseIcon.iconSize = new GSize(30, 32);
-		baseIcon.iconAnchor = new GPoint(9, 32);
-		baseIcon.infoWindowAnchor = new GPoint(20, 2);
-		baseIcon.infoShadowAnchor = new GPoint(20, 32);
+		baseIcon.iconSize = new GSize(25, 13);
+		baseIcon.iconAnchor = new GPoint(10, 13);
+		baseIcon.infoWindowAnchor = new GPoint(19, 2);
+		baseIcon.infoShadowAnchor = new GPoint(22, 2);
 		
 		var marker, markersArray=[];
 		
@@ -134,9 +134,9 @@ function ClusterMarker($map, $options){
 	}else{
 		this.clusterMarkerIcon=new GIcon();
 		this.clusterMarkerIcon.image='/images/marker/group.png';
-		this.clusterMarkerIcon.iconSize=new GSize(37, 41);
-		this.clusterMarkerIcon.iconAnchor=new GPoint(14, 38);
-		this.clusterMarkerIcon.infoWindowAnchor=new GPoint(14, 38);
+		this.clusterMarkerIcon.iconSize=new GSize(39, 21);
+		this.clusterMarkerIcon.iconAnchor=new GPoint(17, 21);
+		this.clusterMarkerIcon.infoWindowAnchor=new GPoint(33, 2);
 	}
 	this.clusterMarkerTitle=($options.clusterMarkerTitle)?$options.clusterMarkerTitle:'Click to zoom in and see %count markers';
 	if($options.fitMapMaxZoom){

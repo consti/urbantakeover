@@ -1,30 +1,36 @@
-<h2>Spots</h2>
+<div class="span-24 lrborder">
+  <div class="span-23 push-1 last">
+  <h2>Spots</h2>
 
-<% if logged_in? and current_user.can_edit_spots? %>
-  <br />
+  <% if logged_in? and current_user.can_edit_spots? %>
+    <br />
 
   <%= link_to 'New spot', new_spot_path %>
-<% end %>
+  <% end %>
 
-<table>
-  <tr>
-    <th>name</th>
-    <th>location</th>
-  </tr>
+  <table>
+    <tr>
+      <th>name</th>
+      <th>location</th>
+    </tr>
 
-<% for spot in @spots %>
-  <tr>
-    <td><%=h spot.name %></td>
-    <td><%=h spot.geolocation_x %> <%=h spot.geolocation_y %> </td>
-    <% if logged_in? %>
-      <% if current_user.can_edit_spots? %>
+    <% for spot in @spots %>
+    <tr>
+      <td><%=h spot.name %></td>
+      <td><%=h spot.geolocation_x %> <%=h spot.geolocation_y %> </td>
+      <% if logged_in? %>
+        <% if current_user.can_edit_spots? %>
         <td><%= link_to 'Show', spot %></td>
         <td><%= link_to 'Edit', edit_spot_path(spot) %></td>
         <td><%= link_to 'Destroy', spot, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
       <% end %>
+    </tr>
     <% end %>
-  </tr>
-<% end %>
-</table>
+  </table>
+  </div>
+</div>
 
-<%= show_map @spots %>
+<div class="span-24" style="border: 1px solid black">
+  <%= show_map @spots, :wide %>
+</div>
