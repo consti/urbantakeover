@@ -53,7 +53,8 @@
   /* logo */
   div#logo { position: absolute; z-index: 2; height: 220px; width: 220px; background-image: url('/images/logo2.png'); background-repeat: no-repeat; background-position: top left; margin: -52px 0px 0px -72px; filter:alpha(opacity=90); -moz-opacity:.90; opacity:.90; }
   div#logo_small { position: absolute; z-index: 2; height: 70px; width: 70px; background-image: url('/images/logo.png'); background-repeat: no-repeat; background-position: top left; margin: -15px 0px 0px -25px; filter:alpha(opacity=90); -moz-opacity:.90; opacity:.90; }
-  
+  div#logo:hover, div#logo_small:hover { cursor: pointer; cursor: hand; }
+    
   /* title */
   div#title { display: block; font-size: 26px; margin-bottom: 0px; }
   div#title a, div#title a:hover, div#title a:active, div#title a:visited { text-decoration: none; color: #999999; font-weight: bold; background-color: transparent;}

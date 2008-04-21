@@ -40,7 +40,8 @@
   
   <div class="span-24 lrborder">
   <div id="menu" class="span-23 push-1">
-  <%= link_to 'claim spot', :controller => :claims, :action => :new %>
+    <%= link_to 'what\'s going on', :controller => :dashboard, :action => :redirect %>
+  | <%= link_to 'claim spot', :controller => :claims, :action => :new %>
   | <%= link_to 'highscore', :controller => :score, :action => :index %>
   | <%= link_to 'team', team_path %>
   | <%= link_to 'get stickers', sticker_path %>
