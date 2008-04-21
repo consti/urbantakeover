@@ -19,19 +19,18 @@ class TwitterController < ApplicationController
   def auto_follow
     username = params[:user]
     user = User.find_by_twittername username
+    login = username
     unless user
+      login = username + rand(128).t_s if user = User.find_by_login login # todo fix me properly
+      
       password = User.generate_password
       user = User.create(:twittername => username,
-                         :login => username,
+                         :login => login,
                          :password => password,
                          :password_confirmation => password)
-  
-      unless user.errors.empty?
-        raise user.errors
-      end
- 
+
       user.notify_all "welcome #{username}! your password for http://urbantakeover.at is #{password}. send 'd cpu claim spot @ address' or 'd cpu help'."
-      return render :text => "created user #{username} and following on twitter"
+      return render :text => "created user #{username} and following on twitter"
     end
     
     return render :text => "already here: user #{username}"
