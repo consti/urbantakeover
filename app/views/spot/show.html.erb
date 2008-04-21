@@ -1,5 +1,13 @@
+<div class="span-24" style="border: 1px solid black">
+  <%= show_map @spots, :wide %>
+</div>
+
 <div class="span-24 lrborder">
-  <div class="span-23 push-1">
+  <br/>
+</div>
+
+<div class="span-24 lrborder last">
+  <div class="span-23 push-1 last">
   <div class="span-10 colborder">
   <h2><%= format_spot @spot %></h2>
   <div class="box">
@@ -20,29 +28,29 @@
   <% end %>
   </div>
 
-  <% unless @spot.text.empty? %>
-  <div class="box">
-    <h3>About</h3>
-    <p><%= format_text(@spot.text) %></p>
-  </div>
-  <% end %>
-
   <div class="box">
   <h3>Log</h3>
     <%= render :partial => 'claims/log', :locals => {:claims => @spot.claims} %>
   </div>
-
-  <h3>Images</h3>
-    images tagged with "<%= @spot.name %>" in the urbantakeover image pool on flickr<br/>
-    <%= render :partial => 'proof/spot_flickr_pool', :locals => {:spot => @spot.name} %>
-    <div style="clear: both"><!-- me clear you --></div>
-    <br/>images tagged with "<%= @spot.name %>" in flickr<br/>
-    <%= render :partial => 'proof/spot_flickr', :locals => {:spot => @spot.name} %></br>
+  
   </div>
   
   <div class="span-11">
-    <%= show_map @spots, :tall %>
-  </div>
-  
+  <h2><br/></h2>
+  <% unless @spot.text.empty? %>
+   <div class="box">
+     <h3>About</h3>
+     <p><%= format_text(@spot.text) %></p>
+   </div>
+   <% end %>
+   
+   <div class="box">
+    <h3>Images</h3>
+      images tagged with "<%= @spot.name %>" in the urbantakeover image pool on flickr<br/>
+      <%= render :partial => 'proof/spot_flickr_pool', :locals => {:spot => @spot.name} %>
+      <div style="clear: both"><!-- me clear you --></div>
+      <br/>images tagged with "<%= @spot.name %>" in flickr<br/>
+      <%= render :partial => 'proof/spot_flickr', :locals => {:spot => @spot.name} %></br>
+   </div>  
   </div>
 </div>
