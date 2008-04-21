@@ -21,7 +21,7 @@ class TwitterController < ApplicationController
     user = User.find_by_twittername username
     login = username
     unless user
-      login = username + rand(128).t_s if user = User.find_by_login login # todo fix me properly
+      login = (username + rand(128).to_s) if User.find_by_login login # todo fix me properly
       
       password = User.generate_password
       user = User.create(:twittername => username,
