@@ -11,12 +11,7 @@ class Command < ActiveRecord::Base
   
   def h
     help
-  end
-  
-  def help
-    user.notify_all("Commands: " + ["'claim spotname'", "'claim spot @ address, city'", "'team teamname'","'help'", "'friend friendname'"].join("\n"))
-  end
-  
+  end  
   def allowed_commands
     self.methods - ['run!']
   end
@@ -26,7 +21,7 @@ class Command < ActiveRecord::Base
     arguments ||= "" # if not set in split
     return self.send(command, arguments) if allowed_commands.include? command
 
-    #per default: treat as claim and/or feature request. eg: "d cbo metalab @ rathausstraße 6"
+    #per default: treat as claim and/or feature request. eg: "d cbo metalab @ rathausstraÃŸe 6"
     admin_user = User.find_by_login "oneup"
     admin_user.notify_mail "[UTO feature]: #{self.text} by #{user.name}" if admin_user
 
@@ -34,8 +29,12 @@ class Command < ActiveRecord::Base
     return claim(arguments)      
   end  
 
+  def help what
+    user.notify_all("Commands: " + ["'claim spotname'", "'claim spot @ address, city'", "'team teamname'","'help'", "'friend friendname'"].join("\n"))
+  end
+
   def hi arguments
-    user.notify_all "ohai, i'm the urbantakeover bot. send 'd cpu claim spot @ address, city' to mark something claimed."
+    user.notify_all "ohai, i'm the urbantakeover bot. send 'd cpu claim spot @Â address, city' to mark something claimed."
   end
   
   def friend friend_name
@@ -99,7 +98,7 @@ class Command < ActiveRecord::Base
     
     buff_user_claim.destroy
     buff_user.score -100, "buffed by #{user.name} @ #{spot.name}"
-    user.score 0, "buffed #{buff_user.name} @ #{spot.name}"
+    user.score 0, "buffed #{buff_user.name} @Â #{spot.name}"
   end
 
 private
@@ -151,7 +150,7 @@ private
 
     geocodes = Geocoding.get(address) # HARHAR - users can easily find their own stuffz
     if geocodes.empty?
-      user.notify_all "plz: claim like '#{spot_name} @ Musterstraße 12, City'"
+      user.notify_all "plz: claim like '#{spot_name} @ MusterstraÃŸe 12, City'"
       return "no address found for '#{address}'"
     elsif geocodes.size > 1
       user.notify_all "plz write exact address, multiple spots found. like #{geocodes.first.address}"
