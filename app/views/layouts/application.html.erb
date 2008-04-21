@@ -64,27 +64,7 @@
   </div>
   <% end %></div>
   
-</div>
-
-<% if flash[:notice] %>
-  <p style="color: green"><%= flash[:notice] %></p>
-<% end %>
-
-<% if @scores %>
-  <% for line in @scores %>
-    <p style="color: blue;"><%= line %></p>
-  <% end %>
-<% end %>
-
-<div id="content">
-  <%= yield  %>
-</div>
-<div style="clear: both;"><!-- ohai, i'm the clear div to make the footer margin-top work --></div>
-
-<div id="footer">
-	<p<%= link_to "support chat", chat_url %> | <a href="http://blog.urbantakeover.at">our blog</a> | <a href="mailto://team@urbantakeover.at">get in touch</a> | urbantakeover is handcrafted by <a class="72dpiarmy" href="http://72dpiarmy.com"><span>72dpi</span>army</a> | &copy; 2008</p>
-	<br/>
-</div>
+   <%= yield  %>
 
   <div class="span-24 lrborder">
    <div class="span-23">
