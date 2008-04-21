@@ -6,6 +6,11 @@ class DashboardController < ApplicationController
 		@num = a[rand(a.size)]
 		render :layout => 'pitch'
   end
+  
+  def test 
+    flickr = Flickr.new '903ed243c4ff3e40e464cf7383a6bc0f'
+    @photos = flickr.photos :tags => 'urbantakeover', :per_page => 24
+  end
 
   def member
     load_data

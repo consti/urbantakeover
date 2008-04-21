@@ -1,5 +1,7 @@
 == TOO NOW
 
+* claim mit umlauten via twitter is broken (test message schicken)
+
 uto widget link
 uto daily statistics
 

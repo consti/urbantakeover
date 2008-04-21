@@ -9,18 +9,18 @@ class UserController < ApplicationController
   def forgot_password
     return unless request.post?
 
-    user = User.find_by_name params[:name]
-    unless user
+    @user = User.find_by_name params[:name]
+    unless @user
       flash[:notice] = "No user #{params[:name]} found"
       return
     end
-    
-    new_password = User.generate_password
-    user.password = new_password
-    user.password_confirmation = user.password
 
-    user.save!
-    user.notify_all "Your new password is #{new_password}."
+    new_password = User.generate_password
+    @user.password = new_password
+    @user.password_confirmation = @user.password
+
+    @user.save!
+    @user.notify_all "Your new password is #{new_password}."
     flash[:notice] = "We've send you a message with your new password!"
   end
     
