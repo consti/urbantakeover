@@ -9,11 +9,11 @@ class TwitterController < ApplicationController
   private_api [:command, :auto_follow]
 
   def command  
-    return render :text => 'already parsed' if Twittermessage.find_by_twitter_id(params[:twitter_message_id])
+    #return render :text => 'already parsed' if Twittermessage.find_by_twitter_id(params[:twitter_message_id])
     
-    Twittermessage.create :twitter_id => params[:twitter_message_id]
+    #Twittermessage.create :twitter_id => params[:twitter_message_id]
     
-    render :text => handle_message(params[:user], params[:message])
+    #render :text => handle_message(params[:user], params[:message])
   end
   
   def auto_follow
