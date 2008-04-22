@@ -91,8 +91,8 @@
   div#menu { font-weight: bold; color: #666666; margin-bottom: 10px; }
   div#menu a:link, div#menu a:visited { color: #000000; text-decoration: none; }
   div#menu a:hover, div#menu a:active { color: white;  background-color: #000000; }
-  div#menu span.stickerlink a { color: #CC3300; }
-    div#menu span.stickerlink a:hover { color: #CC3300; background-color: #000000; }
+  div#menu span.stickerlink a { color: #AAB300; }
+  div#menu span.stickerlink a:hover { color: #AAB300; background-color: #000000; }
   
   /* map */
   div#map.small { width: 475px; height: 285px; margin: 0px; overflow: hidden; }
