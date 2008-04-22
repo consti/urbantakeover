@@ -98,6 +98,7 @@
   div#map.tall { width: 425px; height: 485px; margin: 0px; overflow: hidden; border: 1px solid #DDDDDD; }
   div#map.wide { width: 950px; height: 285px; margin: 0px; overflow: hidden; }
   div#map.gmnoprint a:hover { background-color: transparent;  } /* Fix google imprint-mouseover */
+  .area { background-color: transparent;  filter:alpha(opacity=50); -moz-opacity:.50; opacity:.50;  } /* Fix google imprint-mouseover */
   
   /* marker massage */
   div.markermsg { text-align: left; }

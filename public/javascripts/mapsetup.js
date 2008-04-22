@@ -2,6 +2,143 @@ var map, cluster;
 var gmarkers = [];
 
 function mapini() {
+  /* EINSERT */	
+ 	  function EInsert(point, image, size, basezoom, zindex) {
+       this.point = point;
+       this.image = image;
+       this.size = size;
+       this.basezoom = basezoom;
+       this.zindex=zindex||0;
+       // Is this IE, if so we need to use AlphaImageLoader
+       var agent = navigator.userAgent.toLowerCase();
+
+       if ((agent.indexOf("msie") > -1) && (agent.indexOf("opera") < 1)){this.ie = true} else {this.ie = false}
+       this.hidden = false;
+     } 
+
+     EInsert.groundOverlay = function(image, bounds, zIndex, proj,z) {
+       var proj = proj||G_NORMAL_MAP.getProjection();              
+       var z = z||17;
+       var sw = proj.fromLatLngToPixel(bounds.getSouthWest(),z);
+       var ne = proj.fromLatLngToPixel(bounds.getNorthEast(),z);
+       var cPixel = new GPoint((sw.x+ne.x)/2, (sw.y+ne.y)/2);
+       var c = proj.fromPixelToLatLng(cPixel,z);
+       var s = new GSize(ne.x-sw.x, sw.y-ne.y);
+       return new EInsert(c, image, s, z, zIndex);
+     }
+
+ 		EInsert.prototype = new GOverlay();
+
+     EInsert.prototype.initialize = function(map) {
+       var div = document.createElement("div");
+       div.style.position = "absolute";
+       div.style.zIndex=this.zindex;
+       if (this.zindex < 0) {
+          map.getPane(G_MAP_MAP_PANE).appendChild(div);
+       } else {
+          map.getPane(1).appendChild(div);
+       }
+       this.map_ = map;
+       this.div_ = div;
+     }
+
+     EInsert.prototype.makeDraggable = function() {
+       this.dragZoom_ = this.map_.getZoom();
+       this.dragObject = new GDraggableObject(this.div_);
+
+       this.dragObject.parent = this;
+
+       GEvent.addListener(this.dragObject, "dragstart", function() {
+         this.parent.left=this.left;
+         this.parent.top=this.top;
+       });
+
+
+       GEvent.addListener(this.dragObject, "dragend", function() {
+         var pixels = this.parent.map_.fromLatLngToDivPixel(this.parent.point);
+         var newpixels = new GPoint(pixels.x + this.left - this.parent.left, pixels.y +this.top -this.parent.top);
+         this.parent.point = this.parent.map_.fromDivPixelToLatLng(newpixels);
+         this.parent.redraw(true);
+         GEvent.trigger(this.parent, "dragend", this.parent.point);
+       });    
+     }
+
+     EInsert.prototype.remove = function() {
+       this.div_.parentNode.removeChild(this.div_);
+     }
+
+     EInsert.prototype.copy = function() {
+       return new EInsert(this.point, this.image, this.size, this.basezoom);
+     }
+
+     EInsert.prototype.redraw = function(force) {
+      if (force) {
+       var p = this.map_.fromLatLngToDivPixel(this.point);
+       var z = this.map_.getZoom();
+       var scale = Math.pow(2,(z - this.basezoom));
+       var h=this.size.height * scale;
+       var w=this.size.width * scale;
+
+       this.div_.style.left = (p.x - w/2) + "px";
+       this.div_.style.top = (p.y - h/2) + "px";
+
+       if (this.ie) {
+         var loader = "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+this.image+"', sizingMethod='scale');";
+         this.div_.innerHTML = '<div style="height:' +h+ 'px; width:'+w+'px; ' +loader+ '" ></div>';
+       } else {
+         this.div_.innerHTML = '<img src="' +this.image+ '"  class="area" width='+w+' height='+h+' >';
+       }
+
+       // Only draggable if current zoom = the initial zoom
+       if (this.dragObject) {
+         if (z != this.dragZoom_) {this.dragObject.disable();}
+       }
+
+      } 
+     }
+
+     EInsert.prototype.show = function() {
+       this.div_.style.display="";
+       this.hidden = false;
+     }
+
+     EInsert.prototype.hide = function() {
+       this.div_.style.display="none";
+       this.hidden = true;
+     }
+
+     EInsert.prototype.getPoint = function() {
+       return this.point;
+     }
+
+     EInsert.prototype.supportsHide = function() {
+       return true;
+     }
+
+     EInsert.prototype.isHidden = function() {
+       return this.hidden;
+     }
+
+     EInsert.prototype.setPoint = function(a) {
+       this.point = a;
+       this.redraw(true);
+     }
+
+     EInsert.prototype.setImage = function(a) {
+       this.image = a;
+       this.redraw(true);
+     }
+
+     EInsert.prototype.setZindex = function(a) {
+       this.div_.style.zIndex=a;
+     }
+
+     EInsert.prototype.setSize = function(a) {
+       this.size = a;
+       this.redraw(true);
+     }
+   /* EINSERT END */
+   
 	if (GBrowserIsCompatible()) {
 
 		map=new GMap2(document.getElementById('map'));
@@ -31,6 +168,8 @@ function mapini() {
 			} else if (json[i][2][0]) {
 				marker=newMarker(new GLatLng(json[i][4], json[i][5]), json[i][0], json[i][1], json[i][2], json[i][3], baseIcon, false);
 			}
+			  farbe = json[i][2][0][2].replace(/#/,"");
+        map.addOverlay(new EInsert(new GLatLng(json[i][4], json[i][5]), "/images/areas/"+farbe+".png", new GSize(0.0005,0.0005), -1));
 				markersArray.push(marker);
 		}
 
@@ -50,41 +189,16 @@ function mapini() {
 		}
 
 		map.savePosition();
+
 	}
+
 }
-
-
-
-function drawArea(center,liColor,fillColor){
-	var radius = 0.1; // 100 Meter
-	var nodes = 10; // 40 x Sides
-	var liWidth = 0; // Width of border
-	var liOpa = 0.7; // Opacity of border
-	var fillOpa = 0.7; // Opacity of fill
-	var latConv = center.distanceFrom(new GLatLng(center.lat()+0.1, center.lng()))/100;
-	var lngConv = center.distanceFrom(new GLatLng(center.lat(), center.lng()+0.1))/100;
-
-	var points = [];
-	var step = parseInt(360/nodes)||10;
-	for(var i=0; i<=360; i+=step)
-	{
-	var pint = new GLatLng(center.lat() + (radius/latConv * Math.cos(i * Math.PI/180)), center.lng() + 
-	(radius/lngConv * Math.sin(i * Math.PI/180)));
-	points.push(pint);
-	}
-	var fillCol = fillColor || liColor || "#FFFFFF";
-	var liCol = liColor || fillColor || "#FFFFFF";
-	var poly = new GPolygon(points,liCol,liWidth,liOpa,fillCol,fillOpa);
-	map.addOverlay(poly);
-}
-
 
 function newMarker(markerLocation, spotId, addr, users, mrkclr, baseIcon, selected) {
 	var utoicon = new GIcon(baseIcon);
-	//drawArea(markerLocation,users[0][1],users[0][2]);
 	utoicon.image = "/images/marker/"+mrkclr+".png";
 	var marker=new GMarker(markerLocation, {icon: utoicon, title:'Spot['+spotId+']'});
-	var infoMsg='<div class="markermsg"><a href=\"/spot/'+spotId+'\" class=\"spot-name\">'+spotId+'</a><br/>';
+	var infoMsg='<div class="markermsg"><a href="/spot/'+spotId+'" class="spot-name">'+spotId+'</a><br/>';
 		if(addr!=null) {
 			infoMsg+='<span class=\"address\">'+addr+'</span>';
 		} else {
@@ -104,7 +218,6 @@ function newMarker(markerLocation, spotId, addr, users, mrkclr, baseIcon, select
 	if (selected) {
         map.setCenter(markerLocation, 13);
 	}
-	
 	return marker;
 }
 
@@ -378,5 +491,3 @@ ClusterMarker.prototype._zoomEnd=function(){
 	this._cancelMoveEnd=true;
 	this.refresh(true);
 };
-
-

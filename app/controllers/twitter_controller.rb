@@ -28,6 +28,10 @@ class TwitterController < ApplicationController
                          :login => login,
                          :password => password,
                          :password_confirmation => password)
+<<<<<<< HEAD:app/controllers/twitter_controller.rb
+=======
+
+>>>>>>> c369d5d45917c7552d38f7285836f0e5abd2a0bc:app/controllers/twitter_controller.rb
       user.notify_all "welcome #{username}! your password for http://urbantakeover.at is #{password}. send 'd cpu claim spot @ address' or 'd cpu help'."
       return render :text => "created user #{username} and following on twitter"
     end
