@@ -9,7 +9,7 @@
     spot_json = spots.collect do |spot|
       [spot.name,
       spot.address,
-      spot.claims.collect { |claim| [claim.user.name, claim.user.colour_1, claim.user.colour_1] },
+      spot.claims.collect { |claim| [claim.user.name, claim.user.colour_1,  if spot.current_owner and spot.current_owner.team then spot.current_owner.team.colour else claim.user.colour_1 end] },
       "green", # spot.current_owner.colour_1,
       spot.geolocation_x,
       spot.geolocation_y]
