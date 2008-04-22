@@ -44,7 +44,7 @@
   | <%= link_to 'claim spot', :controller => :claims, :action => :new %>
   | <%= link_to 'highscore', :controller => :score, :action => :index %>
   | <%= link_to 'team', team_path %>
-  | <%= link_to 'get stickers', sticker_path %>
+  | <span class="stickerlink"><%= link_to 'get stickers', sticker_path %></span>
   | <%= link_to 'hotspots', hotspots_path %>
   | <%= link_to 'FAQ', faq_path %>
   <% if logged_in? %><% if current_user.is_admin? %>
