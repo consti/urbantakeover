@@ -204,18 +204,16 @@ function newMarker(markerLocation, spotId, addr, users, mrkclr, baseIcon, select
 	var utoicon = new GIcon(baseIcon);
 	utoicon.image = "/images/marker/"+mrkclr+".png";
 	var marker=new GMarker(markerLocation, {icon: utoicon, title:'Spot['+spotId+']'});
-	var infoMsg='<div class="markermsg"><a href="/spot/'+spotId+'" class="spot-name">'+spotId+'</a><br/>';
-		if(addr!=null) {
-			infoMsg+='<span class=\"address\">'+addr+'</span>';
-		} else {
-			infoMsg+='<span class=\"address\">'+spotId+'</span>';
+	var infoMsg='<div class="markermsg"><a href="/spot/'+spotId+'" class="spot-name">'+spotId+'</a>';
+		if(addr!=null && addr!="") {
+			infoMsg+='<br/>address: <span class="address">'+addr+'</span>';
 		}
-		infoMsg+='<br/>current: <a href=\"/user/'+users[0][0]+'\" class=\"user-name\" style=\"background-color:'+users[0][1]+';border-color:'+users[0][2]+';\">'+users[0][0]+'</a><br/>';
-		infoMsg+='here: <a href\"/user/'+users[0][0]+'" class=\"user-name\" style=\"background-color:'+users[0][1]+';border-color:'+users[0][2]+';\">'+users[0][0]+'</a>';
+		infoMsg+='<br/>current: <a href="/user/'+users[0][0]+'" class="user-name" style="background-color:'+users[0][1]+';border-color:'+users[0][2]+';">'+users[0][0]+'</a><br/>';
+		infoMsg+='here: <a href="/user/'+users[0][0]+'" class="user-name" style="background-color:'+users[0][1]+';border-color:'+users[0][2]+';">'+users[0][0]+'</a>';
 		for(var i=1;i<users.length; i++) {
-			infoMsg+=', <a href\"/user/'+users[i][0]+'" class=\"user-name\" style=\"background-color:'+users[i][1]+';border-color:'+users[i][2]+';\">'+users[i][0]+'</a>';
+			infoMsg+=', <a href="/user/'+users[i][0]+'" class="user-name" style="background-color:'+users[i][1]+';border-color:'+users[i][2]+';">'+users[i][0]+'</a>';
 		}
-		infoMsg+='<br/><a href=\"http://flickr.com/photos/tags/'+spotId+'\">Tag on flickr</a> & <a href=\"http://flickr.com/search/groups/?q='+spotId+'&w=697289%40N21&m=pool\">in uto group</a></div>';
+		infoMsg+='<br/><span class="links"><a href="http://flickr.com/photos/tags/'+spotId+'">Tag on flickr</a> & <a href="http://flickr.com/search/groups/?q='+spotId+'&w=697289%40N21&m=pool">in uto group</a></span></div>';
 	
 	GEvent.addListener(marker, 'click', function() {
 		marker.openInfoWindowHtml(infoMsg);
