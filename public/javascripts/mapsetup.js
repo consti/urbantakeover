@@ -168,10 +168,10 @@ function mapini() {
 			} else if (json[i][2][0]) {
 				marker=newMarker(new GLatLng(json[i][4], json[i][5]), json[i][0], json[i][1], json[i][2], json[i][3], baseIcon, false);
 			}
-
+      
 			if(json[i][2][0]) {
-			    if(json[i][2][0][1]) {
-			      farbe = json[i][2][0][1].replace(/#/,"");
+			    if(json[i][2][0][2]) {
+			      farbe = json[i][2][0][2].replace(/#/,"");
             map.addOverlay(new EInsert(new GLatLng(json[i][4], json[i][5]), "/images/areas/"+farbe+".png", new GSize(0.0005,0.0005), -1));
           }
 			}
