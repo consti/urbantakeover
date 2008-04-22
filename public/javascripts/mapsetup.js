@@ -172,8 +172,7 @@ function mapini() {
 			    if(json[i][2][0][2] != undefined) {
 			      farbe = json[i][2][0][2].replace(/#/,"");
             map.addOverlay(new EInsert(new GLatLng(json[i][4], json[i][5]), "/images/areas/"+farbe+".png", new GSize(0.0005,0.0005), -1));
-			    }
-        }  
+			    }  
 				markersArray.push(marker);
 		}
 
