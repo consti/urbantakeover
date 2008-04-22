@@ -101,7 +101,7 @@
   .area { background-color: transparent;  filter:alpha(opacity=50); -moz-opacity:.50; opacity:.50;  }
   
   /* marker massage */
-  div.markermsg { text-align: left; max-width: 400px; font-size: 12px;}
+  div.markermsg { text-align: left; max-width: 370px; font-size: 12px;}
   div.markermsg a:hover { background-color: red; !important }
   div.markermsg a { background-color: red; }
   div.markermsg a.spot-name { font-weight: bold; }
