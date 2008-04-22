@@ -9,27 +9,25 @@ class TwitterController < ApplicationController
   private_api [:command, :auto_follow]
 
   def command  
-    #return render :text => 'already parsed' if Twittermessage.find_by_twitter_id(params[:twitter_message_id])
+    return render :text => 'already parsed' if Twittermessage.find_by_twitter_id(params[:twitter_message_id])
     
-    #Twittermessage.create :twitter_id => params[:twitter_message_id]
+    Twittermessage.create :twitter_id => params[:twitter_message_id]
     
-    #render :text => handle_message(params[:user], params[:message])
+    render :text => handle_message(params[:user], params[:message])
   end
   
   def auto_follow
     username = params[:user]
     user = User.find_by_twittername username
-    login = username
     unless user
-      login = (username + rand(128).to_s) if User.find_by_login login # todo fix me properly
-      
       password = User.generate_password
       user = User.create(:twittername => username,
-                         :login => login,
+                         :login => username,
                          :password => password,
                          :password_confirmation => password)
-
+  
       user.notify_all "welcome #{username}! your password for http://urbantakeover.at is #{password}. send 'd cpu claim spot @ address' or 'd cpu help'."
+
       return render :text => "created user #{username} and following on twitter"
     end
     
