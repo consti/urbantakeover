@@ -1,3 +1,7 @@
+<% for photo in @photoss %>
+  <%= photo.username %><br/>
+<% end %>
+
 <% for photo in @photos %>
   <a href="<%= photo.url('m') %>"target="_blank"><img src="<%= photo.url('s') %>" /></a> <%= photo.title %> <%= photo.description %> <%= photo.notes.size if photo.notes %>
 

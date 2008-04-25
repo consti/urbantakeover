@@ -9,7 +9,15 @@ class DashboardController < ApplicationController
   
   def test 
     flickr = Flickr.new RAILS_ROOT + "/config/flickr.cache", PRIVATE_API_CONFIG['flickr']['api_key'], PRIVATE_API_CONFIG['flickr']['shared_secret']
-    @photos = flickr.groups.pools.getPhotos("697289@N21")
+    @photos = flickr.groups.pools.getPhotos("697289@N21", nil, nil, 3)
+    
+    @photoss = []
+    @photos.each do |photo|
+      @photoss << flickr.photos.getInfo(photo.id)
+      
+      [photo.description, photo.title].each do |claim_message|
+      end
+    end
   end
 
   def member
