@@ -90,17 +90,24 @@
   /* menu */
   div#menu { font-weight: bold; color: #666666; margin-bottom: 10px; }
   div#menu a:link, div#menu a:visited { color: #000000; text-decoration: none; }
-  div#menu a:hover, div#menu a:active { color: white; background-color: #666; }
+  div#menu a:hover, div#menu a:active { color: white;  background-color: #000000; }
+  div#menu span.stickerlink a { color: #AAB300; }
+  div#menu span.stickerlink a:hover { color: #AAB300; background-color: #000000; }
   
   /* map */
   div#map.small { width: 475px; height: 285px; margin: 0px; overflow: hidden; }
   div#map.normal { width: 475px; height: 390px; margin: 0px; overflow: hidden; border: 1px solid #DDDDDD; }
   div#map.tall { width: 425px; height: 485px; margin: 0px; overflow: hidden; border: 1px solid #DDDDDD; }
   div#map.wide { width: 950px; height: 285px; margin: 0px; overflow: hidden; }
-  div#map.gmnoprint a:hover { background-color: transparent;  } /* Fix google imprint-mouseover */
+  div#map a, div#map a:visited, div#map a:hover { background-color: transparent;  } /* Fix google imprint-mouseover */
+  .area { background-color: transparent;  filter:alpha(opacity=50); -moz-opacity:.50; opacity:.50;  }
   
   /* marker massage */
-  div.markermsg { text-align: left; }
+  div.markermsg { text-align: left; max-width: 370px; font-size: 12px;}
+  div.markermsg a:hover { background-color: red; !important }
+  div.markermsg a { background-color: red; }
+  div.markermsg a.spot-name { font-weight: bold; }
+  div.markermsg span.links a:hover { background-color: #959595 !important; color: #000000 !important; }
 
   /* submenu */
   div#submenu { background-color: #EEEEEE; border: 1px solid transparent;}
