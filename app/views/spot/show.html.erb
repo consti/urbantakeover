@@ -46,11 +46,12 @@
    
    <div class="box">
     <h3>Images</h3>
-      images tagged with "<%= @spot.name %>" in the urbantakeover image pool on flickr<br/>
+      <!-- note: the user shouldn't have to care where they're from. those are just nice pictures :) -->
+      <!-- images tagged with "<%= @spot.name %>" in the urbantakeover image pool on flickr<br/> -->
       <%= render :partial => 'proof/spot_flickr_pool', :locals => {:spot => @spot.name} %>
-      <div style="clear: both"><!-- me clear you --></div>
-      <br/>images tagged with "<%= @spot.name %>" in flickr<br/>
-      <%= render :partial => 'proof/spot_flickr', :locals => {:spot => @spot.name} %></br>
+
+      <!-- <br/>images tagged with "<%= @spot.name %>" in flickr<br/> -->
+      <%= render :partial => 'proof/spot_flickr', :locals => {:spot => @spot.name} %>
    </div>  
   </div>
 </div>
