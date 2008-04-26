@@ -2,6 +2,7 @@ var map, cluster;
 var gmarkers = [];
 
 function mapini() {
+  
   /* EINSERT */	
  	  function EInsert(point, image, size, basezoom, zindex) {
        this.point = point;
