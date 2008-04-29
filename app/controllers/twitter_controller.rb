@@ -20,7 +20,7 @@ class TwitterController < ApplicationController
     username = params[:user]
     user = User.find_by_twittername username
     unless user
-      if User.find_by_login login # username already taken here, create random username
+      if User.find_by_login username # username already taken here, create random username
         login = (username + rand(128).to_s)  # todo fix me properly
       else
         login = username
