@@ -23,5 +23,4 @@ class String
   def ends_with? what
     self[-what.size, what.size] == what
   end
-  
 end
