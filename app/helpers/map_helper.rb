@@ -8,14 +8,16 @@ module MapHelper
     return spots, map
   end
   
-  @@sizes = {
-    :normal => [500, 400],
-    :small => [500, 300],
-    :wide => [1000, 300]
+  @@classes = {
+    :normal => 'normal',
+    :tall => 'tall',
+    :small => 'small',
+    :small_right => 'small right',
+    :wide => 'wide'
   }
 
-  def show_map spots=nil, size=:normal
-    width, height = @@sizes[size]
-    render :partial => 'map/view', :locals => {:spots => spots, :width => width, :height => height}
+  def show_map spots=nil, c=:normal
+    css_class = @@classes[c]
+    render :partial => 'map/view', :locals => {:spots => spots, :css_class => css_class}
   end  
 end

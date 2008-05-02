@@ -1,55 +1,33 @@
-<div id="left">
-<h2>Print your own Stickers for free</h2>
-<ul>
-	<li>Download the <%= link_to "sticker pdf", "/files/urbantakeover_a4_ohai.pdf" %></li>
-	<li>Get Sticker Paper for your printer <%= todo "link to the correct zweckform paper on amazon" %></li>
-	<li>Print your own stickers :)</li>
-</ul>
+<div class="span-24 lrborder">
+  <div class="span-8 push-1 colborder">
+    <h2>Print your own Stickers</h2>
+      <ul>
+	      <li>Download the <%= link_to "sticker pdf", "/files/urbantakeover_a4_ohai.pdf" %></li>
+	      <li>Get Sticker Paper for your printer <%= todo "link to the correct zweckform paper on amazon" %></li>
+	      <li>Print your own stickers :)</li>
+      </ul>
 
-<%= todo "generate a custom sticker pdf in your colour"%>
-
-</div>
-
-<div id="right">
+      <%= todo "generate a custom sticker pdf in your colour"%>
+  </div>
+  <div class="span-12 last">
 	<h2>Order Stickers from us</h2>
 
-	We suggest 50 Stickers for 4,- €, but while we're in beta you can pay as you wish (even <em>get them for free</em>).
-	
-	<%= todo "we don't link your address to your user account for privacy reasons. if you'd like us to connect your urbantakeover user and your address - to not have to write your address here every time you want to order stickers:"%>
+	We suggest 50 stickers for 4,- €, but while we're in beta you can <em>get up to 20 stickers for free</em>.
+	<br/>
+	<span class="small">We don't link your address to your user account for privacy reasons. Please contact us, if you'd like us to connect your urbantakeover username and your address for future orders.</span>
 	
 	<%= error_messages_for :order %>
 
-	<% form_for(@order, :url=> {:controller => 'sticker', :action => 'index'}) do |f| %>
-  	<p>
-      E-Mail:<br/> <%= f.text_field :email, :value => (logged_in? ? current_user.email : '') %>
-    </p>
-
-	  <p>
-	    Name:<br/> <%= f.text_field :name %>
-	  </p>
-	  
-	  <p>
-	    Street:<br/> <%= f.text_field :street %>
-	  </p>
-
-	  <p>
-	    Zip-Code &amp; City:<br/> <%= f.text_field :city %>
-	  </p>
-
+  <% form_for(@order, :url=> {:controller => 'sticker', :action => 'index'}) do |f| %>
+    <p><label for="order_email">E-Mail:</label><br/><%= f.text_field :email, :value => (logged_in? ? current_user.email : ''), "class"=>'textfield must' %></p>
+    <p><label for="order_name">Name:</label><br/><%= f.text_field :name, "class"=>'textfield must' %></p>
+    <p><label for="order_street">Street:</label><br/><%= f.text_field :street, "class"=>'textfield must' %></p>
+    <p><label for="order_city">Zip-Code &amp; City:</label><br/> <%= f.text_field :city, "class"=>'textfield must' %></p>
     <div style="color: #666">
-	    <p>
-  	    Country: <span class="small">(optional)</span><br/> <%= f.text_field :country %>
-  	  </p>
- 	  
-   	  <p>
-  		  Personal Note / Request / Comment: <span class="small">(optional)</span><br/> <%= f.text_area :text, :rows => 3 %>
-  		</p>
-	  </div>
-	
-	  <p>
-	    <%= f.submit "Order" %>
-	  </p>
-	<% end %>
-	
-
+      <p><label for="order_country">Country: <span class="small">(optional)</span></label><br/> <%= f.text_field :country, "class"=>'textfield optional' %></p> 	  
+      <p><label for="order_text">Personal Note / Request / Comment: <span class="small">(optional)</span></label><br/><%= f.text_area :text, :rows => 3, "class"=>'optional' %></p>
+    </div>
+    <p><%= f.submit "Order", "class"=>'submit' %></p>
+  <% end %>
+  </div>
 </div>

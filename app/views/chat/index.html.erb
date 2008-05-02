@@ -1,15 +1,19 @@
-<h2>Chat</h2> 
-
-<div id="left" style="width:600px;">
-  <iframe class="widget-loading" width="100%" height="400px" scrolling="no" frameborder="0"
+<div class="span-24 lrborder">
+  <div class="span-23 push-1">
+  <h2>Chat</h2> 
+  <div class="span-15">
+  <iframe class="widget-loading" width="600px" height="400px" scrolling="no" frameborder="0"
     src="http://embed.mibbit.com/?channel=%23urbantakeover&amp;nick=<%= logged_in? ? h(current_user.name) : "anonymous" %>">
   </iframe>
-  <div class="spacer"><br/></div>
-</div>
-
-<div id="right" style="width:300px">
-<p style="margin-top: 0" class="small">
-type /nick to change your Nick name<br/>
-type /help for available commands
-</p>
+  </div>
+  <div class="span-6 push-1 last">
+  <p style="margin-top: 0" class="small">
+  type /nick to change your Nick name<br/>
+  type /help for available commands<br/>
+  <p class="small">
+  Feel free to contact us <a href="mailto://team@urbantakeover.at">via mail</a>, if no <br/>one is online!
+  </p>
+  </p>
+  </div>
+  </div>
 </div>

@@ -2,8 +2,6 @@ class DashboardController < ApplicationController
   def newcomer
     load_data
 
-    a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] # Will add descriptions, soon
-		@num = a[rand(a.size)]
 		render :layout => 'pitch'
   end
   
@@ -47,9 +45,9 @@ class DashboardController < ApplicationController
   def load_data
     @recent_claims = Claim.find :all, :limit => 10, :order => "created_at desc"
     @last_claim = Claim.find :all, :limit => 1, :order => "created_at desc"
-    now = DateTime::now()
-    in24h = DateTime.new(now.year,now.month,now.mday+1) # might be very buggy.. I mean, 32 days?
-    aweekago = DateTime.new(now.year,now.month,now.mday-7) # might be very buggy.. I mean, -6 days?
+    now = Time.new
+    in24h = now + 1.days
+    aweekago = now - 7.days
     today = now.strftime("%Y")+"-"+now.strftime("%m")+"-"+now.strftime("%d")
     tomorrow = in24h.strftime("%Y")+"-"+in24h.strftime("%m")+"-"+in24h.strftime("%d")
     lastweek = aweekago.strftime("%Y")+"-"+aweekago.strftime("%m")+"-"+aweekago.strftime("%d")

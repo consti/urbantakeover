@@ -5,6 +5,7 @@ class StickerController < ApplicationController
     return unless request.post?
     @order.save!
     OrderMailer.deliver_mailorder(@order)
+    flash[:notice] = "Thanks for your order!"
     redirect_to :action => 'get'
   rescue ActiveRecord::RecordInvalid
     render :action => 'index'

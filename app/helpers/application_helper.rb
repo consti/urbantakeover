@@ -9,7 +9,7 @@ module ApplicationHelper
     s = GoogleChart.sparkline(*data)
     s.height = 12
     s.width = data.size*3
-    "<img src=\"#{s.to_url}&chco=4d89f9,c6d9fd\"/>"
+    "<img title=\"claims over the last 7 days\" src=\"#{s.to_url}&chco=4d89f9,c6d9fd\"/>"
   end
   
   def format_interval(timestamp)

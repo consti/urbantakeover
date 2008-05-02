@@ -4,82 +4,87 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <title>UrbanTakeover - <%= controller.controller_name %>: <%= controller.action_name %></title>
+  <title>urbantakeover - <%= controller.controller_name %>: <%= controller.action_name %></title>
+  <link rel="stylesheet" href="/stylesheets/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="/stylesheets/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]><link rel="stylesheet" href="/stylesheets/blueprint/ie.css" type="text/css" media="screen, projection" /><![endif]-->
   <%= stylesheet_link_tag 'scaffold' %>
   <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag 'mapsetup' %>
 </head>
 <body onunload="try { GUnload(); } catch(Exception) {};">
 
-	<div id="main">
+<div class="container">
 
-<div id="user-nav">
-  <% if logged_in? %>
-    <p>
-    <%= format_user current_user %>
-    (<%= format_user_score current_user %>)
-    |
-    <%= link_to 'my spots', :controller => :claims, :action => :my %>
-    |
-    <%= link_to 'my settings', settings_url %>
-    |
-    <%= link_to 'log out', logout_url %>
-    </p>
-  <% else %>
-    <p>
-      <%= link_to 'log in', login_url %>
-      | <%= link_to 'sign up', signup_url %>
-    </p>
-  <% end%>
-</div>
-
-<div>
-  <h1><a class="title" href="<%= root_url %>"><%= print_pwnzing_logo %></a></h1>
-  <div class="menu">
-  <%= link_to 'claim spot', :controller => :claims, :action => :new %>
-  | <%= link_to 'highscore', :controller => :score, :action => :index %>
-  | <%= link_to 'team', team_path %>
-  | <%= link_to 'get stickers', sticker_path %>
-  | <%= link_to 'hotspots', hotspots_path %>
-  | <%= link_to 'FAQ', faq_path %>
+  <div class="span-24 tlrborder">
+    <div id="logo_small" onclick="javascript:location.href='/'"><!-- --></div>
+    <div id="title" class="span-10 push-1"><a href="<%= root_url %>"><%= print_pwnzing_logo %></a></div>
+    <div id="user-nav" class="span-13 last">
+      <p class="small">
+      <% if logged_in? %>
+        <%= format_user current_user %>
+        (<%= format_user_score current_user %>)
+        |
+        <%= link_to 'my spots', :controller => :claims, :action => :my %>
+        |
+        <%= link_to 'my settings', settings_url %>
+        |
+        <%= link_to 'log out', logout_url %>
+      <% else %>
+          <%= link_to 'log in', login_url %>
+          | <%= link_to 'sign up', signup_url %>
+      <% end%>
+      </p>
+    </div>    
   </div>
   
-  <% if logged_in? %>
-    <% if current_user.is_admin? %>
-      <div class="menu">
-      <%= link_to 'spot list', :controller => :spot, :action => :index %>
+  <div class="span-24 lrborder">
+  <div id="menu" class="span-23 push-1">
+    <%= link_to 'what\'s going on', :controller => :dashboard, :action => :redirect %>
+  | <%= link_to 'claim spot', :controller => :claims, :action => :new %>
+  | <%= link_to 'highscore', :controller => :score, :action => :index %>
+  | <%= link_to 'team', team_path %>
+  | <span class="stickerlink"><%= link_to 'get stickers', sticker_path %></span>
+  | <%= link_to 'hotspots', hotspots_path %>
+  | <%= link_to 'FAQ', faq_path %>
+  <% if logged_in? %><% if current_user.is_admin? %>
+    <br/><%= link_to 'spot list', :controller => :spot, :action => :index %>
       | <%= link_to 'open orders', :controller => :orders, :action => :open %>
       | <%= link_to 'stats', :controller => :dashboard, :action => :admin %>
-      </div>
-    <% end %>
-  <% end %>
-  
-</div>
+    <% end %><% end %></div>
+  <% if flash[:notice] %>  
+    <div class="infomessage span-22 push-1">
+      <p><%= flash[:notice] %>
+      <% if @scores %>
+        <% for line in @scores %>
+          <br/><span class="blue"><%= line %></span>
+        <% end %>
+        <% end %>
+      </p>
+  </div>
+  <% end %></div>
 
-<p style="color: green"><%= flash[:notice] %></p>
+   <%= yield  %>
 
-<% if @scores %>
-  <% for line in @scores %>
-    <p style="color: blue;"><%= line %></p>
-  <% end %>
-<% end %>
+  <div class="span-24 lrborder">
+   <div class="span-23">
+    <br/>
+   </div>
+   <div class="span-1">
+    <br/>
+   </div>
+  </div>
+  <div id="footer" class="span-24 last">
+  	<div class="right small"><%= link_to "support chat", chat_url %> | <a href="http://blog.urbantakeover.at">our blog</a> | <a href="mailto:team@urbantakeover.at">get in touch</a> | handcrafted by <a class="72dpiarmy" href="http://72dpiarmy.com"><span>72dpi</span>army</a> | &copy; 2008</div>
 
-<div id="content">
-  <%= yield  %>
-</div>
-<div style="clear: both;"><!-- ohai, i'm the clear div to make the footer margin-top work --></div>
-
-<div id="footer">
-	<p<%= link_to "support chat", chat_url %> | <a href="http://blog.urbantakeover.at">our blog</a> | <a href="mailto://team@urbantakeover.at">get in touch</a> | urbantakeover is handcrafted by <a class="72dpiarmy" href="http://72dpiarmy.com"><span>72dpi</span>army</a> | &copy; 2008</p>
-	<br/>
-</div>
-
+  </div>
 </div>
 
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-
+</script>
+<script type="text/javascript">
 var pageTracker = _gat._getTracker("UA-3991042-1");
 pageTracker._initData();
 pageTracker._trackPageview();

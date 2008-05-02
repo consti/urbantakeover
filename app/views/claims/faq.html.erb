@@ -1,29 +1,65 @@
-<div id="left">
-<h2>What is this?</h2>
-<p>UrbanTakeover is an alternate reality game in your city.</p>
-<p>You claim spots/territory by putting up stickers (in real life) and sending us a text message or entering the address on the website.</p>
+<div class="span-24 lrborder">
+  <div class="span-10 push-1 colborder">
+  <h2>What is this?</h2>
+  <p>UrbanTakeover is an alternate reality game in your city.</p>
+  <p>You claim spots/territory by putting up stickers (in real life) and sending us a text message or entering the address on the website.</p>
 
-<ol>
-  <li>stick stickers in the city</li>
-  <li>mark your territory on a map</li>
-  <li>be notified, when someone crosses you</li>
-</ol>
+  <ol>
+    <li>stick stickers in the city</li>
+    <li>mark your territory on a map</li>
+    <li>be notified, when someone crosses you</li>
+  </ol>
 
-<h3>How do I get Stickers?</h3>
-<p>You can either print your own, or order some from us. Everything needed is <%= link_to "here", order_url %>.</p>
+  <h3>How do I get Stickers?</h3>
+    <p>You can either print your own, or order some from us. Everything needed is <%= link_to "here", order_url %>.</p>
 
-<h3>Contact us</h3>
-<p>You can reach us via <%= link_to "mail", "mailto://team@72dpiarmy.com" %>.</p>
+  <h3>Contact us</h3>
+    <p>You can reach us via <%= link_to "mail", "mailto://team@72dpiarmy.com" %>.</p>
 
-<h3>More?</h3>
-<ul>
-  <li><a href="http://blog.urbantakeover.at">development blog</a></li>
-  <li><a href="http://flickr.com/groups/urbantakeover/pool/">urbantakeover flickr pool</a></li>
-</ul>
+  <h3>Got Questions?</h3>    
 
-</div>
+      <p>Join the user discussion on <a href="http://getsatisfaction.com/urbantakeover" class="widget_title">Satisfaction</a>, or search the discussions right away:</p>
+      
+      <style type="text/css" media="all">  div#gsfn_search_widget img { border: none; }
+        div#gsfn_search_widget { font-size: 12px; width: 280px; border: 6px solid #DDD; padding: 10px;}
+        div#gsfn_search_widget a.widget_title { color: #000; display: block; margin-bottom: 10px; font-weight: bold; }
+        div#gsfn_search_widget .powered_by { margin-top: 8px; padding-top: 8px; border-top: 1px solid #DDD; } 
+        div#gsfn_search_widget .powered_by a { color: #333; font-size: 90%; }      
+        div#gsfn_search_widget form { margin-bottom: 8px; }
+        div#gsfn_search_widget form label { margin-bottom: 5px; display: block; }
+        div#gsfn_search_widget form #gsfn_search_query { width: 60%; }
+        div#gsfn_search_widget div.gsfn_content { }
+        div#gsfn_search_widget div.gsfn_content li { text-align:left; margin-bottom:6px; }
+        div#gsfn_search_widget div.gsfn_content a.gsfn_link { line-height: 1; }
+        div#gsfn_search_widget div.gsfn_content span.time { font-size: 90%; padding-left: 3px; }
+        div#gsfn_search_widget div.gsfn_content p.gsfn_summary { margin-top: 2px }
+      </style><div id="gsfn_search_widget">
+        <a href="http://getsatisfaction.com/urbantakeover" class="widget_title">People-Powered Customer Service for UrbanTakeover</a>
+        <div class="gsfn_content">
+          <form id="gsfn_search_form" action="http://getsatisfaction.com/urbantakeover" method="get" accept-charset="utf-8" onsubmit="gsfn_search(this); return false;">
+            <div>
+              <input type="hidden" name="limit" value="5" />
+              <input type="hidden" name="style" value="" />
+              <input type="hidden" name="utm_medium" value="widget_search" />
+              <input type="hidden" name="utm_source" value="widget_urbantakeover" />
+              <input type="hidden" name="callback" value="gsfnResultsCallback" />
+              <input type="hidden" name="format" value="widget" />
+              <label for="gsfn_search_query" class="gsfn_label">Ask a question, share an idea, report a problem, or just talk...</label>
+              <input type="text" name="query" value="" id="gsfn_search_query" maxlength="120" />
+              <input type="submit" id="continue" value="Continue" />
+            </div>
+          </form>
+          <div id="gsfn_search_results" style="height: auto;"></div>
+        </div>
+        <div class="powered_by"><a href="http://getsatisfaction.com/"><img alt="Favicon" src="http://www.getsatisfaction.com/favicon.gif" style="vertical-align: middle;" /></a> <a href="http://getsatisfaction.com/">Service and support by Satisfaction</a></div>
+      </div>
+      <script src="http://getsatisfaction.com/urbantakeover/widgets/javascripts/201570/widgets.js" type="text/javascript"></script>
+      
+  
+    
+  </div>
 
-<div id="right">
+  <div class="span-10">
   <h2>How do I play?</h2>
   <p><em>Claim your city! Put stickers up in the city and mark them <%= link_to "on the map", root_url %> via the <%= link_to "website", claim_url %> or sms to <%= link_to "score points", highscore_url %>.</em></p>
 
@@ -32,7 +68,7 @@
     <li>stick sticker - <strong>get your name up on a spot!</strong></li>
     <li>go to <%= link_to "claim spot", claim_path %></li>
     <li>send command <code>claim clubjohn @ doestreet 101</code></li>
-    <li><em>points get!</em></li>
+    <li><em>get points!</em></li>
   </ol>
 
   <h3>Claim via Flickr</h3>
@@ -45,5 +81,5 @@
   
   <h3>Claim via SMS (powered by <%= link_to "Twitter", "http://twitter.com"%>)</h3>
   <img src="images/howto.png" alt="urban takeover howto flyer"/>
-  
+  </div>
 </div>

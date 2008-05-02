@@ -1,25 +1,29 @@
+  <div class="span-24" style="border: 1px solid #DDDDDD">
+    <%= show_map @spots, :wide %>
+  </div>
 
-<div id="top">
-  <%= show_map @spots, :wide %>
-</div>
-<div id="subtop">
-  <span id="info">
+  <div id="submenu" class="span-24">
+    <div class="left">
 	<%= render :partial => 'claims/today', :locals => {:claim => @claims_today} %>
    <!-- |  <%= render :partial => 'claims/crosses_week', :locals => {:crosses => @crosses_week} %> --> 
    | <%= render :partial => 'claims/num_claims', :locals => {:claims => @num_claims} %>
-   | <%= render :partial => 'claims/last', :locals => {:claim => @last_claim} %></span>
-	</span>
-	<br/>
+   | <%= render :partial => 'claims/last', :locals => {:claim => @last_claim} %>
+    </div>
+  </div>
+
+<div class="span-24 lrborder">
+  <br/>
 </div>
 
-<div id="desc">
-  <div id="left">
+<div class="span-24 lrborder">
+  <div class="span-10 push-1">
   <h2>What's going on?</h2>
   <%= render :partial => 'claims/log', :locals => {:claims => @recent_claims} %>
   <p><%= link_to "full log", :controller => :claims, :action => :log %></p>
   </div>
-  <div id="right">
+
+  <div class="span-12 push-1 last">
     <h2>Newest Image Proofs:</h2>
-  <%= render_partial 'proof/flickr' %>
+    <%= render_partial 'proof/flickr' %>
   </div>
 </div>

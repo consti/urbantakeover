@@ -1,5 +1,7 @@
 #!/usr/local/bin/ruby
 
+MONGREL_PORT = 6984
+
 #restart the server 
 
 alias :old_print :print
@@ -13,7 +15,8 @@ print "updating from git"
 `/home/consti/opt/bin/git pull origin master`
 
 pid = nil
-`ps x`.each_line { |line| pid = line.strip.split(" ").first  if line.include? 'mongrel' }
+`ps x`.each_line { |line| pid = line.strip.split(" ").first  if line.include?('mongrel') and line.include?(
+"-p #{MONGREL_PORT}") }
 
 if pid
   print "stopping old server"
