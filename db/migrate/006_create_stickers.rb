@@ -6,8 +6,6 @@ class CreateStickers < ActiveRecord::Migration
       t.column :claim_id, :integer
       t.timestamps
     end
-    
-    Sticker.create :code => '1111-1234-1111'
   end
 
   def self.down
