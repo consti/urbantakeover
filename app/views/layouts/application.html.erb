@@ -45,10 +45,11 @@
   | <%= link_to 'hotspots', hotspots_path %>
   | <%= link_to 'FAQ', faq_path %>
   <% if logged_in? %><% if current_user.is_admin? %>
-    <br/><%= link_to 'spot list', :controller => :spot, :action => :index %>
+    | admin &rarr; <%= link_to 'spot list', :controller => :spot, :action => :index %>
       | <%= link_to 'open orders', :controller => :orders, :action => :open %>
       | <%= link_to 'stats', :controller => :dashboard, :action => :admin %>
-    <% end %><% end %></div>
+    <% end %><% end %>
+  </div>
   <% if flash[:notice] %>  
     <div class="infomessage span-22 push-1">
       <p><%= flash[:notice] %>
