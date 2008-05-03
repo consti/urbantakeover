@@ -130,3 +130,8 @@
   /* border */
   .lrborder { border-left: 1px solid #EEEEEE; border-right: 1px solid #EEEEEE; }
   .tlrborder { border-top: 1px solid #EEEEEE; border-left: 1px solid #EEEEEE; border-right: 1px solid #EEEEEE; }
+
+/* handy stuff */
+.combobreaker {
+  clear: both;
+}
