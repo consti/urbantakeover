@@ -19,13 +19,15 @@
     
     <div class="span-6 colborder">
       <h3>Notification?</h3>
+      <p class="small">All this is <em>optional</em>. You can leave it out.</p>
       <p><label for="twittername">Twitter</label><br/>
-      <%= f.text_field :twittername, "class"=>'textfield optional' %><br/><span class="small">Don't forget to add <%= link_to "cpu", "http://twitter.com/friendships/create/14143882"%> as friend to receive notifications.</span>
+      <%= f.text_field :twittername, "class"=>'textfield optional' %><br/><span class="small">You need to add <%= link_to "cpu", "http://twitter.com/friendships/create/14143882"%> as friend to use this.</span>
       <br/><label for="email">Email</label><br/>
       <%= f.text_field :email, "class"=>'textfield optional' %></p>
     </div>
     <div class="span-7 last">
       <h3>Are you on Flickr?</h3>
+      <p class="small">All this is <em>optional</em>. You can leave it out.</p>
       <p><label for="flickr">Flickr Username is</label><br/>
       <%= f.text_field :flickr, "class"=>'textfield optional' %><br><span class="small">Claiming via Flickr gives more points!</span></p>
     </div>
@@ -36,7 +38,7 @@
         	
     <div class="span-22 last">
     <hr class="space">
-    <span class="smaller">And please remember: We are still an early prototype. It could get a little bumpy.. :P</span>
+    <span class="smaller">And please remember: We are still in beta. It could get a little bumpy...</span>
     </div>
 
 <% end -%>
