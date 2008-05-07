@@ -10,6 +10,8 @@ class Spot < ActiveRecord::Base
   has_many :stuffs, :dependent => :destroy
   belongs_to :city
   
+  validates_presence_of :city
+  
   #has_many :spots # spots inside this spot
   #has_one :spot # parent spot
 

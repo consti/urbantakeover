@@ -12,8 +12,10 @@ class City < ActiveRecord::Base
     return if self.longitude and self.latitude
     geocodes = Geocoding.get(self.name)
     if geocodes.size == 1
+      geocode = geocodes.first
       self.longitude = geocode.longitude
       self.latitude = geocode.latitude
+      #self.name = geocode.locality # dangerous... we need a fuzzy find_by_name !!! because city names != city.locality. ie: Vienna <=> Wien, Wien <=> Wien
     end
   end  
   

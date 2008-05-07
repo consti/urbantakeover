@@ -22,9 +22,10 @@ class User < ActiveRecord::Base
   validates_length_of       :login,    :within => 1..32
   validates_uniqueness_of   :login, :case_sensitive => false
   validates_uniqueness_of   :email, :case_sensitive => false, :if => Proc.new { |user| not user.email.empty? }
-  validates_format_of :email, :with => /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i, :if => Proc.new { |user| not user.email.empty?}
+  validates_format_of       :email, :with => /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i, :if => Proc.new { |user| not user.email.empty?}
   validates_uniqueness_of   :twittername, :if => Proc.new { |user| not user.twittername.empty? }
-  validate :colour_is_somewhat_visible
+  validate                  :colour_is_somewhat_visible
+  validates_presence_of     :city
   
   before_save :encrypt_password
   before_save :update_twitter_friend
@@ -93,19 +94,6 @@ class User < ActiveRecord::Base
     if self.colour_1 == self.colour_2
       self.errors.add "Colour 1 and 2 can't be the same. Other players won't be able to read your name, kbai?!"
     end
-  end
-  
-  def spots
-    # super not performant
-    @spots ||= load_spots
-  end
-  
-  def load_spots
-      spots = []
-      self.claims.each do |claim|
-        spots << claim.spot if claim.spot.current_owner == self
-      end
-      spots.uniq
   end
   
 #  validate :leetness_of_password
