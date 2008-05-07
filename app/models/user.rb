@@ -95,6 +95,19 @@ class User < ActiveRecord::Base
     end
   end
   
+  def spots
+    # super not performant
+    @spots ||= load_spots
+  end
+  
+  def load_spots
+      spots = []
+      self.claims.each do |claim|
+        spots << claim.spot if claim.spot.current_owner == self
+      end
+      spots.uniq
+  end
+  
 #  validate :leetness_of_password
 #  
 #  def leetnes_of_password
