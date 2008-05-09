@@ -177,13 +177,12 @@ private
       if self.user.can_claim? spot
         claim = self.user.claim spot
         if old_name
-          return user.notify_all "lol! you rebranded #{old_name} to #{spot.name}!"
+          return user.notify_all("lol! you rebranded #{old_name} to #{spot.name}!")
         else
-          # TODO: previous user get points for giving this a good name
-          return "bam! 10 points for claiming #{spot.name}"
+          return user.notify_all("bam! 10 points for claiming #{spot.name}")
         end
       else
-        return user.notify_all "lol! #{spot.name} is already yours!"
+        return user.notify_all("lol! #{spot.name} is already yours!")
       end
     end
   end  
