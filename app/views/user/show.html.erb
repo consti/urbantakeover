@@ -2,6 +2,8 @@
   <div class="span-23 push-1">
     <h2><%= format_user @user %> <% if @user.team %> of team <%= format_team @user.team %> <% end -%></h2>
     
+    <h3>Rank: <%= @user.rank %></h3>
+    
     <% if logged_in? and current_user.is_admin? %>
       <%= link_to 'edit', :action => :edit, :id => @user %> |
     <% end %>

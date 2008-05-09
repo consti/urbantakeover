@@ -41,6 +41,33 @@ class User < ActiveRecord::Base
     password = "%04d" % (1+rand(9999))
   end
   
+  
+  def rank
+    @rank ||= calculate_rank
+  end
+  
+  def calculate_rank
+    rank = 1
+    User.ranked_users.each do |user|
+      return rank if user == self
+      rank += 1
+    end
+  end
+  
+  def self.each
+    self.find(:all).each yield
+  end
+  
+  def self.ranked_users
+    @@ranked_users ||= self.calculate_ranks
+  end
+  
+  def self.calculate_ranks
+    User.find(:all).sort do |user, user2|
+      user.score <=> user2.score
+    end.reverse
+  end
+  
   def add_initial_friend
     developers = User.find :all, :conditions => ["login in (?)", ["oneup", "consti", "stereotype", "sushimako"]]
     return if developers.empty?
