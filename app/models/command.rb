@@ -11,7 +11,8 @@ class Command < ActiveRecord::Base
   
   def h
     help
-  end  
+  end
+
   def allowed_commands
     self.methods - ['run!']
   end
