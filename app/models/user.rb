@@ -41,6 +41,14 @@ class User < ActiveRecord::Base
   def self.generate_password
     password = "%04d" % (1+rand(9999))
   end
+
+  def self.each
+    self.find(:all).each yield
+  end  
+
+  def rank
+    @rank ||= Score.rank_for(self)
+  end
   
   def add_initial_friend
     developers = User.find :all, :conditions => ["login in (?)", ["oneup", "consti", "stereotype", "sushimako"]]

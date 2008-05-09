@@ -5,6 +5,10 @@ class Team < ActiveRecord::Base
   
   before_validation :generate_colour_if_needed
   
+  def self.each
+    self.find(:all).each yield
+  end  
+  
   def generate_colour_if_needed
     self.colour = "#%06x" % rand(0xffffff) if not self.colour or self.colour.empty?
   end
@@ -12,8 +16,8 @@ class Team < ActiveRecord::Base
   def score
     self.users.inject(0) {|n, u| n += u.score }
   end
-  
+
   def rank
-    0
-  end
+    @rank ||= Score.rank_for(self)
+  end  
 end

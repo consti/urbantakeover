@@ -31,11 +31,13 @@ ActionController::Routing::Routes.draw do |map|
   
   map.root :controller => 'dashboard', :action => 'redirect'
     
+  map.join_team '/join_team/:id', :controller => 'team', :action => 'join'
   map.connect '/:name', :controller => 'disambiguation', :action => 'index'
-  map.connect '/which/:name', :controller => 'disambiguation', :action => 'disambiguate'
-  map.connect '/user/:name', :controller => 'user', :action => 'show_by_name'
-  map.connect '/spot/:name', :controller => 'spot', :action => 'show_by_name'
-  map.connect '/team/:name', :controller => 'team', :action => 'show_by_name'
+  map.which '/which/:name', :controller => 'disambiguation', :action => 'disambiguate'
+  map.show '/show/:name', :controller => 'disambiguation', :action => 'disambiguate'
+  map.show_user '/user/:name', :controller => 'user', :action => 'show_by_name'
+  map.show_spot '/spot/:name', :controller => 'spot', :action => 'show_by_name'
+  map.show_team '/team/:name', :controller => 'team', :action => 'show_by_name'
 
 
   # The priority is based upon order of creation: first created -> highest priority.
