@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
     password = "%04d" % (1+rand(9999))
   end
   
-  
+  ### TODO: IMPLEMENT ME AS MIXIN
   def rank
     @rank ||= calculate_rank
   end
@@ -67,6 +67,7 @@ class User < ActiveRecord::Base
       user.score <=> user2.score
     end.reverse
   end
+  ### END
   
   def add_initial_friend
     developers = User.find :all, :conditions => ["login in (?)", ["oneup", "consti", "stereotype", "sushimako"]]
