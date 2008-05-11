@@ -14,6 +14,9 @@
       <p><label for="password_confirmation">Confirm Password</label><br/>
       <%= f.password_field :password_confirmation, "class"=>'textfield must password' %></p>
 
+      <p><label for="city_id">Your Hometown</label><br/>
+      <%= text_field_with_auto_complete :city, :name %></p>
+  
       <p><label for="colour_1">Your Colors</label><br/>
       <%= f.text_field :colour_1, "class"=>'colorfield must' %> <%= f.text_field :colour_2, "class"=>'colorfield must' %></p>
       
