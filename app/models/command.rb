@@ -11,7 +11,8 @@ class Command < ActiveRecord::Base
   
   def h
     help
-  end  
+  end
+
   def allowed_commands
     self.methods - ['run!']
   end
@@ -34,7 +35,7 @@ class Command < ActiveRecord::Base
   end
 
   def hi arguments
-    user.notify_all "ohai, i'm the urbantakeover bot. send 'd cpu claim spot @Â address, city' to mark something claimed."
+    user.notify_all "ohai, i'm the urbantakeover bot. send 'd cpu claim spot @ address, city' to mark something claimed."
   end
   
   def friend friend_name
@@ -53,7 +54,17 @@ class Command < ActiveRecord::Base
       return user.notify_all("sry, already friends with #{friend.login}")
     end
   end
-    
+  
+  # TODO alias method me  
+  def claimed spot_description
+    claim spot_description
+  end
+  
+  def claiming spot_description
+    claim spot_description
+  end
+  # TODO END
+
   def claim spot_description
     if spot_description.include? "@"
       s = spot_description.split("@")
@@ -98,7 +109,7 @@ class Command < ActiveRecord::Base
     
     buff_user_claim.destroy
     buff_user.score -100, "buffed by #{user.name} @ #{spot.name}"
-    user.score 0, "buffed #{buff_user.name} @Â #{spot.name}"
+    user.score 0, "buffed #{buff_user.name} @ #{spot.name}"
   end
 
 private
@@ -150,10 +161,10 @@ private
 
     geocodes = Geocoding.get(address) # HARHAR - users can easily find their own stuffz
     if geocodes.empty?
-      user.notify_all "plz: claim like '#{spot_name} @ MusterstraÃŸe 12, City'"
+      user.notify_all "plz: claim like '#{spot_name} @ Doestreet 12, City'"
       return "no address found for '#{address}'"
     elsif geocodes.size > 1
-      user.notify_all "plz write exact address, multiple spots found. like #{geocodes.first.address}"
+      user.notify_all "plz write exact address, multiple spots found. eg: #{geocodes.first.address}"
       return "sry, multiple spots found. for #{address}"
     else
       geocode = geocodes.first
@@ -177,13 +188,12 @@ private
       if self.user.can_claim? spot
         claim = self.user.claim spot
         if old_name
-          return user.notify_all "lol! you rebranded #{old_name} to #{spot.name}!"
+          return user.notify_all("lol! you rebranded #{old_name} to #{spot.name}!")
         else
-          # TODO: previous user get points for giving this a good name
-          return "bam! 10 points for claiming #{spot.name}"
+          return user.notify_all("bam! 10 points for claiming #{spot.name}")
         end
       else
-        return user.notify_all "lol! #{spot.name} is already yours!"
+        return user.notify_all("lol! #{spot.name} is already yours!")
       end
     end
   end  

@@ -25,9 +25,7 @@
         <%= format_user current_user %>
         (<%= format_user_score current_user %>)
         |
-        <%= link_to 'my spots', :controller => :claims, :action => :my %>
-        |
-        <%= link_to 'my settings', settings_url %>
+        <%= link_to 'settings', settings_url %>
         |
         <%= link_to 'log out', logout_url %>
       <% else %>
@@ -40,18 +38,18 @@
   
   <div class="span-24 lrborder">
   <div id="menu" class="span-23 push-1">
-    <%= link_to 'what\'s going on', :controller => :dashboard, :action => :redirect %>
-  | <%= link_to 'claim spot', :controller => :claims, :action => :new %>
+  <%= link_to 'claim spot', :controller => :claims, :action => :new %>
   | <%= link_to 'highscore', :controller => :score, :action => :index %>
   | <%= link_to 'team', team_path %>
-  | <span class="stickerlink"><%= link_to 'get stickers', sticker_path %></span>
+  | <%= link_to 'get stickers', sticker_path %>
   | <%= link_to 'hotspots', hotspots_path %>
   | <%= link_to 'FAQ', faq_path %>
   <% if logged_in? %><% if current_user.is_admin? %>
-    <br/><%= link_to 'spot list', :controller => :spot, :action => :index %>
+    | admin &rarr; <%= link_to 'spot list', :controller => :spot, :action => :index %>
       | <%= link_to 'open orders', :controller => :orders, :action => :open %>
       | <%= link_to 'stats', :controller => :dashboard, :action => :admin %>
-    <% end %><% end %></div>
+    <% end %><% end %>
+  </div>
   <% if flash[:notice] %>  
     <div class="infomessage span-22 push-1">
       <p><%= flash[:notice] %>

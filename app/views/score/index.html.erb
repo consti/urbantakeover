@@ -12,7 +12,7 @@
 <ol>
 <% for user in @users %>
   <li>
-  <%= format_user user %>: <%= user.score %> points
+  <%= format_user user %>: <%= user.score %> points <%= user.rank %>
   </li>
 <% end %>
 </ol>

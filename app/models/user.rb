@@ -40,6 +40,14 @@ class User < ActiveRecord::Base
   def self.generate_password
     password = "%04d" % (1+rand(9999))
   end
+
+  def self.each
+    self.find(:all).each yield
+  end  
+
+  def rank
+    @rank ||= Score.rank_for(self)
+  end
   
   def add_initial_friend
     developers = User.find :all, :conditions => ["login in (?)", ["oneup", "consti", "stereotype", "sushimako"]]
@@ -93,6 +101,19 @@ class User < ActiveRecord::Base
     if self.colour_1 == self.colour_2
       self.errors.add "Colour 1 and 2 can't be the same. Other players won't be able to read your name, kbai?!"
     end
+  end
+  
+  def spots
+    # super not performant
+    @spots ||= load_spots
+  end
+  
+  def load_spots
+      spots = []
+      self.claims.each do |claim|
+        spots << claim.spot if claim.spot.current_owner == self
+      end
+      spots.uniq
   end
   
 #  validate :leetness_of_password

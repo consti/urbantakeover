@@ -2,8 +2,7 @@ class ClaimsController < ApplicationController
   before_filter :login_required, :except => [:log, :howto, :faq, :recent, :all]
 
   def my
-    @claims = current_user.claims
-    @owned_spots = current_user.owned_spots
+    redirect_to :controller => :user, :action => :show_by_name, :name => current_user.name
   end
   
   def log

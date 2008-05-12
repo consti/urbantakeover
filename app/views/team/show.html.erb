@@ -1,8 +1,10 @@
 <div class="span-24 lrborder">
   <div class="span-23 push-1">
   <h2><%= format_team @team %></h2>
+  <%= link_to "Join team", join_team_url(:id => @team) %>
+
   <p>Team score: <%= @team.score %></p>
-  <!--<p>Global Team rank: <%= @team.rank %></p>-->
+  <p>Rank: <%= @team.rank %></p>
 
   <ul><% for user in @team.users %>
     <li><%= format_user user %> <%= format_user_score user%></li>
