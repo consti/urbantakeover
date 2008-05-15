@@ -116,7 +116,7 @@
   div#submenu div { padding: 6px 10px 7px 10px; }
 
   /* footer */
-  div#footer { background-color: #EEEEEE; border-left: 1px solid transparent; background-image: url("/images/cornerbr.png"); background-repeat: no-repeat; background-position: 931px 11px; }
+  div#footer { background-color: #EEEEEE; border-left: 1px solid transparent; border-right: 1px solid transparent; background-image: url("/images/cornerbr.png"); background-repeat: no-repeat; background-position: 932px 11px; }
   div#footer div { margin: 5px 8px 5px 0px; }
   div#footer div a:link, div#footer div a:visited { color: #959595; text-decoration: underline; }
   div#footer div a:hover, div#footer div a:active { background-color: #99CC00; color: #FFFFFF; text-decoration: none; }
