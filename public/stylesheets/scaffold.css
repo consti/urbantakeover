@@ -99,6 +99,11 @@
   div#map a, div#map a:visited, div#map a:hover { background-color: transparent;  } /* Fix google imprint-mouseover */
   .area { background-color: transparent;  filter:alpha(opacity=50); -moz-opacity:.50; opacity:.50;  }
   
+  /* @consti: can i be removed and replaced by map.wide?!?!? */
+  .map-border {
+    border: 1px solid #DDDDDD;
+  }
+  
   /* marker massage */
   div.markermsg { text-align: left; max-width: 370px; font-size: 12px;}
   div.markermsg a:hover { background-color: red; !important }
