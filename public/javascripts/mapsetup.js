@@ -187,68 +187,7 @@ function mapini() {
 		GEvent.addListener(map, "mouseout", function(){
 		map.hideControls(); 
 		});
-		
-		var icon = new GIcon();
-		icon.image = "http://www.panoramio.com/img/panoramio-marker.png";
-		icon.shadow = "http://www.panoramio.com/img/panoramio-shadow.png";
-		icon.iconSize = new GSize(18, 18);
-		icon.shadowSize = new GSize(22, 22);
-		icon.iconAnchor = new GPoint(9, 9);
-		icon.infoWindowAnchor = new GPoint(9, 0);
-		
-		function drawPanoramio(transport, map) {
-		  var panMarkersArray=[];
-      var response = transport.responseText.evalJSON(true);
-      photos = response.photos;
-      for (var i = 0; i < photos.length; i++)
-      		{
-      			var marker = new GMarker(new GLatLng(photos[i].latitude, photos[i].longitude), icon);
-      			marker.photo = photos[i];
-            panMarkersArray.push(marker);
-      		}
 
-      		GEvent.addListener(map, "click", function(overlay, point) {
-      			if (!overlay || !overlay.photo)
-      				return;
-
-      		var p = overlay.photo;
-
-      		// if photo_title is too long, cut it.
-      		if (p.photo_title.length > 33) {
-      			p.photo_title = p.photo_title.substring(0, 33) + "&#8230;";
-      		}
-
-      		overlay.openInfoWindowHtml(
-      		  "<div id='infowin' style='height:" + (p.height + 80) + "px'>" +
-        		"<p><a href='http://www.panoramio.com/' target='_blank'><img src='http://www.panoramio.com/img/logo-small.gif' width='119px' height='25px' alt='Panoramio logo' /><\/a></p>" +
-        		"<a id='photo_infowin' target='_blank' href='" + p.photo_url + "'>" +
-        		"<img width='" + p.width + "' height='" + p.height + "' src='" + p.photo_file_url + "'/><\/a>" +
-        		"<div style='overflow: hidden; width: 240px;'>" +
-        		"<p><a target='_blank' class='photo_title' href='" + p.photo_url +
-        		"'><strong>" + p.photo_title + "<\/strong><\/a></p>" +
-        		"<p>Posted by <a target='_blank' href='" + p.owner_url + "'>" +
-        		p.owner_name + "<\/a></p><\/div>" +
-        		"<\/div>");
-      		});
-        
-          for (var i = 0; i < panMarkersArray.length; i++) {
-            if(panMarkersArray[i].isHidden())
-            map.addOverlay(panMarkersArray[i], icon);
-          }
-        
-    }
-		
-		GEvent.addListener(map, "moveend", function() {
-//     alert(map.getZoom());
-    var bounds = map.getBounds();
-    var sw = bounds.getSouthWest();
-    var ne = bounds.getNorthEast();
-      new Ajax.Request('/panoramio/?minx='+sw.lng()+'&miny='+sw.lat()+'&maxx='+ne.lng()+"&maxy="+ne.lat(), { method:'get',
-        onComplete: function(transport) { drawPanoramio(transport, map) }
-        });
-     
-    });
-		
 		cluster=new ClusterMarker(map, { markers:markersArray } );
 		if (focus_spot == "") {
 			cluster.fitMapToMarkers();

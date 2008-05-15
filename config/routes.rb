@@ -23,8 +23,6 @@ ActionController::Routing::Routes.draw do |map|
   
   map.sparklines "sparklines", :controller => "sparklines", :action => "index"
   map.sparklines "sparklines/:action/:id/image.png", :controller => "sparklines"
-  
-  map.panoramio '/panoramio/', :controller => 'panoramio', :action => 'view'
     
   # map.root :controller => 'claims', :action => 'recent'
   
