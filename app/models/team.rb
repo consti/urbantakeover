@@ -9,7 +9,7 @@ class Team < ActiveRecord::Base
     # PERFORMANCE: super slow method here!
     spots = []
     self.users.each do |user|
-      spots << user.spots
+      spots += user.spots
     end
     
     spots.uniq
