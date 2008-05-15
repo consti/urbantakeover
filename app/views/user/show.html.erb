@@ -1,3 +1,11 @@
+<div class="span-24" style="border: 1px solid #DDDDDD">
+  <%= show_map @user.spots, :wide %>
+</div>
+
+<div class="span-24 lrborder">
+  <br/>
+</div>
+
 <div class="span-24 lrborder">
   <div class="span-23 push-1">
     <h2><%= format_user @user %> <% if @user.team %> of team <%= format_team @user.team %> <% end -%></h2>
@@ -39,9 +47,5 @@
       </ul>
       </div>
     </div>
-  </div>
-  
-  <div class="span-23">
-    <%= show_map @user.spots, :wide %>
   </div>
 </div>
