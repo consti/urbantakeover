@@ -95,14 +95,10 @@
   div#map.small { width: 475px; height: 285px; margin: 0px; overflow: hidden; }
   div#map.normal { width: 475px; height: 390px; margin: 0px; overflow: hidden; border: 1px solid #DDDDDD; }
   div#map.tall { width: 425px; height: 485px; margin: 0px; overflow: hidden; border: 1px solid #DDDDDD; }
-  div#map.wide { width: 950px; height: 285px; margin: 0px; overflow: hidden; }
+  div#map.wide { width: 950px; height: 285px; margin: 0px; overflow: hidden; border: 1px solid #DDDDDD; }
+  div#map.edit { width: 350px; height: 340px; margin: 20px 0px 0px 0px; overflow: hidden; border: 1px solid #DDDDDD; }
   div#map a, div#map a:visited, div#map a:hover { background-color: transparent;  } /* Fix google imprint-mouseover */
   .area { background-color: transparent;  filter:alpha(opacity=50); -moz-opacity:.50; opacity:.50;  }
-  
-  /* @consti: can i be removed and replaced by map.wide?!?!? */
-  .map-border {
-    border: 1px solid #DDDDDD;
-  }
   
   /* marker massage */
   div.markermsg { text-align: left; max-width: 370px; font-size: 12px;}
