@@ -44,6 +44,8 @@
 
     var map = new GMap2(document.getElementById("map"));
   	new GKeyboardHandler(map);
+  	map.addControl(new GLargeMapControl());
+  	map.addControl(new GMapTypeControl());
   	var geocoder = new GClientGeocoder();
 
   	function setMarker() {
@@ -63,7 +65,6 @@
   		});
   	}
 
-  	map.addControl(new GLargeMapControl());
     setMarker();
 
   //]]>
