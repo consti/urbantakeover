@@ -1,9 +1,6 @@
 <%= GMap.header %>
-
 <div id="map" class="widget-loading <%= css_class.to_s %>"></div>
-
 <script type="text/javascript">
-
   <% spots, map = get_map_data(spots)
     spots ||= []
     spot_json = spots.collect do |spot|
@@ -15,13 +12,7 @@
       spot.geolocation_y]
     end
   %>
-  // if spot.current_owner.team then spot.current_owner.team.colour end
-  
   var json = <%= spot_json.to_json %>;
   var focus_spot = "<%=h params[:focus] %>";
-
-  mapini(); // I am here now - lets see if its better :)
-
-  // todo: the spot data is super cacheable!!! so cache it!
-  // todo: refactor code for gods sake
+  mapini();
 </script>
