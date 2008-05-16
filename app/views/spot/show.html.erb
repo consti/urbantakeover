@@ -46,12 +46,17 @@
    
    <div class="box">
     <h3>Images</h3>
-      <!-- note: the user shouldn't have to care where they're from. those are just nice pictures :) -->
-      <!-- images tagged with "<%= @spot.name %>" in the urbantakeover image pool on flickr<br/> -->
+      <!-- note: the user shouldn't have to care where they're from. those are just nice pictures :) 
+           note: Ist nur temporaer.. langfristig machen wir ja eh eine andere aggregation der bilder
+                 und zwei zeilen von wo die bilder kommen sollten ist besser als ein leeres feld
+                 ausserdem wird den leuten dann klar dass sie die bilder erstmal mit dem gleichen
+                 namen wie dem spot bei flickr taggen sollten :) -->
+      images tagged with "<%= @spot.name %>" in the urbantakeover pool on flickr<br/>
       <%= render :partial => 'proof/spot_flickr_pool', :locals => {:spot => @spot.name} %>
 
-      <!-- <br/>images tagged with "<%= @spot.name %>" in flickr<br/> -->
+      <br/>images tagged with "<%= @spot.name %>" in flickr<br/>
       <%= render :partial => 'proof/spot_flickr', :locals => {:spot => @spot.name} %>
    </div>  
   </div>
+ </div>
 </div>
