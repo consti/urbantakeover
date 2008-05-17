@@ -1,0 +1,17 @@
+<script src="/inputdraw/swfobject.js" type="text/javascript"></script>
+<script src="/inputdraw/inputdraw.js" type="text/javascript"></script>
+
+<div id="place"></div>
+
+<input type="hidden" id="svgdraw" />
+
+<script type="text/javascript">
+  new InputDraw(
+    "/inputdraw/inputdraw.non-commercial.v1.5.swf",
+    "place",
+    {
+      id: "svgdraw",
+      width: "800",
+      height: "600",
+      animation: 60 });
+</script>
