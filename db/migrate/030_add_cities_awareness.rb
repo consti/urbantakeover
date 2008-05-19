@@ -1,4 +1,4 @@
-class SetCityForAllUsers < ActiveRecord::Migration
+class AddCitiesAwareness < ActiveRecord::Migration
   def self.up
     city_seventeen = City.new :name => "City 17", :longitude => 0, :latitude => 0
     city_seventeen.save! # this is the city if we find no city for you
