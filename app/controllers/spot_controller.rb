@@ -49,7 +49,7 @@ class SpotController < ApplicationController
   def edit
     @spot = Spot.find(params[:id])
     unless @spot.is_editable_by? current_user
-      flash[:notice] = "no, just no!"
+      flash[:notice] = "Sry, not allowed!"
       redirect_to root_path
     end
   end

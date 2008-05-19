@@ -11,18 +11,21 @@ class TeamController < ApplicationController
   end
   
   def edit
-    @team = Team.find(params[:id])
+    @team = Team.find params[:id]
     unless @team.is_editable_by? current_user
       flash[:notice] = "Sry, not allowed!"
       redirect_to root_path
     end
-
-    return unless request.post?
-    
+  end
+  
+  # PUT /spots/1
+  # PUT /spots/1.xml
+  def update  
+    @team = Team.find params[:id]
     respond_to do |format|
       if @team.update_attributes(params[:team])
         flash[:notice] = 'Yay, saved!'
-        format.html { redirect_to(@team) }
+        format.html { redirect_to(:action => :show, :id => @team) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
