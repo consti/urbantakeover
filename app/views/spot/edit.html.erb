@@ -21,7 +21,7 @@
   <div class="span-8 last">
   <label for="geolocation_x">geolocation:</label><br/>x:<%= f.text_field :geolocation_x, "class"=>"textfield must" %><br/>y:<%= f.text_field :geolocation_y, "class"=>"textfield must" %>
   </div>
-  
+  <div class="span-12">
   <p>
     <label for="tupalo_link">Tupalo Link:</label><br/>
     <%= f.text_field :tupalo_link, "class"=>'tupalofield optional' %>
@@ -35,9 +35,46 @@
   <p>
     <%= f.submit "Update", "class"=>'submit' %>
   </p>
-<% end %>
+  </div>
+  <div class="span-9 push-1">
+  <div id="map" class="edit" onchange="setMarker()"></div>
+  <%= GMap.header %>
+  <script type="text/javascript">
+  //<![CDATA[
 
-<%= link_to 'Show', @spot %> |
-<%= link_to 'Back', spot_path %>
+    var map = new GMap2(document.getElementById("map"));
+  	new GKeyboardHandler(map);
+  	map.addControl(new GLargeMapControl());
+  	map.addControl(new GMapTypeControl());
+  	var geocoder = new GClientGeocoder();
+
+  	function setMarker() {
+
+	    x = document.getElementById('spot_geolocation_x').value;
+  	  y = document.getElementById('spot_geolocation_y').value;
+
+      point = new GLatLng(x,y);
+  	  map.setCenter(point,17);
+      var marker = new GMarker(point, {draggable: true});
+  			  
+	    map.addOverlay(marker);
+	    GEvent.addListener(marker, "dragend", function() {
+	      point = marker.getLatLng();
+	      document.getElementById('spot_geolocation_x').value = point.lat();
+	      document.getElementById('spot_geolocation_y').value = point.lng();
+  		});
+  	}
+
+    setMarker();
+
+  //]]>
+  </script>
+  
+  </div>
+  <div class="span-23 last">
+    <%= link_to 'Show', @spot %> |
+    <%= link_to 'Back', spot_path %>
+  </div>
+  <% end %>
   </div>
 </div>

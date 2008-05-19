@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :spot
+  map.resources :team
 
   map.settings '/settings', :controller => 'user', :action => 'settings'
   map.howto '/howto', :controller => 'claims', :action => 'howto'
@@ -35,9 +36,12 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/:name', :controller => 'disambiguation', :action => 'index'
   map.which '/which/:name', :controller => 'disambiguation', :action => 'disambiguate'
   map.show '/show/:name', :controller => 'disambiguation', :action => 'disambiguate'
-  map.show_user '/user/:name', :controller => 'user', :action => 'show_by_name'
-  map.show_spot '/spot/:name', :controller => 'spot', :action => 'show_by_name'
-  map.show_team '/team/:name', :controller => 'team', :action => 'show_by_name'
+  # todo: maybe we can remove those thanks to map.resource - can anyone google "rails rest"
+  map.show_user '/user/:id', :controller => 'user', :action => 'show'
+  map.show_spot '/spot/:id', :controller => 'spot', :action => 'show'
+  map.show_team '/team/:id', :controller => 'team', :action => 'show'
+  
+  map.create_team '/team/create/:name', :controller => 'team', :action => 'create'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

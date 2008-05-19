@@ -2,7 +2,7 @@ class ClaimsController < ApplicationController
   before_filter :login_required, :except => [:log, :howto, :faq, :recent, :all]
 
   def my
-    redirect_to :controller => :user, :action => :show_by_name, :name => current_user.name
+    redirect_to :controller => :user, :action => :show, :id => current_user
   end
   
   def log
