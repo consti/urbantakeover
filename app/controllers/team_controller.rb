@@ -2,10 +2,45 @@ class TeamController < ApplicationController
   before_filter :login_required, :only => [:join, :edit]
   
   def show
-    @team = Team.find params[:id]
+    @team = Team.find_by_id params[:id]
     @team ||= Team.find_by_name params[:id]
+
+    if @team.nil?
+      flash[:notice] = "no such team here... YET!" and redirect_to(:action => :create, :name => params[:id])
+    end
   end
   
+  def edit
+    @team = Team.find(params[:id])
+    unless @team.is_editable_by? current_user
+      flash[:notice] = "Sry, not allowed!"
+      redirect_to root_path
+    end
+
+    return unless request.post?
+    
+    respond_to do |format|
+      if @team.update_attributes(params[:team])
+        flash[:notice] = 'Yay, saved!'
+        format.html { redirect_to(@team) }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @team.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  def create
+    @team = Team.new(params[:team])  
+    return unless request.post?
+    @team.save!
+    redirect_back_or_default :action => :show, :id => @team
+  rescue ActiveRecord::RecordInvalid
+    render :action => 'create'
+  end
+
+
   def join
     team = Team.find params[:id]
     Command.run_for current_user, "team #{team.name}"

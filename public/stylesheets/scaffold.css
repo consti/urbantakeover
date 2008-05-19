@@ -44,9 +44,15 @@
   input.tupalofield { width: 420px; height: 23px; font-size: 16px; margin-top: 2px; }
   input.colorfield { width: 76px; height: 23px; font-size: 16px; margin-top: 2px; }
   input.must, textarea.must { background-color: #EEEEEE; border: 1px solid #888888; }
-  input.optional, textarea.optional { background-color: #FFFFFF; border: 1px solid #DDDDDD; }
+  input.optional, textarea.optional { color: #666, background-color: #FFFFFF; border: 1px solid #DDDDDD; }
+  .form-optional input, .form-optional textarea { color: #666, background-color: #FFFFFF; border: 1px solid #DDDDDD; }
+  .form-optional, .form-optional p, .form-optional h1, .form-optional h2, .form-optional h3 {
+    color: #666;
+  }
+
   input.submit {width: 150px; height: 30px; font-size: 14px; }
   input.go {width: 50px; height: 30px; font-size: 14px; }
+  
   
 /* items */  
 
@@ -132,4 +138,21 @@
 /* handy stuff */
 .combobreaker {
   clear: both;
+}
+
+
+
+
+/* SHOULD-BE-WEBAPP-DEFAULT-STUFF */
+ul.buttons {
+  margin: 0;
+  padding: 0;
+  display: inline;
+  list-style-type: none;
+}
+
+ul.buttons li {
+  margin: 0;
+  padding: 0;
+  display: inline;
 }

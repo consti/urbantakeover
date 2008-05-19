@@ -24,7 +24,6 @@ class UserController < ApplicationController
     flash[:notice] = "We've send you a message with your new password!"
   end
     
-  
   def show_by_name # here for permanent URL reasons
     redirect_to :action => :show, :id => params[:name]
   end

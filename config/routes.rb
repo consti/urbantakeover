@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :spot
+  map.resources :team
 
   map.settings '/settings', :controller => 'user', :action => 'settings'
   map.howto '/howto', :controller => 'claims', :action => 'howto'
@@ -39,6 +40,8 @@ ActionController::Routing::Routes.draw do |map|
   map.show_user '/user/:id', :controller => 'user', :action => 'show'
   map.show_spot '/spot/:id', :controller => 'spot', :action => 'show'
   map.show_team '/team/:id', :controller => 'team', :action => 'show'
+  
+  map.create_team '/team/create/:name', :controller => 'team', :action => 'create'
 
 
   # The priority is based upon order of creation: first created -> highest priority.
