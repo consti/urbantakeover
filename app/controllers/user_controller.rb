@@ -25,15 +25,13 @@ class UserController < ApplicationController
   end
     
   
-  def show_by_name
-    @user = User.find_by_login params[:name]
-    return redirect_back_or_default(root_url) unless @user
-    show
-    render :template => 'user/show'
+  def show_by_name # here for permanent URL reasons
+    redirect_to :action => :show, :id => params[:name]
   end
 
   def show
-    @user ||= User.find(params[:id])
+    @user = User.find(params[:id])
+    @user ||= User.find_by_name(params[:id])
     @claims = @user.claims
   end
   
@@ -42,7 +40,7 @@ class UserController < ApplicationController
     
     Command.run_for current_user, "friend #{friend.name}", "web"
     
-    redirect_back_or_default :controller => 'user', :action => 'show_by_name', :name => friend.name
+    redirect_back_or_default :controller => 'user', :action => 'show', :id => friend
   end
   
   def remove_friend
@@ -51,7 +49,7 @@ class UserController < ApplicationController
       current_user.friends.delete friend
       current_user.save!
     end
-    redirect_back_or_default :controller => 'user', :action => 'show_by_name', :name => friend.name
+    redirect_back_or_default :controller => 'user', :action => 'show', :id => friend
   end
   
   

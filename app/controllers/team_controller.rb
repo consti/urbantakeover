@@ -12,17 +12,10 @@ class TeamController < ApplicationController
     redirect_to show_team_url :name => team.name
   end
   
-  def show_by_name
-    @team = Team.find_by_name params[:name]
-    
-    unless @team
-      flash[:notice] = "no team #{params[:name]} found, sry"
-      return redirect_back_or_default root_path
-    end
-    
-    render :template => 'team/show'
+  def index
   end
   
-  def index
+  def show_by_name # here for permanent URL reasons
+    redirect_to :action => :show, :id => params[:name]
   end
 end

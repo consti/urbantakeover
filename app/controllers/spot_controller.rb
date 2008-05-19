@@ -16,10 +16,8 @@ class SpotController < ApplicationController
     end
   end
   
-  def show_by_name
-    @spot = Spot.find_by_name(params[:name])
-    flash[:notice] = "Sry, no Spot #{params[:name]} found." and return redirect_back_or_default root_url unless @spot
-    render :template => 'spot/show'
+  def show_by_name # here for legacy reasons
+    redirect_to :action => :show, :id => params[:name]
   end
   
   # GET /spots/1
