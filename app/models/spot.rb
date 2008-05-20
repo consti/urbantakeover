@@ -55,7 +55,7 @@ class Spot < ActiveRecord::Base
     return if self.address.empty?
     geocodes = Geocoding.get(self.address)
     return if geocodes.empty?
-  
+
     self.city = City.find_or_create_by_name geocodes.first.locality
   end
 
