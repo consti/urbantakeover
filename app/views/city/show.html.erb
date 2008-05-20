@@ -3,10 +3,16 @@
 
 
     <h2>City <%= format_city @city %></h2>
-
-    <p>lol show spots and zoom to map</p>
     
     <h3>Users</h3>
     <%= format_list @city.users %>
   </div>
+</div>
+
+<div class="span-24 lrborder">
+  <br/>
+</div>
+
+<div class="span-24 map-border">
+  <%= show_map @city.spots, :wide %>
 </div>
