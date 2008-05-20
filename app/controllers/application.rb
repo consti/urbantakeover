@@ -11,6 +11,11 @@ class ApplicationController < ActionController::Base
   before_filter :login_from_cookie
   before_filter :flashify_new_scores
   
+  def not_found_url
+    "/404.html"
+  end
+  
+  
   def flashify_new_scores
     return unless logged_in?
     scores = current_user.scores.find :all, :conditions => ["created_at > ?", current_user.scores_seen_until]

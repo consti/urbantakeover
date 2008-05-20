@@ -23,8 +23,10 @@ class SpotController < ApplicationController
   # GET /spots/1
   # GET /spots/1.xml
   def show
-    @spot = Spot.find_by_id (params[:id]) # for some strange reasons "= Spot" does not compute
-    @spot ||= Spot.find_by_name(params[:id])
+    @spot = Spot.find_by_id params[:id]
+    @spot ||= Spot.find_by_name params[:id]
+
+    redirect_to not_found_url and return unless @spot
 
     params[:focus] = @spot.name
 

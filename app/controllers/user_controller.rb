@@ -29,8 +29,11 @@ class UserController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    @user ||= User.find_by_name(params[:id])
+    @user = User.find_by_id params[:id]
+    @user ||= User.find_by_name params[:id]
+    
+    redirect_to not_found_url and return unless @user
+        
     @claims = @user.claims
   end
   

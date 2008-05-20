@@ -18,7 +18,7 @@ class DisambiguationController < ApplicationController
 
   def disambiguate
     @objects = find_ambiguate_by params[:name]
-    redirect_to "/404.html" if @objects.empty?
+    redirect_to not_found_url and return if @objects.empty?
   end
   
   private

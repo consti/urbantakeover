@@ -3,7 +3,7 @@ module ApplicationHelper
   def format_text text
     RedCloth.new(text, [ :filter_html]).to_html
   end
-  
+
   def sparkline data
     data = data.map {|d| d*12}
     s = GoogleChart.sparkline(*data)

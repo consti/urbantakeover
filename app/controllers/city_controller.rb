@@ -31,13 +31,9 @@ class CityController < ApplicationController
   end
 
   def show
-    @city = City.find params[:id]
+    @city = City.find_by_id params[:id]
     @city ||= City.find_by_name params[:id]
     
-    unless @city
-      flash[:notice] = "no such city - #{params[:id]}" 
-      redirect_to home_url
-      return
-    end
+    redirect_to not_found_url and return unless @city
   end
 end
