@@ -1,5 +1,5 @@
 class ClaimsController < ApplicationController
-  before_filter :login_required, :except => [:log, :howto, :faq, :recent, :all]
+  before_filter :login_required, :except => [:log, :howto, :faq, :all]
 
   def my
     redirect_to :controller => :user, :action => :show, :id => current_user
@@ -51,17 +51,5 @@ class ClaimsController < ApplicationController
   end
   
   def faq
-  end
-  
-  # GET /recent
-  # GET /recent.xml
-  def recent
-    @recent_claims = Claim.find :all, :limit => 16, :order => "created_at desc"
-    @recent_spots = @recent_claims.collect{|c| c.spot}.compact
-
-    #respond_to do |format|
-    #  format.html # index.html.erb
-    #  format.xml  { render :xml => @recent_claims }
-    #end
   end
 end
