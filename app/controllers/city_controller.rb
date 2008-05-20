@@ -1,5 +1,5 @@
 class CityController < ApplicationController
-  before_filter :login_required
+  before_filter :login_required, :only => [:edit, :new]
 
   def authorized?
     current_user.is_admin?
@@ -26,8 +26,18 @@ class CityController < ApplicationController
     flash[:notice] = 'Changes LASLF'
   end
 
+  def list
+    @cities = City.find :all
+  end
+
   def show
     @city = City.find params[:id]
-    render :text => "#{@city.name}: #{@city.longitude} / #{@city.latitude}"
+    @city ||= City.find_by_name params[:id]
+    
+    unless @city
+      flash[:notice] = "no such city - #{params[:id]}" 
+      redirect_to home_url
+      return
+    end
   end
 end

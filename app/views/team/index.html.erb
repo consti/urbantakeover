@@ -1,20 +1,23 @@
 <div class="span-24 lrborder">
   <div class="span-22 push-1">
-  <h2>Teams</h2>
-  <% if logged_in? %>
-  <% if current_user.team %>
-  <h3>Your Team: <%= format_team current_user.team%></h3>
-  <% else %>
-  <p>You can join a team by sending a "team teamname" command at the  <%= link_to "claim spot", claim_path %> page.</p>
-  <% end %>
-  <% end %>
-  <ul>
-  <% Team.find(:all).each do |team| %>
-  <li><%= format_team team %></li>
-  <% end %>
-  </ul>
+    <h2>Teams</h2>
+    <% if logged_in? %>
+      <% if current_user.team %>
+        <h3>Your Team: <%= format_team current_user.team%></h3>
+      <% else %>
+        <p>You can join a team by sending a "team teamname" command at the  <%= link_to "claim spot", claim_path %> page.</p>
+      <% end %>
+    <% end %>
+
+    <ul>
+      <% Team.find(:all).each do |team| %>
+        <li><%= format_team team %></li>
+      <% end %>
+    </ul>
   </div>
+  
   <div class="span-1">
     <br/>
   </div>
+
 </div>
