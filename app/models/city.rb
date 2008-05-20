@@ -1,3 +1,8 @@
+# to create a City, the name is sufficient
+# everything else can be retrieved via Geocoding
+#
+# FUTURE: multiple names for the same city (eg: Vienna == Wien)
+
 class City < ActiveRecord::Base
   has_many :users
   has_many :spots
