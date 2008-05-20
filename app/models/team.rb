@@ -4,6 +4,7 @@ class Team < ActiveRecord::Base
   validates_presence_of :colour
   
   before_validation :generate_colour_if_needed
+  after_save :update_team_graphic
   
   def spots
     # PERFORMANCE: super slow method here!
@@ -38,4 +39,9 @@ class Team < ActiveRecord::Base
   def rank
     @rank ||= Score.rank_for(self)
   end  
+
+  def update_team_graphic 
+      `script/generate_team_circle.sh #{self.colour[1,self.colour.length]} &`
+  end 
+
 end
