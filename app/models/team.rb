@@ -23,6 +23,14 @@ class Team < ActiveRecord::Base
     self.colour = "#%06x" % rand(0xffffff) if not self.colour or self.colour.empty?
   end
   
+  def has_user? user
+    self.users.include? user
+  end
+
+  def is_editable_by? user
+    self.has_user? user
+  end
+  
   def score
     self.users.inject(0) {|n, u| n += u.score }
   end

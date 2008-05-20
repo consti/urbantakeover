@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include GeolocationSystem
   include ExceptionNotifiable
+  
+  self.allow_forgery_protection = false
 
   before_filter :login_from_cookie
   before_filter :flashify_new_scores

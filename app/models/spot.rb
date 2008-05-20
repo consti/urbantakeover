@@ -112,6 +112,7 @@ class Spot < ActiveRecord::Base
   end
   
   def is_editable_by? user
-    (current_owner == user) or (user.is_admin?)
+    true # every registered user can edit spots ^_^
+    # (current_owner == user) or (user.is_admin?)
   end
 end
