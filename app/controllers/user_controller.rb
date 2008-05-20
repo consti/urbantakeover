@@ -1,8 +1,6 @@
 class UserController < ApplicationController
   before_filter :login_required, :only => [:add_friend, :remove_friend, :edit, :profile, :settings]
   
-  auto_complete_for :city, :name
-  
   # TODO: refactor me! get rid of settings/profile distinction
   def settings
     redirect_to :action => 'edit', :id => current_user.id
@@ -56,7 +54,7 @@ class UserController < ApplicationController
   
   def edit
     @user = User.find(params[:id])
-    
+
     #authorize
     if current_user != @user and not current_user.is_admin?
       flash[:notice] = "surely not!"

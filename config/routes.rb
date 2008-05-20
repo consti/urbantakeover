@@ -41,8 +41,6 @@ ActionController::Routing::Routes.draw do |map|
   map.show_spot '/spot/:id', :controller => 'spot', :action => 'show'
   map.show_team '/team/:id', :controller => 'team', :action => 'show'  
   map.create_team '/team/create/:name', :controller => 'team', :action => 'create'
-  
-  map.connect '/user/auto_complete_for_city_name/:id', :controller => 'user', :action => 'auto_complete_for_city_name'
 
   # The priority is based upon order of creation: first created -> highest priority.
 
