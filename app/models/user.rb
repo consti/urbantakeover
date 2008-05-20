@@ -311,6 +311,13 @@ class User < ActiveRecord::Base
     
     claims
   end
+  
+  def may_be_friend_of? user
+    return false if user == nil
+    return false if user == self
+    # todo already friend
+    true
+  end
 
   protected
     # before filter 
