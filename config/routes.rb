@@ -39,12 +39,10 @@ ActionController::Routing::Routes.draw do |map|
   # todo: maybe we can remove those thanks to map.resource - can anyone google "rails rest"
   map.show_user '/user/:id', :controller => 'user', :action => 'show'
   map.show_spot '/spot/:id', :controller => 'spot', :action => 'show'
-  map.show_team '/team/:id', :controller => 'team', :action => 'show'
-  
-  map.connet '/user/auto_complete_for_city_name/:id', :controller => 'user', :action => 'auto_complete_for_city_name'
-  
+  map.show_team '/team/:id', :controller => 'team', :action => 'show'  
   map.create_team '/team/create/:name', :controller => 'team', :action => 'create'
-
+  
+  map.connect '/user/auto_complete_for_city_name/:id', :controller => 'user', :action => 'auto_complete_for_city_name'
 
   # The priority is based upon order of creation: first created -> highest priority.
 
