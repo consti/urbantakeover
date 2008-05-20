@@ -29,7 +29,7 @@ class AddCitiesAwareness < ActiveRecord::Migration
 
     User.find(:all).each do |user|
       # guess users city from last claim or use vienna
-      
+
       print "city for user #{user.name}... "
       if user.claims.empty?
         user.city_name = "Wien"

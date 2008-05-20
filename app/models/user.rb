@@ -30,7 +30,6 @@ class User < ActiveRecord::Base
   before_save :encrypt_password
   before_save :update_twitter_friend
   before_validation :random_color_if_not_set
-  before_validation :set_city
   before_validation :clean_notify_fields
   before_create :initial_score_before
   after_create :initial_score_after
@@ -93,9 +92,9 @@ class User < ActiveRecord::Base
   def before_destroy
     raise "not allowed to destroy users!"
   end
-
-  def set_city
-    self.city = City.find_by_name "Wien" # HACKETY HACK
+  
+  def city_name= value
+    self.city = City.find_or_create_by_name value
   end
 
   def colour_is_somewhat_visible

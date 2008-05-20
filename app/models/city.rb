@@ -7,7 +7,7 @@ class City < ActiveRecord::Base
   validates_uniqueness_of :name
   
   before_validation :geolocate
-  
+
   def geolocate
     return if self.longitude and self.latitude
     geocodes = Geocoding.get(self.name)
