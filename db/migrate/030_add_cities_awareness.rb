@@ -32,7 +32,7 @@ class AddCitiesAwareness < ActiveRecord::Migration
 
       print "city for user #{user.name}... "
       if user.claims.empty?
-        user.city_name = "Wien"
+        user.city = city_seventeen
       else
         user.city = user.claims[0].spot.city
       end

@@ -105,10 +105,6 @@ class User < ActiveRecord::Base
   def before_destroy
     raise "not allowed to destroy users!"
   end
-  
-  def city_name= value
-    self.city = City.find_or_create_by_name value
-  end
 
   def colour_is_somewhat_visible
     if self.colour_1 == self.colour_2
