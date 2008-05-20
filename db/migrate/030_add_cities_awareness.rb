@@ -19,7 +19,7 @@ class AddCitiesAwareness < ActiveRecord::Migration
           spot.city = City.find_or_create_by_name "nowhere"
         else
           location = gc.first
-          spot.city = City.find_or_create_by_name address.locality
+          spot.city = City.find_or_create_by_name location.locality
         end
       end
       
