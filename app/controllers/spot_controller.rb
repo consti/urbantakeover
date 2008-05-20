@@ -56,23 +56,6 @@ class SpotController < ApplicationController
     end
   end
 
-#  # POST /spots
-#  # POST /spots.xml
-#  def create
-#    @spot = Spot.new(params[:spot])
-#
-#    respond_to do |format|
-#      if @spot.save
-#        flash[:notice] = 'Spot was successfully created.'
-#        format.html { redirect_to(@spot) }
-#        format.xml  { render :xml => @spot, :status => :created, :location => @spot }
-#      else
-#        format.html { render :action => "new" }
-#        format.xml  { render :xml => @spot.errors, :status => :unprocessable_entity }
-#      end
-#    end
-#  end
-
   # PUT /spots/1
   # PUT /spots/1.xml
   def update
