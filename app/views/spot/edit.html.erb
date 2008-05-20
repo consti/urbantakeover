@@ -1,48 +1,52 @@
 <div class="span-24 lrborder">
   <div class="span-23 push-1 last">
+
   <h2>Editing spot</h2>
   <%= error_messages_for :spot %>
 
   <% form_for(@spot) do |f| %>
   <div class="span-6">
-  <p><label for="name">Name:</label><br/>
-  <%= f.text_field :name, "class"=>"textfield must" %>
-  </p>
+    <p><label for="name">Name:</label><br/>
+    <%= f.text_field :name, :class => "textfield must" %>
+    </p>
   </div>
-  <div class="span-6">
-  <p>
-    <label for="address">Address:</label><br/>
-    <%= f.text_field :address, "class"=>"textfield must" %>
-  </p>
-  
-  <p>
-  <label for="city">City (only if no address is set): </label><br/>
-  <%=
-  	@cities = City.find(:all, :order => "name")
-  	collection_select(:spot, :city_id, @cities, :id, :name ) %>
-  </p>
-  </div>
-  <div class="span-2">
-  or 
-  </div>
-  <div class="span-8 last">
-  <label for="geolocation_x">geolocation:</label><br/>x:<%= f.text_field :geolocation_x, "class"=>"textfield must" %><br/>y:<%= f.text_field :geolocation_y, "class"=>"textfield must" %>
-  </div>
-  <div class="span-12">
-  <p>
-    <label for="tupalo_link">Tupalo Link:</label><br/>
-    <%= f.text_field :tupalo_link, "class"=>'tupalofield optional' %>
-  </p>
-  
-  <p>
-    <label for="text">Spot Description:</label>
-    <br/> <%= f.text_area :text, "class"=>'optional' %>
-  </p>
 
-  <p>
-    <%= f.submit "Update", "class"=>'submit' %>
-  </p>
+  <div class="span-6">
+    <p>
+      <label for="address">Address:</label><br/>
+      <%= f.text_field :address, :class => "textfield must" %>
+    </p>
+  
+    <p>
+      <label for="city">City (only if no address is set): </label><br/>
+      <%=	collection_select(:spot, :city_id, City.find_for_combobox, :id, :name ) %>
+    </p>
   </div>
+
+  <div class="span-2">
+    or 
+  </div>
+
+  <div class="span-8 last">
+    <label for="geolocation_x">geolocation:</label><br/>x:<%= f.text_field :geolocation_x, :class => "textfield must" %><br/>y:<%= f.text_field :geolocation_y, :class => "textfield must" %>
+  </div>
+  
+  <div class="span-12">
+    <p>
+      <label for="tupalo_link">Tupalo Link:</label><br/>
+      <%= f.text_field :tupalo_link, :class => 'tupalofield optional' %>
+    </p>
+  
+    <p>
+      <label for="text">Spot Description:</label>
+      <br/> <%= f.text_area :text, :class => 'optional' %>
+    </p>
+
+    <p>
+      <%= f.submit "Update", :class => 'submit' %>
+    </p>
+  </div>
+
   <div class="span-9 push-1">
   <div id="map" class="edit" onchange="setMarker()"></div>
   <%= GMap.header %>

@@ -15,9 +15,8 @@ class Spot < ActiveRecord::Base
   #has_many :spots # spots inside this spot
   #has_one :spot # parent spot
 
-
-  #todo: turn me into a before_save filter
   before_validation :geolocate_if_necessary
+  before_validation :update_city_from_address
   
   def self.create_by_tupalo name
     stuff = self.geolocate_from_tupalo name
@@ -49,6 +48,14 @@ class Spot < ActiveRecord::Base
     end
     
     nil
+  end
+
+  def update_city_from_address
+#    return if self.address.empty?
+#    geocodes = Geocoding.get(self.address)
+#    return if geocodes.empty?
+#  
+#    self.city = City.find_or_create_by_name geocodes.first.locality
   end
 
   def geolocate_if_necessary

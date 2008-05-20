@@ -13,6 +13,10 @@ class City < ActiveRecord::Base
   
   before_validation :geolocate
 
+  def self.find_for_combobox
+    self.find(:all, :order => "name")
+  end
+        	
   def geolocate
     return if self.longitude and self.latitude
     geocodes = Geocoding.get(self.name)

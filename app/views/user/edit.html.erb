@@ -17,8 +17,11 @@
       <p><label for="password_confirmation">Confirm Password</label><br/>
       <%= f.password_field :password_confirmation, :class => 'textfield must password' %></p>
 
-      <p><label for="city_id">Your Hometown</label><br/>
-      TODO: ADD HAS_MANY DROPDOWN FIELD
+      <p>
+        <label for="city">Your Hometown</label><br/>
+        <%=	f.collection_select(:city_id, City.find_for_combobox, :id, :name ) %>
+      </p>
+
     </p>
   
       <p><label for="colour_1">Your Colors</label><br/>
