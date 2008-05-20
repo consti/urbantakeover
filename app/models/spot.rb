@@ -5,12 +5,13 @@ class Spot < ActiveRecord::Base
   validates_presence_of :geolocation_x
   validates_presence_of :geolocation_y
   validates_presence_of :name
+  validates_presence_of :city
   
   has_many :claims, :order => "created_at DESC", :dependent => :destroy
   has_many :stuffs, :dependent => :destroy
   belongs_to :city
   
-  validates_presence_of :city
+
   
   #has_many :spots # spots inside this spot
   #has_one :spot # parent spot
@@ -51,11 +52,11 @@ class Spot < ActiveRecord::Base
   end
 
   def update_city_from_address
-#    return if self.address.empty?
-#    geocodes = Geocoding.get(self.address)
-#    return if geocodes.empty?
-#  
-#    self.city = City.find_or_create_by_name geocodes.first.locality
+    return if self.address.empty?
+    geocodes = Geocoding.get(self.address)
+    return if geocodes.empty?
+  
+    self.city = City.find_or_create_by_name geocodes.first.locality
   end
 
   def geolocate_if_necessary
