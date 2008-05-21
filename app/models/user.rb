@@ -22,14 +22,14 @@ class User < ActiveRecord::Base
   validates_length_of       :login,    :within => 1..32
   validates_uniqueness_of   :login, :case_sensitive => false
   validates_uniqueness_of   :email, :case_sensitive => false, :if => Proc.new { |user| not user.email.empty? }
-  validates_format_of :email, :with => /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i, :if => Proc.new { |user| not user.email.empty?}
+  validates_format_of       :email, :with => /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i, :if => Proc.new { |user| not user.email.empty?}
   validates_uniqueness_of   :twittername, :if => Proc.new { |user| not user.twittername.empty? }
-  validate :colour_is_somewhat_visible
+  validate                  :colour_is_somewhat_visible
+  validates_presence_of     :city
   
   before_save :encrypt_password
   before_save :update_twitter_friend
   before_validation :random_color_if_not_set
-  before_validation :set_city
   before_validation :clean_notify_fields
   before_create :initial_score_before
   after_create :initial_score_after
@@ -47,6 +47,19 @@ class User < ActiveRecord::Base
 
   def rank
     @rank ||= Score.rank_for(self)
+  end
+  
+  def spots
+    # super not performant
+    @spots ||= load_spots
+  end
+  
+  def load_spots
+      spots = []
+      self.claims.each do |claim|
+        spots << claim.spot if claim.spot.current_owner == self
+      end
+      spots.uniq
   end
   
   def add_initial_friend
@@ -93,27 +106,10 @@ class User < ActiveRecord::Base
     raise "not allowed to destroy users!"
   end
 
-  def set_city
-    self.city = City.find_by_name "Wien" # HACKETY HACK
-  end
-
   def colour_is_somewhat_visible
     if self.colour_1 == self.colour_2
       self.errors.add "Colour 1 and 2 can't be the same. Other players won't be able to read your name, kbai?!"
     end
-  end
-  
-  def spots
-    # super not performant
-    @spots ||= load_spots
-  end
-  
-  def load_spots
-      spots = []
-      self.claims.each do |claim|
-        spots << claim.spot if claim.spot.current_owner == self
-      end
-      spots.uniq
   end
   
 #  validate :leetness_of_password
@@ -310,6 +306,13 @@ class User < ActiveRecord::Base
     end
     
     claims
+  end
+  
+  def may_be_friend_of? user
+    return false if user == nil
+    return false if user == self
+    # todo already friend
+    true
   end
 
   protected

@@ -5,23 +5,26 @@ class Spot < ActiveRecord::Base
   validates_presence_of :geolocation_x
   validates_presence_of :geolocation_y
   validates_presence_of :name
+  validates_presence_of :city
   
   has_many :claims, :order => "created_at DESC", :dependent => :destroy
   has_many :stuffs, :dependent => :destroy
   belongs_to :city
   
+
+  
   #has_many :spots # spots inside this spot
   #has_one :spot # parent spot
 
-
-  #todo: turn me into a before_save filter
   before_validation :geolocate_if_necessary
+  before_validation :update_city_from_address
   
   def self.create_by_tupalo name
     stuff = self.geolocate_from_tupalo name
     return nil if stuff.empty?
     longitude, latitude, tupalo_link = stuff
-    return Spot.create(:name => name, :geolocation_x => longitude, :geolocation_y => latitude, :tupalo_link => tupalo_link)
+    #FIXME: tupalo gives us no address, we need to fix those spots later
+    return Spot.create(:name => name, :geolocation_x => longitude, :geolocation_y => latitude, :tupalo_link => tupalo_link, :city => City.find_by_name("City 17"))
   end
   
   def self.geolocate_from_tupalo name
@@ -47,6 +50,14 @@ class Spot < ActiveRecord::Base
     end
     
     nil
+  end
+
+  def update_city_from_address
+    return if self.address.empty?
+    geocodes = Geocoding.get(self.address)
+    return if geocodes.empty?
+
+    self.city = City.find_or_create_by_name geocodes.first.locality
   end
 
   def geolocate_if_necessary

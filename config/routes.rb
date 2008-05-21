@@ -16,33 +16,34 @@ ActionController::Routing::Routes.draw do |map|
   map.sticker '/sticker', :controller => 'sticker', :action => 'index'
   map.stickers '/stickers', :controller => 'sticker', :action => 'index'
   map.order '/stickers', :controller => 'sticker', :action => 'index'
-
-  map.team '/team', :controller => 'team', :action => 'index'
   map.hotspots '/hotspots', :controller => 'spot', :action => 'hotspots'
   map.chat '/chat', :controller => 'chat', :action => 'index'
-  map.connect '/users', :controller => 'user', :action => 'list'
   
   map.sparklines "sparklines", :controller => "sparklines", :action => "index"
   map.sparklines "sparklines/:action/:id/image.png", :controller => "sparklines"
-    
-  # map.root :controller => 'claims', :action => 'recent'
   
   map.connect '/ohai', :controller => 'dashboard', :action => 'newcomer'
   map.home '/home', :controller => 'dashboard', :action => 'member'
-  
   map.root :controller => 'dashboard', :action => 'redirect'
-    
-  map.join_team '/join_team/:id', :controller => 'team', :action => 'join'
-  map.connect '/:name', :controller => 'disambiguation', :action => 'index'
-  map.which '/which/:name', :controller => 'disambiguation', :action => 'disambiguate'
-  map.show '/show/:name', :controller => 'disambiguation', :action => 'disambiguate'
+
   # todo: maybe we can remove those thanks to map.resource - can anyone google "rails rest"
   map.show_user '/user/:id', :controller => 'user', :action => 'show'
+  map.connect '/users', :controller => 'user', :action => 'list'
+
   map.show_spot '/spot/:id', :controller => 'spot', :action => 'show'
   map.show_team '/team/:id', :controller => 'team', :action => 'show'
-  
-  map.create_team '/team/create/:name', :controller => 'team', :action => 'create'
+  map.teams '/teams', :controller => 'team', :action => 'list'
 
+  map.show_city '/city/:id', :controller => 'city', :action => 'show'
+  map.cities '/cities', :controller => 'city', :action => 'list'
+
+  map.join_team '/join_team/:id', :controller => 'team', :action => 'join'
+  # VERY SPECIAL ROUTE
+  map.connect '/:name', :controller => 'disambiguation', :action => 'index'
+  # /VERY SPECIAL ROUTE
+  map.which '/which/:name', :controller => 'disambiguation', :action => 'disambiguate'
+  map.show '/show/:name', :controller => 'disambiguation', :action => 'disambiguate'
+  map.create_team '/team/create/:name', :controller => 'team', :action => 'create'
 
   # The priority is based upon order of creation: first created -> highest priority.
 

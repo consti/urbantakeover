@@ -50,7 +50,8 @@ class TeamController < ApplicationController
     redirect_to show_team_url :name => team.name
   end
   
-  def index
+  def list
+    redirect_to :action => :index
   end
   
   def show_by_name # here for permanent URL reasons
