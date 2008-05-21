@@ -23,7 +23,8 @@ class Spot < ActiveRecord::Base
     stuff = self.geolocate_from_tupalo name
     return nil if stuff.empty?
     longitude, latitude, tupalo_link = stuff
-    return Spot.create(:name => name, :geolocation_x => longitude, :geolocation_y => latitude, :tupalo_link => tupalo_link)
+    #FIXME: tupalo gives us no address, we need to fix those spots later
+    return Spot.create(:name => name, :geolocation_x => longitude, :geolocation_y => latitude, :tupalo_link => tupalo_link, :city => City.find_by_name("City 17"))
   end
   
   def self.geolocate_from_tupalo name
