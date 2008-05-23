@@ -1,18 +1,15 @@
-<h1>Listing quests</h1>
+<%= div_map @spots_with_quests, :wide %>
 
-<table>
-  <tr>
-  </tr>
+<%= div_spacer %>
 
-<% for quest in @quests %>
-  <tr>
-    <td><%= link_to 'Show', quest %></td>
-    <td><%= link_to 'Edit', edit_quest_path(quest) %></td>
-    <td><%= link_to 'Destroy', quest, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+<%= div_magic %>
+  <%= div_second_magic %>
 
-<br />
+    <%= format_navigation ['New quest', new_quest_path] %>
 
-<%= link_to 'New quest', new_quest_path %>
+    <h2>All quests</h2>
+
+    <%= format_list @quests %>
+
+  </div>
+</div>

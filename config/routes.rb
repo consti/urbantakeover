@@ -13,7 +13,7 @@ ActionController::Routing::Routes.draw do |map|
   map.signup '/signup', :controller => 'user', :action => 'signup'
   map.connect '/profile', :controller => 'user', :action => 'settings'
   map.highscore '/highscore', :controller => 'score', :action => 'index'
-
+  
   map.sticker '/sticker', :controller => 'sticker', :action => 'index'
   map.stickers '/stickers', :controller => 'sticker', :action => 'index'
   map.order '/stickers', :controller => 'sticker', :action => 'index'
@@ -25,6 +25,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.connect '/ohai', :controller => 'dashboard', :action => 'newcomer'
   map.home '/home', :controller => 'dashboard', :action => 'member'
+  map.explore '/explore', :controller => 'dashboard', :action => 'explore'
   map.root :controller => 'dashboard', :action => 'redirect'
 
   # todo: maybe we can remove those thanks to map.resource - can anyone google "rails rest"

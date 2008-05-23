@@ -38,16 +38,14 @@
   
   <div class="span-24 lrborder">
     <div id="menu" class="span-23 push-1">
-      <%= link_to 'claim spot', :controller => :claims, :action => :new %>
-      | <%= link_to 'highscore', :controller => :score, :action => :index %>
-      | <%= link_to 'teams', teams_path %>
-      | <%= link_to 'cities', cities_path %>
+      <%= link_to 'claim spots', :controller => :claims, :action => :new %>
       | <%= link_to 'get stickers', sticker_path %>
-      | <%= link_to 'hotspots', hotspots_path %>
+      | <%= link_to 'solve quests', quests_path %>
+      | <%= link_to 'highscore', highscore_path %>
+      | <%= link_to 'explore uto', explore_path %>
       | <%= link_to 'FAQ', faq_path %>
       <% if logged_in? %>
         <% if current_user.is_admin? %>
-          | admin &rarr; <%= link_to 'spot list', :controller => :spot, :action => :index %>
           | <%= link_to 'open orders', :controller => :orders, :action => :open %>
           | <%= link_to 'stats', :controller => :dashboard, :action => :admin %>
         <% end %>

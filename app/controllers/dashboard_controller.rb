@@ -1,6 +1,9 @@
 class DashboardController < ApplicationController
   before_filter :login_required, :except => [:newcomer]
 
+  def explore
+  end
+
   def newcomer
     load_data
 

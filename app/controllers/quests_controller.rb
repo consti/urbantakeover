@@ -2,7 +2,8 @@ class QuestsController < ApplicationController
   # GET /quests
   # GET /quests.xml
   def index
-    @quests = Quest.find(:all)
+    @quests = Quest.find(:all, :include => :spot)
+    @spots_with_quests = @quests.collect {|quest| quest.spot }.uniq
 
     respond_to do |format|
       format.html # index.html.erb
