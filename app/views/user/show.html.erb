@@ -9,18 +9,16 @@
 <div class="span-24 lrborder">
 
   <div class="span-23 push-1">
+    <%
+     navigation = []
+     navigation << ['Edit', url_for(:action => :edit, :id => @user)] if logged_in? and current_user.is_admin?
+     navigation << ["Add as Friend", url_for(:controller => 'user', :action => 'add_friend', :id => @user.id)] if @user.may_be_friend_of? current_user
+    %>
+    <%= format_navigation navigation %>
+    
     <h2><%= format_user @user %> <% if @user.team %> of team <%= format_team @user.team %> <% end -%></h2>
     
-    <p>
-    <% if logged_in? and current_user.is_admin? %>
-      <%= link_to 'edit', :action => :edit, :id => @user %> |
-    <% end %>
-    <% if @user.may_be_friend_of? current_user %>
-      <%= link_to "add as friend", :controller => 'user', :action => 'add_friend', :id => @user.id %>
-    <% end %>
-    </p>
-    
-    
+        
     <h3>Rank: <%= @user.rank %></h3>
 
     <h3>Score: <%= format_user_score @user %></h3>
