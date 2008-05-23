@@ -3,15 +3,16 @@
     <h2>Teams</h2>
     <% if logged_in? %>
       <% if current_user.team %>
-        <h3>Your Team: <%= format_team current_user.team%></h3>
+        <p>Your Team: <%= format_team current_user.team%></p>
       <% else %>
         <p>You can join a team by sending a "team teamname" command at the  <%= link_to "claim spot", claim_path %> page.</p>
       <% end %>
     <% end %>
 
-    <ul>
+
       <% Team.find(:all).each do |team| %>
-        <li><%= format_team team %></li>
+          <h3><%= format_team team %></h3>
+          <p><%= format_list team.users, :flat %></p>
       <% end %>
     </ul>
   </div>

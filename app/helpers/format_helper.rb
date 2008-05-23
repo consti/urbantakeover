@@ -32,15 +32,16 @@ module FormatHelper
   end
   
 
-  def format_list entries
+  def format_list entries, params=nil
     if entries.empty?
-      return "Oh noes - none!"
+      return "-"
     end
     
     formatter = "format_#{entries.first.class.to_s.downcase}"
     
     lilili = entries.map {|entry| content_tag("li", eval("#{formatter}(entry)")) }
-    return content_tag "ul", lilili
+    klass = "flat" if params == :flat
+    return content_tag "ul", lilili, :class => "flat"
   end
   
   def format_navigation buttons
