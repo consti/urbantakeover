@@ -1,3 +1,7 @@
+<%= div_map @team.spots, :wide %>
+
+<%= div_spacer %>
+
 <div class="span-24 lrborder">
   <div class="span-23 push-1">
   <%
@@ -20,12 +24,4 @@
   <div class="span-1">
     <br/>
   </div>
-</div>
-
-<div class="span-24 lrborder">
-  <br/>
-</div>
-
-<div class="span-24 map-border">
-  <%= show_map @team.spots, :wide %>
 </div>

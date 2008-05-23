@@ -1,7 +1,7 @@
 module FormatHelper
   def format_buttons titles_urls
     titles_urls.compact! # sort out what became nil due to ifs
-    return 'v_v' if titles_urls.empty?
+    return ':/' if titles_urls.empty?
     
     titles_urls = [titles_urls] unless titles_urls.first.is_a? Array # if we only pass one button
     

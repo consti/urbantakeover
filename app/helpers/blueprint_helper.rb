@@ -8,9 +8,15 @@ module BlueprintHelper
     '<div class="span-23 push-1 last">'
   end
   
-  def blueprint_map spots, c
+  def div_map spots, c
     '<div class="span-24 map-border">' +
       show_map(spots, c) +
     '</div>'
   end  
+  
+  def div_spacer
+    '<div class="span-24 lrborder">
+       <br/>
+    </div>'
+  end
 end
