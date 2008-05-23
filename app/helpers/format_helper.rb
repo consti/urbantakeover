@@ -41,7 +41,7 @@ module FormatHelper
     
     lilili = entries.map {|entry| content_tag("li", eval("#{formatter}(entry)")) }
     klass = "flat" if params == :flat
-    return content_tag "ul", lilili, :class => "flat"
+    return content_tag "ul", lilili, :class => klass
   end
   
   def format_navigation buttons
