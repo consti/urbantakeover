@@ -1,0 +1,6 @@
+<%
+ navigation = []
+ navigation << []
+ navigation << []
+%>      
+<%= format_navigation navigation %>

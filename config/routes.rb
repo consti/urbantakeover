@@ -1,6 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :spot
   map.resources :team
+  map.resources :quests
 
   map.settings '/settings', :controller => 'user', :action => 'settings'
   map.howto '/howto', :controller => 'claims', :action => 'howto'

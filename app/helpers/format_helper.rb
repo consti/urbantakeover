@@ -1,6 +1,26 @@
 module FormatHelper
+  def format_buttons titles_urls
+    titles_urls.compact! # sort out what became nil due to ifs
+    return 'v_v' if titles_urls.empty?
+    
+    titles_urls = [titles_urls] unless titles_urls.first.is_a? Array # if we only pass one button
+    
+    '<ul class="buttons">' + 
+    
+    lis = titles_urls.collect do |title_url|
+      title, url = title_url
+      '<li>' + link_to(title, url) + '</li>'
+    end.join("\n") +
+    
+    '</ul>'
+  end  
+
   def format_city city
     link_to(h(city.name), {:controller => :city, :action => :show, :id => city}, :class => 'city-name')
+  end
+
+  def format_quest quest
+    link_to(h(quest.name), quest, :class => 'quest-name')
   end
 
   def format_team team
@@ -21,5 +41,11 @@ module FormatHelper
     
     lilili = entries.map {|entry| content_tag("li", eval("#{formatter}(entry)")) }
     return content_tag "ul", lilili
+  end
+  
+  def format_navigation buttons
+    '<div style="float: right">' +
+        format_buttons(buttons) +
+    '</div>'
   end
 end

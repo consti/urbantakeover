@@ -9,15 +9,20 @@
 <div class="span-24 lrborder last">
   <div class="span-23 push-1 last">
   <div class="span-10 colborder">
+    <%
+      navigation = []
+      navigation << ['Edit', edit_spot_path(@spot)] if logged_in? and @spot.is_editable_by? current_user 
+    %>      
+    <%= format_navigation navigation %>
+
     <h2><%= format_spot @spot %> (<%= format_city @spot.city %>)</h2>
 
     <div class="box">
+      
       <% unless @spot.stuffs.empty? %>
         Also known as: <%= @spot.stuffs.collect(&:name).join(", ") %>
       <% end %>
-      <% if logged_in? and @spot.is_editable_by? current_user %>
-        <%= link_to 'Edit', edit_spot_path(@spot) %>
-      <% end %>
+      
       <p>Address: <%= @spot.address %></p>
 
       <% if @spot.current_owner %>
@@ -29,11 +34,17 @@
       <% end %>
     </div>
 
+
+    <div class="box">
+      <h3>Quests</h3>
+      <%= format_list @spot.quests %>
+    </div>  
+
     <div class="box">
       <h3>Log</h3>
       <%= render :partial => 'claims/log', :locals => {:claims => @spot.claims} %>
     </div>
-  
+
   </div>
   
   <div class="span-11">

@@ -1,0 +1,26 @@
+<h1>Editing quest</h1>
+
+<%= error_messages_for :quest %>
+
+<% form_for(@quest) do |f| %>
+  <p>
+    <label for="name">What's the name of this quest?</label><br/>
+    <%=	f.text_field :name %>
+  </p>
+
+  <p>
+    <label for="text">What's to do?</label><br/>
+    <%=	f.text_area :text %>
+  </p>
+  
+  <p>
+    <label for="city">Where this be done?</label><br/>
+    <%=	f.collection_select(:spot_id, Spot.find(:all, :order => "name"), :id, :name ) %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', quests_path %>

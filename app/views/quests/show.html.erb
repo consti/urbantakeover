@@ -1,0 +1,14 @@
+<%= blueprint_map [@quest.spot], :wide %>
+
+<%= div_magic %>
+  <%= div_second_magic %>
+    <%= format_navigation ["Edit", edit_quest_path(@quest)] %>
+
+    <h2><%= format_quest @quest %> @ <%= format_spot @quest.spot %></h2>
+
+
+    <h3>What?</h3>
+
+    <p><%=format_text @quest.text %></p>
+  </div>
+</div>

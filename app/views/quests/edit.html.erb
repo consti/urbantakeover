@@ -1,0 +1,32 @@
+<%= div_magic %>
+  <%= div_second_magic%>
+  
+    <h1>New Quest</h1>
+
+    <%= error_messages_for :quest %>
+
+    <% form_for(@quest) do |f| %>
+      <p>
+        <label for="name">Quest Title</label><br/>
+        <%=	f.text_field :name %>
+      </p>
+
+      <p>
+        <label for="text">Description</label><br/>
+        <%=	f.text_area :text %>
+      </p>
+
+      <p>
+        <label for="city">Spot for this Quest</label><br/>
+        <%=	f.collection_select(:spot_id, Spot.find(:all, :order => "name"), :id, :name ) %>
+        <%= todo "TODO: select spot on map" %>
+      </p>
+
+      <p>
+        <%= f.submit "Create" %>
+      </p>
+    <% end %>
+
+    <%= link_to 'Show', @quest %> |
+  </div>
+</div>
