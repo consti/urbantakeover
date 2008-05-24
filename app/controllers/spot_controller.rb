@@ -16,17 +16,17 @@ class SpotController < ApplicationController
     end
   end
   
-  def show_by_name
-    @spot = Spot.find_by_name(params[:name])
-    flash[:notice] = "Sry, no Spot #{params[:name]} found." and return redirect_back_or_default root_url unless @spot
-    render :template => 'spot/show'
+  def show_by_name # here for permanent URL reasons
+    redirect_to :action => :show, :id => params[:name]
   end
   
   # GET /spots/1
   # GET /spots/1.xml
   def show
-    @spot ||= Spot.find_by_name(params[:id])
-    @spot ||=Spot.find(params[:id]) # for some strange reasons "= Spot" does not compute
+    @spot = Spot.find_by_id params[:id]
+    @spot ||= Spot.find_by_name params[:id]
+
+    redirect_to not_found_url and return unless @spot
 
     params[:focus] = @spot.name
 
@@ -51,27 +51,10 @@ class SpotController < ApplicationController
   def edit
     @spot = Spot.find(params[:id])
     unless @spot.is_editable_by? current_user
-      flash[:notice] = "no, just no!"
+      flash[:notice] = "Sry, not allowed!"
       redirect_to root_path
     end
   end
-
-#  # POST /spots
-#  # POST /spots.xml
-#  def create
-#    @spot = Spot.new(params[:spot])
-#
-#    respond_to do |format|
-#      if @spot.save
-#        flash[:notice] = 'Spot was successfully created.'
-#        format.html { redirect_to(@spot) }
-#        format.xml  { render :xml => @spot, :status => :created, :location => @spot }
-#      else
-#        format.html { render :action => "new" }
-#        format.xml  { render :xml => @spot.errors, :status => :unprocessable_entity }
-#      end
-#    end
-#  end
 
   # PUT /spots/1
   # PUT /spots/1.xml
@@ -79,7 +62,7 @@ class SpotController < ApplicationController
     @spot = Spot.find(params[:id])
 
     unless @spot.is_editable_by? current_user
-      flash[:notice] = "no, just no!"
+      flash[:notice] = "sry, not allowed!"
       redirect_to root_path
     end
 

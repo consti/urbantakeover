@@ -18,9 +18,18 @@
 
   <%= yield  %>
 
-<div id="footer" class="span-24 last">
-	<div class="right small"><%= link_to "support chat", chat_url %> | <a href="http://blog.urbantakeover.at">our blog</a> | <a href="mailto:team@urbantakeover.at">get in touch</a> |  handcrafted by <a class="72dpiarmy" href="http://72dpiarmy.com"><span>72dpi</span>army</a> | &copy; 2008</div>
-</div>
+  <div class="span-24 lrborder">
+  </div>
+  <div id="footer" class="span-24 last">
+  	<div class="right small">
+  	<%= link_to "Blog", "http://blog.urbantakeover.at" %>
+  	| <%= link_to "Support Chat", chat_url %>
+    | <%= link_to "Report a Bug", "http://lolcathost3000.lighthouseapp.com/projects/11512-urbantakeover/home" %>
+    | <%= link_to "Request a Feature", "http://lolcathost3000.lighthouseapp.com/projects/11512-urbantakeover/home" %>
+    | <%= link_to "Contact Us", "mailto:team@urbantakeover.at" %> | 
+  	handcrafted by <a class="72dpiarmy" href="http://72dpiarmy.com"><span>72dpi</span>army</a> (&copy; 2008)
+  	</div>
+  </div>
 </div>
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

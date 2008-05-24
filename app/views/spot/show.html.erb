@@ -1,4 +1,4 @@
-<div class="span-24" style="border: 1px solid #DDDDDD">
+<div class="span-24 map-border">
   <%= show_map @spots, :wide %>
 </div>
 
@@ -9,49 +9,56 @@
 <div class="span-24 lrborder last">
   <div class="span-23 push-1 last">
   <div class="span-10 colborder">
-  <h2><%= format_spot @spot %></h2>
-  <div class="box">
-  <% unless @spot.stuffs.empty? %>
-    Also known as: <%= @spot.stuffs.collect(&:name).join(", ") %>
-  <% end %>
-  <% if logged_in? and @spot.is_editable_by? current_user %>
-    <%= link_to 'Edit', edit_spot_path(@spot) %>
-  <% end %>
-  <p>Address: <%= @spot.address %></p>
+    <h2><%= format_spot @spot %> (<%= format_city @spot.city %>)</h2>
 
-  <% if @spot.current_owner %>
-    <p>Current owner: <%= format_user @spot.current_owner %></p>
-  <% end %>
+    <div class="box">
+      <% unless @spot.stuffs.empty? %>
+        Also known as: <%= @spot.stuffs.collect(&:name).join(", ") %>
+      <% end %>
+      <% if logged_in? and @spot.is_editable_by? current_user %>
+        <%= link_to 'Edit', edit_spot_path(@spot) %>
+      <% end %>
+      <p>Address: <%= @spot.address %></p>
 
-  <% if not @spot.tupalo_link.empty? %>
-    <p>On Tupalo: <%= link_to(h(@spot.name), @spot.tupalo_link) %></p>
-  <% end %>
-  </div>
+      <% if @spot.current_owner %>
+        <p>Current owner: <%= format_user @spot.current_owner %></p>
+      <% end %>
 
-  <div class="box">
-  <h3>Log</h3>
-    <%= render :partial => 'claims/log', :locals => {:claims => @spot.claims} %>
-  </div>
+      <% if not @spot.tupalo_link.empty? %>
+        <p>On Tupalo: <%= link_to(h(@spot.name), @spot.tupalo_link) %></p>
+      <% end %>
+    </div>
+
+    <div class="box">
+      <h3>Log</h3>
+      <%= render :partial => 'claims/log', :locals => {:claims => @spot.claims} %>
+    </div>
   
   </div>
   
   <div class="span-11">
-  <h2><br/></h2>
-  <% unless @spot.text.empty? %>
-   <div class="box">
-     <h3>About</h3>
-     <p><%= format_text(@spot.text) %></p>
-   </div>
-   <% end %>
+    <h2><br/></h2>
+   
+    <% unless @spot.text.empty? %>
+      <div class="box">
+        <h3>About</h3>
+        <p><%= format_text(@spot.text) %></p>
+      </div>
+    <% end %>
    
    <div class="box">
     <h3>Images</h3>
-      <!-- note: the user shouldn't have to care where they're from. those are just nice pictures :) -->
-      <!-- images tagged with "<%= @spot.name %>" in the urbantakeover image pool on flickr<br/> -->
+      <!-- note: the user shouldn't have to care where they're from. those are just nice pictures :) 
+           note: Ist nur temporaer.. langfristig machen wir ja eh eine andere aggregation der bilder
+                 und zwei zeilen von wo die bilder kommen sollten ist besser als ein leeres feld
+                 ausserdem wird den leuten dann klar dass sie die bilder erstmal mit dem gleichen
+                 namen wie dem spot bei flickr taggen sollten :) -->
+      images tagged with "<%= @spot.name %>" in the urbantakeover pool on flickr<br/>
       <%= render :partial => 'proof/spot_flickr_pool', :locals => {:spot => @spot.name} %>
 
-      <!-- <br/>images tagged with "<%= @spot.name %>" in flickr<br/> -->
+      <br/>images tagged with "<%= @spot.name %>" in flickr<br/>
       <%= render :partial => 'proof/spot_flickr', :locals => {:spot => @spot.name} %>
    </div>  
   </div>
+ </div>
 </div>

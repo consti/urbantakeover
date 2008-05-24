@@ -1,5 +1,7 @@
-  <div class="span-24" style="border: 1px solid #DDDDDD">
-    <%= show_map @spots, :wide %>
+  <h1>Hello, <%= format_user current_user %> in <%= format_city current_user.city %></h1>
+  
+  <div class="span-24 map-border">
+    <%= show_map current_user.city.spots , :wide %>
   </div>
 
   <div id="submenu" class="span-24">

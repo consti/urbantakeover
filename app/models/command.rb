@@ -114,44 +114,54 @@ class Command < ActiveRecord::Base
 
 private
   #TODO: refactor me
-  #TODO: space indicates possible address ;)
+  #HINT: space indicates possible address ;)
+  
+  def create_spot_by_target target
+    # maybe it's an address:
+    address = target
+    address += ", #{user.city.name}" unless address.include? "," # indicates a spot with a city
+
+    geocodes = Geocoding.get(address)
+    if geocodes.empty?
+
+      spot = Spot.create_by_tupalo target
+      if not spot # no tupalo spot, must have really been an address
+        return user.notify_all( "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ address'.")
+      end
+      
+      spot.save!
+
+    elsif geocodes.size > 1
+      return user.notify_all( "plz write exact address, multiple spots found. like #{geocodes.first.address}")
+    else
+      geocode = geocodes.first
+
+      spot = Spot.find_by_address geocode.address
+
+      unless spot
+        spot = Spot.create :name => spot_name, :address => geocode.address, :geolocation_x => geocode.latitude, :geolocation_y => geocode.longitude
+        spot.save! # very important: should bail if it doesn't work, so we know
+      end
+    end
+
+    return spot
+  end
+
   def claim_by_name_or_address target
     spot_name = target
     spot = Spot.find_by_name spot_name
+
     unless spot
-      #maybe it's an address:
-      address = target
-      address += ", #{user.city.name}" unless address.include? "," # indicates a spot with a city
-
-      geocodes = Geocoding.get(address)
-      if geocodes.empty?
-        spot = Spot.create_by_tupalo target
-
-        if not spot
-          # no tupalo spot, must have really been an address
-          user.notify_all "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ address'."
-          return "sec, need address for #{spot_name}. plz send 'claim #{spot_name} @ $address'."      
-        end
-      elsif geocodes.size > 1
-        user.notify_all "plz write exact address, multiple spots found. like #{geocodes.first.address}"
-        return "sry, multiple spots found. for #{address}. eg: #{geocodes.first.address}."
-      else
-        geocode = geocodes.first
-        spot = Spot.find_by_address geocode.address
-        unless spot
-          spot = Spot.create :name => spot_name, :address => geocode.address, :geolocation_x => geocode.latitude, :geolocation_y => geocode.longitude
-          spot.save
-        end
-      end
+      spot = create_spot_by_target target
+      return spot if spot.is_a? String # error message
     end
-    
+
     unless user.can_claim? spot
-      user.notify_all "lol, you already own #{spot.name}!"
-      return "you already own #{spot.name}"
+      return user.notify_all("lol, you already own #{spot.name}!")
     end
     
     user.claim spot
-    return "BAM! claimed #{spot.name}"
+    return "bam, claimed #{spot.name}!"
   end
 
   def claim_by_name_and_address spot_name, spot_address
@@ -171,7 +181,7 @@ private
       spot = Spot.find_by_address geocode.address
       unless spot
         spot = Spot.create :name => spot_name, :address => geocode.address, :geolocation_x => geocode.latitude, :geolocation_y => geocode.longitude
-        spot.save
+        spot.save!
         self.user.claim spot
         return  "#{self.user.name} conquered a new spot! #{spot_name} @ #{spot.address}"
       end
@@ -182,7 +192,7 @@ private
         old_name = spot.name
         stuff = Stuff.create :name => spot.name, :spot => spot # save old name for spot
         spot.name = spot_name
-        spot.save
+        spot.save!
       end
 
       if self.user.can_claim? spot

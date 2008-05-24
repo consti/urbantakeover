@@ -44,9 +44,15 @@
   input.tupalofield { width: 420px; height: 23px; font-size: 16px; margin-top: 2px; }
   input.colorfield { width: 76px; height: 23px; font-size: 16px; margin-top: 2px; }
   input.must, textarea.must { background-color: #EEEEEE; border: 1px solid #888888; }
-  input.optional, textarea.optional { background-color: #FFFFFF; border: 1px solid #DDDDDD; }
+  input.optional, textarea.optional { color: #666, background-color: #FFFFFF; border: 1px solid #DDDDDD; }
+  .form-optional input, .form-optional textarea { color: #666, background-color: #FFFFFF; border: 1px solid #DDDDDD; }
+  .form-optional, .form-optional p, .form-optional h1, .form-optional h2, .form-optional h3 {
+    color: #666;
+  }
+
   input.submit {width: 150px; height: 30px; font-size: 14px; }
   input.go {width: 50px; height: 30px; font-size: 14px; }
+  
   
 /* items */  
 
@@ -95,7 +101,8 @@
   div#map.small { width: 475px; height: 285px; margin: 0px; overflow: hidden; }
   div#map.normal { width: 475px; height: 390px; margin: 0px; overflow: hidden; border: 1px solid #DDDDDD; }
   div#map.tall { width: 425px; height: 485px; margin: 0px; overflow: hidden; border: 1px solid #DDDDDD; }
-  div#map.wide { width: 950px; height: 285px; margin: 0px; overflow: hidden; }
+  div#map.wide { width: 950px; height: 285px; margin: 0px; overflow: hidden; border: 1px solid #DDDDDD; }
+  div#map.edit { width: 350px; height: 340px; margin: 20px 0px 0px 0px; overflow: hidden; border: 1px solid #DDDDDD; }
   div#map a, div#map a:visited, div#map a:hover { background-color: transparent;  } /* Fix google imprint-mouseover */
   .area { background-color: transparent;  filter:alpha(opacity=50); -moz-opacity:.50; opacity:.50;  }
   
@@ -111,8 +118,8 @@
   div#submenu div { padding: 6px 10px 7px 10px; }
 
   /* footer */
-  div#footer { background-color: #EEEEEE; border: 1px solid transparent; background-image: url("/images/cornerbr.png"); background-repeat: no-repeat; background-position: 931px 11px; }
-  div#footer div { margin: 5px 8px 5px 0px;}
+  div#footer { background-color: #EEEEEE; border-left: 1px solid transparent; border-right: 1px solid transparent; background-image: url("/images/cornerbr.png"); background-repeat: no-repeat; background-position: 932px 11px; }
+  div#footer div { margin: 5px 8px 5px 0px; }
   div#footer div a:link, div#footer div a:visited { color: #959595; text-decoration: underline; }
   div#footer div a:hover, div#footer div a:active { background-color: #99CC00; color: #FFFFFF; text-decoration: none; }
   div#footer div a:link span, div#footer div a:visited span { color: #99CC00; }
@@ -131,4 +138,21 @@
 /* handy stuff */
 .combobreaker {
   clear: both;
+}
+
+
+
+
+/* SHOULD-BE-WEBAPP-DEFAULT-STUFF */
+ul.buttons {
+  margin: 0;
+  padding: 0;
+  display: inline;
+  list-style-type: none;
+}
+
+ul.buttons li {
+  margin: 0;
+  padding: 0;
+  display: inline;
 }

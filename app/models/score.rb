@@ -5,20 +5,20 @@ class Score < ActiveRecord::Base
   belongs_to :user
 
   def before_create
-    @old_rank = Score.rank_for(self.user)
+#    @old_rank = Score.rank_for(self.user)
   end
   
   def after_create
-    Score.recalculate_ranks(self.user.class)
-    new_rank = Score.rank_for(self.user)
+#    Score.recalculate_ranks(self.user.class)
+#    new_rank = Score.rank_for(self.user)
 
-    return if new_rank == @old_rank or self.points == 0
-  
-    if new_rank > @old_rank
-      self.user.notify_all "yay, ranked +#{new_rank-@old_rank} up. now \##{new_rank} with #{user.score} points."
-    else
-      self.user.notify_all "fck! ranked -#{new_rank-@old_rank} down. now \##{new_rank} with #{user.score} points."
-    end
+#    return if new_rank == @old_rank or self.points == 0
+#  
+#    if new_rank > @old_rank
+#      self.user.notify_all "yay, ranked +#{new_rank-@old_rank} up. now \##{new_rank} with #{user.score} points."
+#    else
+#      self.user.notify_all "fck! ranked -#{new_rank-@old_rank} down. now \##{new_rank} with #{user.score} points."
+#    end
   end
   
   
