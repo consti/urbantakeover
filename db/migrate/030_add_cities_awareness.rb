@@ -16,7 +16,7 @@ class AddCitiesAwareness < ActiveRecord::Migration
 
         gc = Geocoding.get(spot.address)
         if gc.empty? # spot has INCORRECT ADDRESS (a different city, so we can make an admin interface to correct those later)
-          spot.city = City.find_or_create_by_name "nowhere"
+          spot.city = city_seventeen
         else
           location = gc.first
           city = City.find_or_create_by_name location.locality
@@ -40,6 +40,10 @@ class AddCitiesAwareness < ActiveRecord::Migration
         user.city = city_seventeen
       else
         user.city = user.claims[0].spot.city
+      end
+      
+      if user.city.nil?
+        user.city = city_seventeen
       end
 
       user.save!

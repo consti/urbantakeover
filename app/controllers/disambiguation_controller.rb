@@ -2,7 +2,7 @@
 # name refactorization welcome ;)
 
 class DisambiguationController < ApplicationController
-  @@models = [User, Spot, Team]
+  @@models = [User, Spot, Team, City]
   
   def index
     name = params[:name]
