@@ -13,13 +13,18 @@ class AddCitiesAwareness < ActiveRecord::Migration
         print "city for spot without address.... "
       else
         print "city for spot @ #{spot.address}... "
-      
+
         gc = Geocoding.get(spot.address)
         if gc.empty? # spot has INCORRECT ADDRESS (a different city, so we can make an admin interface to correct those later)
           spot.city = City.find_or_create_by_name "nowhere"
         else
           location = gc.first
-          spot.city = City.find_or_create_by_name location.locality
+          city = City.find_or_create_by_name location.locality
+          if city.save
+            spot.city = city
+          else
+            spot.city = city_seventeen
+          end
         end
       end
       
@@ -39,7 +44,7 @@ class AddCitiesAwareness < ActiveRecord::Migration
 
       user.save!
       print "#{user.city.name}... "
-      user.notify_all "we added different cities to urbantakeover and set yours to #{user.city.name}. you can change this on http://urbantakeover.at/preferences. have a nice day!"
+      #user.notify_all "we added different cities to urbantakeover and set yours to #{user.city.name}. you can change this on http://urbantakeover.at/preferences. have a nice day!"
       print "notified user!\n"
     end
   end
