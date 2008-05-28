@@ -7,6 +7,7 @@ class City < ActiveRecord::Base
   has_many :users
   has_many :spots
   
+  validates_presence_of :name
   validates_presence_of :longitude
   validates_presence_of :latitude
   validates_uniqueness_of :name
