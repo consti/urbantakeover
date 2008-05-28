@@ -18,7 +18,7 @@ class Spot < ActiveRecord::Base
   #has_one :spot # parent spot
 
   before_validation :geolocate_if_necessary
-  before_validation :update_city_from_address
+  before_validation :set_city_from_address
   
   def self.create_by_tupalo name
     stuff = self.geolocate_from_tupalo name
@@ -53,8 +53,9 @@ class Spot < ActiveRecord::Base
     nil
   end
 
-  def update_city_from_address
-    return unless attribute_changed?(:address)
+  def set_city_from_address
+    #todo: only run me when address was changed, but city was not
+    return unless self.city.nil?
     return if self.address.empty?
     geocodes = Geocoding.get(self.address)
     return if geocodes.empty?
