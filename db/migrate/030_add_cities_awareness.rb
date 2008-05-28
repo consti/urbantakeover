@@ -21,7 +21,7 @@ class AddCitiesAwareness < ActiveRecord::Migration
           location = gc.first
           city = City.find_or_create_by_name location.locality
 
-          if city.save
+          if city.save # sometimes we get b0rked localities
             spot.city = city
           else
             spot.city = city_seventeen

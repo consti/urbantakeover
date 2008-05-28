@@ -54,6 +54,7 @@ class Spot < ActiveRecord::Base
   end
 
   def update_city_from_address
+    return unless attribute_changed?(:address)
     return if self.address.empty?
     geocodes = Geocoding.get(self.address)
     return if geocodes.empty?
