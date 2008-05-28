@@ -120,6 +120,7 @@ private
     # maybe it's an address:
     address = target
     address += ", #{user.city.name}" unless address.include? "," # indicates a spot with a city
+    spot_name = target
 
     geocodes = Geocoding.get(address)
     if geocodes.empty?
