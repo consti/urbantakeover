@@ -1,1 +1,166 @@
-think of easy gui to solve quests
+== TOO NOW
+
+* claim mit umlauten via twitter is broken (test message schicken)
+
+uto widget link
+uto daily statistics
+
+* uto marker & kreise per svg->png imagemagick command machen: convert a.svg a.png
+
+* user page => link to flickr/twitter via icon (and to user profile page, not friends)
+* user description field => for essence
+
+* city feld für user (damit der londoner losstarten kann)
+
+* urbantakeover tags einbauen (#lol in description)
+
+* logmessage wenn description  eingetragen wurde, bei rank änderung etc
+
+* register uto bot on flickr. favourite claims. leave reply for epic claims & for points
+** eg http://flickr.com/photos/24938945@N03/2371184872/
+
+* tag via flickr
+** rflickr + 903ed243c4ff3e40e464cf7383a6bc0f
+
+** check [http://flickr.com/groups/urbantakeover/pool & public tags "ut"/"uto"/"urbantakeover"
+*** check for "claim x" or "claiming x" or "x @ y" in [notes, title, description]
+*** leave reply "need address"
+
+** auto-register user @ us
+
+
+* den tupalo leuten für die launch party sticker geben
+
+* claim 2.0
+** rewrite from scratch
+** claim treelike spots (spot @ spot @ address)
+** sms senden, wenn du den rank änderst. und an den gepwnten
+** join team members
+
+
+* log team changes
+* log buffs
+* make logmessages table
+
+* oliver zettel ncl neu
+* wolfgang indesign 2.0
+
+
+
+
+== TODO SOOON
+
+* marker kaufen
+* flossbross buttons bestellen
+* sticker bestellen (stickma geschnitten und hinten anleitung drauf)
+
+* tumblr about page kopieren
+* erkälrung auf website
+  * sticker schreiben
+  * sticker kleben
+  * sms schreiben
+  * auf karte den sticker sehen & punkte bekommen (super mario point get über der karte)
+
+* auf frontpage "claim here knopf"
+
+* anleitung müdnlich
+  * sticker geben
+  * name => kleben
+  * auf website ein fetter "i claimed this" knopf (w/ flickr bild upload), or: my claim foto for is on flickr on (2 flickr links akzeptieren)
+  * monatlicher gewinner
+
+
+* redesign frontpage
+
+	frontpage ("the pitch")
+
+  """" CLAIM HERE""""
+
+  """" VIENNA """"
+  """ THE MAP """ (zoom to interesting position in vienna on default) 
+
+  """" HIGHSCORE """"
+
+  """" REGISTER TO SEE WHO TAGGED WHERE """"
+  
+  
+* seller backend
+  * destroy addresses after send
+  
+  
+* urban takeover team invite
+
+* einfach sticker auf website bestellen °!!!!!!!!!!!!!!111elf
+  * formular
+  * senden
+  * lone wolf pack
+  * team packs (30 30 30)
+* teamfarbe = primärfarbe
+
+
+action_log
+  google for active record inheritance
+  script/generate model ActionLog
+  code Claim < ActionLog
+  code Cross < ActionLog
+  code JoinTeam < ActionLog
+
+@oneup
+  => login via email oder username * besseres changelog als scores tabelle
+  => neues datenbankmodel für actions => active record inheritance
+  => claimed
+  => crossed
+  => joined
+  => buffed
+  => frontpage 3.0 (score, changelog)
+
+  20% of hardcore users users have iphones => iphone geolocate application
+
+sushimako
+* spot view
+** spot name in liste nicht anzeigen
+** zum richtigen spot springen
+* git deploy auf server
+* team vector auswertung (cluster gruppieren by abstand, ym4r) 
+* stats stats stats!
+* password cleanup
+** -update twitter password-^done^
+** -update gmail password-^done^
+** -update server => https://github.com/sushimako/urbantakeover/wikis/server-howto-^done^
+
+
+
+
+	
+
+== TODO USERS
+
++ howto += what to put in the 'command' line @ claim?!
+
++ also: 'global team rank' does not computeR =)
+
++ add a hometown (expicit!) entry field;
+
++ also: upp pic to flickr & tag correctly (i.e. spot name + ut or urbantakeover) & add to ut-group = + 25 bonus points
+(possibility to upp pic via ut-web interface??) - does that one already work on an automated basis?
+
++  'ut powerholder of the month
+
++ (google) map: spot search on flickr via tags 'spotname' PLUS 'ut' or 'urbantakeover', or 'simply' display pics added to ut-group only (?)
+
++ switch team / change team name / change team colour
+
++ help/how to-page: add screenshots, pics of crossed stickers, etc. as reference;
+also: what's best to write on the stickers (underneath 'ohai, my name is'...)?
+plus, instructions for/to flickr group.
+and instruction how/why to set up a twitter account (another 'maybe')
+
++ a feedback form would rule.
+
++ legal disclaimer is missing, but super super SUPER necessary (terms & conditions/third party)!
+
++ extra bonus (ev. 50 p?) für das krasseste takeover. würd mal sagen, wird wöchentlich vergeben.
+
+
++ @ 'send command': drop-down menu for team names/friends to add/maybe even existig spots (or maybe not) would rule.
+
