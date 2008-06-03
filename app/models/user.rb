@@ -8,8 +8,8 @@ class User < ActiveRecord::Base
 
   has_many :claims, :order => "created_at desc", :dependent => :destroy
   has_many :scores, :order => "created_at desc", :dependent => :destroy
-  has_and_belongs_to_many :friends, :class_name => 'User', :join_table => 'user_friend', :association_foreign_key => 'user_id', :foreign_key => 'friend_id'
-  has_and_belongs_to_many :friends_of, :class_name => 'User', :join_table => 'user_friend', :association_foreign_key => 'friend_id', :foreign_key => 'user_id'
+  has_and_belongs_to_many :friends, :class_name => 'User', :join_table => 'user_friend', :association_foreign_key => 'user_id', :foreign_key => 'friend_id', :uniq => true
+  has_and_belongs_to_many :friends_of, :class_name => 'User', :join_table => 'user_friend', :association_foreign_key => 'friend_id', :foreign_key => 'user_id', :uniq => true
   belongs_to :team
   belongs_to :city
   
