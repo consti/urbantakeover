@@ -2,8 +2,8 @@ class TeamController < ApplicationController
   before_filter :login_required, :only => [:join, :edit]
   
   def show
-    @team = Team.find_by_id params[:id]
-    @team ||= Team.find_by_name params[:id]
+    @team = Team.find_by_id params[:id], :include => :users
+    @team ||= Team.find_by_name params[:id], :include => :users
 
     if @team.nil?
       flash[:notice] = "no such team here... YET!" and redirect_to(:action => :create, :name => params[:id])
