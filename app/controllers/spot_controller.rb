@@ -23,8 +23,8 @@ class SpotController < ApplicationController
   # GET /spots/1
   # GET /spots/1.xml
   def show
-    @spot = Spot.find_by_id params[:id], :include => :quests
-    @spot ||= Spot.find_by_name params[:id], :include => :quests
+    @spot = Spot.find_by_id params[:id]
+    @spot ||= Spot.find_by_name params[:id]
 
     redirect_to not_found_url and return unless @spot
 

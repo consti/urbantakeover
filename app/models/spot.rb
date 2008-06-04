@@ -9,6 +9,7 @@ class Spot < ActiveRecord::Base
   has_many :claims, :order => "created_at DESC", :dependent => :destroy
   has_many :stuffs, :dependent => :destroy
   belongs_to :city
+  has_many :quests
 
   validates_presence_of :city
   
