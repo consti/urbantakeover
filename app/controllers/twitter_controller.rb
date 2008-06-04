@@ -30,7 +30,8 @@ class TwitterController < ApplicationController
       user = User.create(:twittername           => username,
                          :login                 => login,
                          :password              => password,
-                         :password_confirmation => password)
+                         :password_confirmation => password,
+                         :city                  => City.find_by_name("City 17"))
 
       user.save! # yo! throw an exception if this fails, otherwise we spam twitter users      
       user.notify_all "welcome #{username}! your user+password on http://urbantakeover.at: #{login}+#{password}. send 'd cpu claim spot @ address' or 'd cpu help'."
