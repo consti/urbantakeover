@@ -17,7 +17,8 @@
 
         <p>
           <label for="city">Your Hometown</label><br/>
-          <%=	f.collection_select(:city_id, City.find_for_combobox, :id, :name ) %>
+          <%=	f.collection_select(:city_id, City.find_for_combobox, :id, :name, :include_blank => '-- select here or write in textfield'  ) %>
+          <p>or add your city if not in list: <%= text_field :city, :name %> (alpha)</p>
         </p>
       </div>
   

@@ -94,7 +94,14 @@ class UserController < ApplicationController
   def signup
     @user = User.new(params[:user])
     return unless request.post?
+    
+    if params[:city]
+      @city = City.find_or_create_by_name(params[:city][:name])
+      @city.save!
+      @user.city = @city
+    end
     @user.save!
+    
     self.current_user = @user
     redirect_back_or_default root_url
     flash[:notice] = "Thanks for signing up!"
