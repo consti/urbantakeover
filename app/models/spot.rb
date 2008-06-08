@@ -13,7 +13,14 @@ class Spot < ActiveRecord::Base
   validates_presence_of :city
   
 
+  after_save :move_to_city_17_if_fuckup
   
+  def move_to_city_17_if_fuckup
+    return unless self.city.nil?
+    self.city = City.find_by_name("City 17")
+    self.save!
+  end
+
   #has_many :spots # spots inside this spot
   #has_one :spot # parent spot
 
