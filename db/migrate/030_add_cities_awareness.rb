@@ -13,24 +13,27 @@ class AddCitiesAwareness < ActiveRecord::Migration
         print "city for spot without address.... "
       else
         print "city for spot @ #{spot.address}... "
-
+        sleep 0.2
         gc = Geocoding.get(spot.address)
-        if gc.empty? # spot has INCORRECT ADDRESS (a different city, so we can make an admin interface to correct those later)
+        if gc.size == 0 # spot has INCORRECT ADDRESS (a different city, so we can make an admin interface to correct those later)
+          print "no geocoding found ... "
           spot.city = city_seventeen
         else
           location = gc.first
           city = City.find_or_create_by_name location.locality
 
           if city.save # sometimes we get b0rked localities
+            print "by geolocation ... "
             spot.city = city
           else
+            print "INVALID LOCALITY - #{location.locality} ... "
             spot.city = city_seventeen
           end
         end
       end
-      
+      print "#{spot.city.name} ... "      
       spot.save!
-      print "#{spot.city.name}\n"
+      print "then #{spot.city.name}\n"
     end
 
     User.find(:all).each do |user|
@@ -55,5 +58,7 @@ class AddCitiesAwareness < ActiveRecord::Migration
   end
 
   def self.down
+    execute "UPDATE spots set city_id=null"
+    execute "UPDATE users set city_id=null"
   end
 end
