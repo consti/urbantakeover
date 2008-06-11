@@ -1,7 +1,8 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   def format_text text
-    RedCloth.new(text, [ :filter_html]).to_html
+    h(text) # textile decided to go ape-shit. disable text formatting for now.
+    #RedCloth.new(text, [:filter_html]).to_html
   end
 
   def sparkline data
