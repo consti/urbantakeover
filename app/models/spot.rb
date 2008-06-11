@@ -56,6 +56,7 @@ class Spot < ActiveRecord::Base
   def set_city_from_address
     #todo: only run me when address was changed, but city was not
     return unless self.city.nil?
+    
     return if self.address.empty?
     geocodes = Geocoding.get(self.address)
     return if geocodes.empty?
@@ -71,15 +72,21 @@ class Spot < ActiveRecord::Base
       unless geocodes.empty?
         self.geolocation_x = geocodes.first[:latitude]
         self.geolocation_y = geocodes.first[:longitude]
+        if self.city.nil?
+          city = City.find_or_create_by_name geocodes.first[:locality]
+          city.save
+          self.city = city
+        end
       end
     end
     
     unless self.name.empty?
-      stuff = Spot.geolocate_from_tupalo name
+      stuff = Spot.geolocate_from_tupalo name # todo refactor me
       unless stuff.empty?
         longitude, latitude, tupalo_link = stuff
         self.geolocation_x = longitude
         self.geolocation_y = latitude
+        self.city = City.find_by_name "City 17" if self.city.nil?# todo fixme
         self.tupalo_link = tupalo_link
       end
     end
