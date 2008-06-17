@@ -67,14 +67,7 @@ class Spot < ActiveRecord::Base
     geocodes = Geocoding.get(self.address)
     return if geocodes.empty?
 
-    city = City.find_or_create_by_name geocodes.first.locality
-    if city.nil?
-      city = City.find_by_name "City 17"
-    else
-      city.save!
-    end
-
-    self.city = city
+    self.city = City.from_locality geocodes.first.locality
   end
 
   def geolocate_if_necessary
@@ -86,9 +79,7 @@ class Spot < ActiveRecord::Base
         self.geolocation_x = geocodes.first[:latitude]
         self.geolocation_y = geocodes.first[:longitude]
         if self.city.nil?
-          city = City.find_or_create_by_name geocodes.first[:locality]
-          city.save
-          self.city = city
+          self.city = City.from_locality geocodes.first[:locality]
         end
       end
     end

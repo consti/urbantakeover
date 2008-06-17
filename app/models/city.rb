@@ -14,6 +14,23 @@ class City < ActiveRecord::Base
   
   before_validation :geolocate
 
+  def default_city
+    City.find_by_name "City 17"
+  end
+
+  def from_locality name
+    if name.strip.empty?
+      return City.default_city
+    end
+    
+    city = City.find_or_create_by_name name
+    if city.save
+      return city
+    else
+      return City.default_city
+    end
+  end
+  
   def self.find_for_combobox
     self.find(:all, :order => "name")
   end
