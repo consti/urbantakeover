@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
-  before_filter :login_required, :except => [:newcomer]
+  before_filter :login_required, :only => [:member, :admin]
 
   def explore
   end
