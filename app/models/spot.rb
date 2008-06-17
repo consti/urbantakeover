@@ -11,7 +11,6 @@ class Spot < ActiveRecord::Base
   belongs_to :city
 
   validates_presence_of :city
-  
 
   after_save :move_to_city_17_if_fuckup
   
@@ -68,7 +67,9 @@ class Spot < ActiveRecord::Base
     geocodes = Geocoding.get(self.address)
     return if geocodes.empty?
 
-    self.city = City.find_or_create_by_name geocodes.first.locality
+    city = City.find_or_create_by_name geocodes.first.locality
+    city.save!
+    self.city = city
   end
 
   def geolocate_if_necessary
