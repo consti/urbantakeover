@@ -14,11 +14,11 @@ class City < ActiveRecord::Base
   
   before_validation :geolocate
 
-  def default_city
+  def self.default_city
     City.find_by_name "City 17"
   end
 
-  def from_locality name
+  def self.from_locality name
     if name.strip.empty?
       return City.default_city
     end
