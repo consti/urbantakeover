@@ -68,7 +68,12 @@ class Spot < ActiveRecord::Base
     return if geocodes.empty?
 
     city = City.find_or_create_by_name geocodes.first.locality
-    city.save!
+    if city.nil?
+      city = City.find_by_name "City 17"
+    else
+      city.save!
+    end
+
     self.city = city
   end
 
